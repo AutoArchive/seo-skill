@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the public Markdown-only SEO operating directory."""
+"""Validate public SEO operating data without imposing a shared document layout."""
 
 from __future__ import annotations
 
@@ -10,29 +10,10 @@ from datetime import date
 from pathlib import Path
 
 
-REQUIRED_FILES = {
-    "site.md": (
-        "# Site metadata",
-        "## Identity",
-        "## Repository",
-        "## Analytics",
-        "## Deployment",
-    ),
-    "daily-task.md": ("# Daily SEO task", "## Objective", "## Required sequence", "## Daily completion"),
-    "promotion.md": ("# Promotion strategy", "## Audience", "## Channels", "## Operating rules"),
-    "status.md": ("# SEO status", "## Current state", "## Current signals"),
-    "plan.md": ("# SEO plan", "## Purpose"),
-    "block.md": ("# Human-only blockers",),
-}
-DAILY_HEADINGS = (
-    "## Scope",
-    "## Data window",
-    "## Evidence collected",
-    "## Work performed",
-    "## Validation and self-review",
-    "## Delivery",
-    "## Decisions and follow-ups",
-)
+# These are stable semantic entrypoints used by the scheduler. Other files,
+# headings, titles, ordering, and prose belong to the consuming repository.
+REQUIRED_ENTRYPOINTS = ("site.md", "daily-task.md")
+
 EMAIL_RE = re.compile(r"(?i)\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b")
 BEARER_RE = re.compile(r"(?i)\b(?:authorization\s*:\s*)?bearer\s+[A-Za-z0-9._~+/-]+=*\b")
 DRIVE_URL_RE = re.compile(r"(?i)https://drive\.google\.com/[^\s)>]+")
@@ -62,13 +43,12 @@ PAYLOAD_POLICY_RE = re.compile(
 )
 
 
-def read_required(path: Path, headings: tuple[str, ...]) -> str:
+def read_nonempty(path: Path) -> str:
     if not path.is_file():
         raise ValueError(f"missing {path}")
     text = path.read_text(encoding="utf-8")
-    for heading in headings:
-        if heading not in text:
-            raise ValueError(f"missing heading {heading!r} in {path}")
+    if not text.strip():
+        raise ValueError(f"empty {path}")
     return text
 
 
@@ -88,6 +68,12 @@ def scan_public(path: Path, text: str) -> None:
 
 
 def validate_analytics_contract(path: Path, text: str) -> None:
+    """Validate required declarations wherever the consumer keeps them.
+
+    The labels are a semantic API. Their surrounding heading, ordering, title,
+    and neighboring content are intentionally not prescribed by this package.
+    """
+
     checks = (
         (ANALYTICS_REQUIRED_RE, "runtime analytics must be explicitly required: yes"),
         (PRIMARY_ANALYTICS_RE, "a primary runtime analytics provider is required"),
@@ -102,14 +88,24 @@ def validate_analytics_contract(path: Path, text: str) -> None:
 
 
 def validate(data_root: Path, expected_date: date | None) -> int:
+    if not data_root.is_dir():
+        raise ValueError(f"missing {data_root}")
+
     loaded: dict[str, str] = {}
-    for filename, headings in REQUIRED_FILES.items():
+    for filename in REQUIRED_ENTRYPOINTS:
         path = data_root / filename
-        text = read_required(path, headings)
+        text = read_nonempty(path)
         scan_public(path, text)
         loaded[filename] = text
 
     validate_analytics_contract(data_root / "site.md", loaded["site.md"])
+
+    # Scan every public Markdown file, including consumer-specific files that
+    # the shared package does not know about. Do not require or rename them.
+    for path in sorted(data_root.rglob("*.md")):
+        if path.name in REQUIRED_ENTRYPOINTS and path.parent == data_root:
+            continue
+        scan_public(path, read_nonempty(path))
 
     daily_dir = data_root / "daily"
     if not daily_dir.is_dir():
@@ -125,11 +121,6 @@ def validate(data_root: Path, expected_date: date | None) -> int:
         if file_date in seen_dates:
             raise ValueError(f"duplicate daily date: {file_date}")
         seen_dates.add(file_date)
-        text = read_required(path, DAILY_HEADINGS)
-        expected_title = f"# SEO operations — {file_date.isoformat()}"
-        if expected_title not in text:
-            raise ValueError(f"daily title does not match filename in {path}")
-        scan_public(path, text)
         daily_count += 1
 
     if expected_date is not None and expected_date not in seen_dates:
