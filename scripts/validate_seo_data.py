@@ -49,7 +49,7 @@ PRIMARY_ANALYTICS_RE = re.compile(
     r"(?im)^\s*[-*]\s*Primary runtime provider:\s*(?!`?(?:none|disabled|optional|not configured)`?\s*$).+\S\s*$"
 )
 RUNTIME_VERIFICATION_RE = re.compile(
-    r"(?im)^\s*[-*]\s*Runtime verification URL:\s*https://[^\s]+\s*$"
+    r"(?im)^\s*[-*]\s*Runtime verification URL:\s*`?https://[^\s`]+`?\s*$"
 )
 SEARCH_ANALYTICS_RE = re.compile(
     r"(?im)^\s*[-*]\s*Search analytics required:\s*(?!`?(?:none|no|optional|disabled)`?\s*$).+\S\s*$"
