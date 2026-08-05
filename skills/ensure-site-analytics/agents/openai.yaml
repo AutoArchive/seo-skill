@@ -1,4 +1,4 @@
 interface:
   display_name: "Ensure Site Analytics"
   short_description: "Require and verify analytics on every site"
-  default_prompt: "Use $ensure-site-analytics to verify mandatory runtime analytics, URL reporting, Search Console, infrastructure evidence, and repair defects through $change-seo-site and $deliver-github-pr with a from-scratch final review."
+  default_prompt: "Use $ensure-site-analytics to verify mandatory runtime analytics, URL reporting, Search Console, and infrastructure evidence, then repair defects through $deliver-github-pr with production verification."

@@ -16,9 +16,10 @@ shared collection.
   prioritizes same-cycle technical repair, invokes optional content work, and
   carries every change through truthful delivery and closeout.
 - [`deliver-github-pr`](skills/deliver-github-pr/SKILL.md) owns the reusable
-  GitHub lifecycle for main, corrective, and closeout changes: fresh branch,
-  real non-draft pull request, complete CI, a from-scratch final review after CI,
-  repair-and-review repetition when needed, and squash merge.
+  delivery lifecycle for main, corrective, and closeout changes: focused
+  implementation, fresh branch, real non-draft pull request, complete CI, a
+  from-scratch final review after CI, squash merge, applicable production
+  deployment, public acceptance, and closeout.
 - [`configure-google-seo-export`](skills/configure-google-seo-export/SKILL.md)
   configures Google-managed weekly GA4 and Search Console CSV exports into one
   Drive folder per site, including an idempotent immediate backfill and a
@@ -44,10 +45,18 @@ shared collection.
   complete research-publication cycle from a site-defined editorial program
   through deep research, readable writing, pull-request delivery, actual
   production deployment, and independent public verification.
-- [`change-seo-site`](skills/change-seo-site/SKILL.md) implements one
-  evidence-backed site improvement through a real pull request, waits for CI,
-  self-reviews the final diff, squash-merges it, and waits for deployment and
-  live verification.
+
+## Skill boundaries
+
+- `$operate-seo-site` decides what the current operating cycle should do and in
+  which order.
+- Evidence and content skills own their domain analysis and quality criteria.
+- `$deliver-github-pr` owns how every repository change is implemented and
+  carried through PR, CI, final review, merge, applicable production deployment,
+  public acceptance, and closeout.
+
+Search-facing incremental-change and blast-radius rules are a conditional
+reference inside `$deliver-github-pr`, not a second delivery skill.
 
 ## Research publication boundary
 
@@ -63,7 +72,8 @@ Long-form research publication should invoke the skills in this order:
 site editorial plan
 → $deep-research-blog
 → $write-readable-research-blog
-→ $publish-research-blog / $change-seo-site delivery
+→ $publish-research-blog
+→ $deliver-github-pr
 ```
 
 The public product is a coherent article. Search logs, claim matrices, source
@@ -176,8 +186,9 @@ website repository. Invoke `$operate-seo-site` for each scheduled cycle and use
 `$deliver-github-pr` for every main, corrective, and closeout pull request. Every
 automated change still requires a fresh branch, real non-draft pull request, all
 required and expected CI, a from-scratch final review of the complete PR after
-CI, squash merge, and truthful closeout. Rendered site changes also require the
-exact production deployment and public verification through `$change-seo-site`.
+CI, squash merge, and truthful closeout. For rendered site changes,
+`$deliver-github-pr` also requires the exact production deployment and public
+verification before completion.
 
 Merged head-branch deletion remains best-effort repository hygiene. Never push
 automated consuming-repository changes directly to the default branch, bypass

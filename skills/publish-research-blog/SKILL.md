@@ -12,8 +12,9 @@ Coordinate one complete research-publication cycle. This skill connects:
 1. the consuming site's editorial research program;
 2. `$deep-research-blog` for multilingual evidence gathering and falsification;
 3. `$write-readable-research-blog` for clear academic-style prose;
-4. `$change-seo-site` for repository delivery, CI, self-review, squash merge,
-   actual production deployment, and public verification.
+4. `$deliver-github-pr` for the search-facing repository change, CI,
+   from-scratch self-review, squash merge, actual production deployment, public
+   verification, and closeout.
 
 The public product is one coherent article. Search logs, source matrices, model
 transcripts, JSON records, and metadata updates may support the work but do not
@@ -152,7 +153,10 @@ excerpts.
 
 ## Repository delivery
 
-Invoke `$change-seo-site` for the actual repository change.
+Invoke `$deliver-github-pr` as a search-facing site change for the actual
+repository change. Supply the article review packet, generated and canonical
+URLs, affected navigation and sitemap behavior, representative unaffected
+routes, deployment topology, public acceptance check, and rollback.
 
 The main pull request must include the article and only closely related site
 changes. A recurring publication program may also update or add the site-owned
@@ -186,10 +190,9 @@ Run the consuming repository's authoritative checks. Where available, check:
 
 ## CI and domain-specific final review
 
-Use `$deliver-github-pr` through `$change-seo-site` for complete expected CI and
-the common from-scratch final review. During that post-CI review, also restart
-the article review from the original research question and perform two separate
-domain passes:
+Use `$deliver-github-pr` for complete expected CI and the common from-scratch
+final review. During that post-CI review, also restart the article review from
+the original research question and perform two separate domain passes:
 
 ### Evidence review
 
@@ -217,9 +220,9 @@ common review from the original request, and repeat both article passes.
 
 ## Merge, production, and public verification
 
-After `$deliver-github-pr` returns a squash commit through `$change-seo-site`,
-identify the deployment produced by the actual production provider for that
-exact commit.
+As part of `$deliver-github-pr`, identify the deployment produced by the actual
+production provider for the exact squash commit and wait for its successful
+terminal state.
 
 Verify the canonical public hostname independently. At minimum confirm:
 
@@ -236,6 +239,7 @@ Verify the canonical public hostname independently. At minimum confirm:
 A source file in the repository, generated file in a deployment branch, passing
 workflow, or HTTP 200 alone does not complete publication.
 
+Use these checks as the public acceptance criteria for `$deliver-github-pr`.
 Complete the consuming site's closeout process, adding only records explicitly
 required by the current skill or site instructions.
 

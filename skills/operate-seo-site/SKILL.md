@@ -71,10 +71,10 @@ truthfully, and keep raw rows and private provider identifiers outside Git.
 ### 4. Triage work in priority order
 
 Handle reproducible technical defects before experiments, content, reporting,
-or promotion. When a safe repair or rollback exists, invoke `$change-seo-site`
-and finish it during the same operating cycle and local calendar day. Use a
-separate focused pull request for each independent repair when combining them
-would reduce reviewability.
+or promotion. When a safe repair or rollback exists, invoke
+`$deliver-github-pr` as a search-facing site change and finish it during the
+same operating cycle and local calendar day. Use a separate focused pull request
+for each independent repair when combining them would reduce reviewability.
 
 After technical work, select at most one speculative or experimental site
 improvement supported by current evidence. Do not invent a change to make the
@@ -97,16 +97,16 @@ cycle.
 ### 6. Deliver and close out
 
 Invoke `$deliver-github-pr` for every main, corrective, and closeout change. It
-owns the fresh branch, real non-draft pull request, complete expected CI, and the
-mandatory from-scratch final review after CI. If that review finds a problem,
-fix it on the same branch, repeat CI, and restart the complete review before
-squash merge. No human or second reviewer is required.
+owns the fresh branch, real non-draft pull request, complete expected CI,
+mandatory from-scratch final review after CI, squash merge, and any applicable
+exact production deployment and public verification. If review or deployment
+finds a problem, use its corrective loop and repeat the complete lifecycle. No
+human or second reviewer is required.
 
-For every site change, invoke `$change-seo-site` through exact production
-deployment and public verification. A preview, workflow URL, script tag,
-provider export, or HTTP 200 alone is not completion. Deliver final merge,
-deployment, and verification evidence through the consuming site's closeout
-process.
+A preview, workflow URL, script tag, provider export, or HTTP 200 alone is not
+completion. Supply final merge, deployment, public acceptance, and verification
+criteria to `$deliver-github-pr` and record its evidence through the consuming
+site's closeout process.
 
 ## Completion criteria
 
