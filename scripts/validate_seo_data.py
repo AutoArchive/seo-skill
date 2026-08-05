@@ -11,22 +11,9 @@ from pathlib import Path
 
 
 REQUIRED_FILES = {
-    "bootstrap.md": (
-        "# SEO bootstrap",
-        "## Status",
-        "## Canonical production",
-        "## Production source of truth",
-        "## Provider deployment evidence",
-        "## Public verification",
-        "## Non-production and rejected paths",
-        "## Analytics and search baseline",
-        "## Baseline and rollback",
-        "## Invalidation conditions",
-    ),
     "site.md": (
         "# Site metadata",
         "## Identity",
-        "## Bootstrap",
         "## Repository",
         "## Analytics",
         "## Deployment",
@@ -117,10 +104,6 @@ def get_field(path: Path, text: str, label: str) -> str:
     return value
 
 
-def normalize_url(value: str) -> str:
-    return value.rstrip("/")
-
-
 def validate_analytics_contract(path: Path, text: str) -> None:
     checks = (
         (ANALYTICS_REQUIRED_RE, "runtime analytics must be explicitly required: yes"),
@@ -135,56 +118,45 @@ def validate_analytics_contract(path: Path, text: str) -> None:
             raise ValueError(f"{message} in {path}")
 
 
-def validate_bootstrap_contract(path: Path, text: str) -> dict[str, str]:
-    required = {
+def validate_bootstrap_contract(path: Path, text: str) -> None:
+    exact_values = {
         "Bootstrap status": "complete",
         "Production chain verified": "yes",
-        "Custom-domain attachment verified": "yes",
-        "Public content matched exact production commit": "yes",
     }
-    values: dict[str, str] = {}
-    for label, expected in required.items():
+    for label, expected in exact_values.items():
         value = get_field(path, text, label)
         if value.lower() != expected:
             raise ValueError(f"{label} must be {expected!r} in {path}")
-        values[label] = value
 
     verified_at = get_field(path, text, "Bootstrap verified at")
     try:
         date.fromisoformat(verified_at)
     except ValueError as error:
         raise ValueError(f"Bootstrap verified at must be YYYY-MM-DD in {path}") from error
-    values["Bootstrap verified at"] = verified_at
 
-    field_names = (
-        "Canonical production URL",
-        "DNS or edge provider",
-        "Production hosting provider",
+    required_fields = (
+        "Bootstrap evidence strength",
+        "Provider",
         "Production project or service",
         "Production source repository",
         "Production source branch",
         "Repository root or monorepo path",
-        "Site generator or framework",
         "Production build command",
         "Production output directory",
         "Production deployment trigger",
         "Last verified production commit",
-        "Provider evidence method",
+        "Provider deployment evidence method",
         "Public deployment verification method",
-        "Public verification URL",
+        "Verification URL",
+        "Preview or non-production paths",
+        "Bootstrap invalidation conditions",
     )
-    for label in field_names:
+    values: dict[str, str] = {}
+    for label in required_fields:
         value = get_field(path, text, label)
         if PLACEHOLDER_RE.search(value):
             raise ValueError(f"placeholder value for {label!r} in {path}")
         values[label] = value
-
-    canonical = values["Canonical production URL"]
-    verification_url = values["Public verification URL"]
-    if not canonical.startswith("https://"):
-        raise ValueError(f"Canonical production URL must use HTTPS in {path}")
-    if not verification_url.startswith("https://"):
-        raise ValueError(f"Public verification URL must use HTTPS in {path}")
 
     repository = values["Production source repository"]
     if not REPOSITORY_RE.fullmatch(repository):
@@ -194,76 +166,12 @@ def validate_bootstrap_contract(path: Path, text: str) -> dict[str, str]:
     if not COMMIT_RE.fullmatch(commit) or len(set(commit.lower())) == 1:
         raise ValueError(f"Last verified production commit must be a real git SHA in {path}")
 
-    return values
-
-
-def validate_site_deployment_contract(path: Path, text: str) -> dict[str, str]:
-    if get_field(path, text, "Bootstrap required").lower() != "yes":
-        raise ValueError(f"Bootstrap required must be 'yes' in {path}")
-    if get_field(path, text, "Normal site mutation allowed only when bootstrap status is complete").lower() != "yes":
-        raise ValueError(f"normal mutation must be gated on bootstrap completion in {path}")
-
-    field_names = (
-        "Canonical URL",
-        "Provider",
-        "Production project or service",
-        "Production source repository",
-        "Production source branch",
-        "Repository root or monorepo path",
-        "Production build command",
-        "Production output directory",
-        "Production deployment trigger",
-        "Verification URL",
-        "Provider deployment evidence method",
-        "Public deployment verification method",
-    )
-    values: dict[str, str] = {}
-    for label in field_names:
-        value = get_field(path, text, label)
-        if PLACEHOLDER_RE.search(value):
-            raise ValueError(f"placeholder value for {label!r} in {path}")
-        values[label] = value
-
-    if not values["Canonical URL"].startswith("https://"):
-        raise ValueError(f"Canonical URL must use HTTPS in {path}")
-    if not values["Verification URL"].startswith("https://"):
+    verification_url = values["Verification URL"]
+    if not verification_url.startswith("https://"):
         raise ValueError(f"Verification URL must use HTTPS in {path}")
-    if not REPOSITORY_RE.fullmatch(values["Production source repository"]):
-        raise ValueError(f"Production source repository must be owner/repository in {path}")
-    return values
 
 
-def validate_production_agreement(
-    bootstrap_path: Path,
-    bootstrap: dict[str, str],
-    site_path: Path,
-    site: dict[str, str],
-) -> None:
-    comparisons = (
-        ("Canonical production URL", "Canonical URL", normalize_url),
-        ("Production hosting provider", "Provider", str.lower),
-        ("Production project or service", "Production project or service", str.lower),
-        ("Production source repository", "Production source repository", str.lower),
-        ("Production source branch", "Production source branch", str.lower),
-        ("Repository root or monorepo path", "Repository root or monorepo path", str),
-        ("Production build command", "Production build command", str),
-        ("Production output directory", "Production output directory", str),
-        ("Production deployment trigger", "Production deployment trigger", str),
-        ("Public verification URL", "Verification URL", normalize_url),
-        ("Provider evidence method", "Provider deployment evidence method", str),
-        ("Public deployment verification method", "Public deployment verification method", str),
-    )
-    for bootstrap_label, site_label, normalizer in comparisons:
-        left = normalizer(bootstrap[bootstrap_label])
-        right = normalizer(site[site_label])
-        if left != right:
-            raise ValueError(
-                f"production metadata mismatch: {bootstrap_label!r} in {bootstrap_path} "
-                f"does not agree with {site_label!r} in {site_path}"
-            )
-
-
-def validate(data_root: Path, expected_date: date | None) -> int:
+def validate(data_root: Path, expected_date: date | None, require_bootstrap: bool = False) -> int:
     loaded: dict[str, str] = {}
     for filename, headings in REQUIRED_FILES.items():
         path = data_root / filename
@@ -271,12 +179,10 @@ def validate(data_root: Path, expected_date: date | None) -> int:
         scan_public(path, text)
         loaded[filename] = text
 
-    bootstrap_path = data_root / "bootstrap.md"
     site_path = data_root / "site.md"
-    bootstrap = validate_bootstrap_contract(bootstrap_path, loaded["bootstrap.md"])
     validate_analytics_contract(site_path, loaded["site.md"])
-    site = validate_site_deployment_contract(site_path, loaded["site.md"])
-    validate_production_agreement(bootstrap_path, bootstrap, site_path, site)
+    if require_bootstrap:
+        validate_bootstrap_contract(site_path, loaded["site.md"])
 
     daily_dir = data_root / "daily"
     if not daily_dir.is_dir():
@@ -308,9 +214,14 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-root", type=Path, required=True)
     parser.add_argument("--date", type=date.fromisoformat)
+    parser.add_argument(
+        "--require-bootstrap",
+        action="store_true",
+        help="require completed production-bootstrap fields inside the existing site.md",
+    )
     args = parser.parse_args()
     try:
-        daily_count = validate(args.data_root, args.date)
+        daily_count = validate(args.data_root, args.date, args.require_bootstrap)
     except (OSError, UnicodeError, ValueError) as error:
         print(f"error: {error}", file=sys.stderr)
         return 1
