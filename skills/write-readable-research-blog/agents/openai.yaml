@@ -1,4 +1,0 @@
-interface:
-  display_name: "Write Readable Research Blog"
-  short_description: "Write accessible academic blogs with rigorous citations"
-  default_prompt: "Use $write-readable-research-blog to turn a verified research packet into a clear academic-style article with a direct answer, sustained argument, counterevidence, labeled synthesis, limitations, claim-level citations, and a final evidence and style audit."
