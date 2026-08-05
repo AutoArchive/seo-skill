@@ -36,6 +36,19 @@ proof.
 Do not change the consuming repository's `.github/seo-data` file structure. Use
 its existing files and headings.
 
+## Site context boundary
+
+Treat `site.md` as the technical source of truth for domain, repository,
+production provider, build, deployment, analytics, and public verification. When
+the consuming repository already has `position.md`, read it as the site-owned
+source for mission, readers, research programs, editorial boundaries, article
+form, language, and style. Keep all such site-specific content in the consuming
+repository.
+
+`position.md` is optional. When it is absent, use the site's existing editorial
+plan, repository instructions, or equivalent durable guidance. Do not create,
+require, rename, or migrate files merely to match this shared skill.
+
 ## Editorial program and topic selection
 
 Read the site's existing editorial plan and recent articles. A durable site may
