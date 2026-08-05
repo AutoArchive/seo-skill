@@ -1,0 +1,4 @@
+interface:
+  display_name: "Collect SEO Data"
+  short_description: "Collect Google and Cloudflare SEO evidence"
+  default_prompt: "Use $collect-seo-data to collect today's Google Drive and Cloudflare evidence, update the Markdown SEO record, commit and push anonymously to the default branch, wait for exact-commit CI, and push the closeout record."

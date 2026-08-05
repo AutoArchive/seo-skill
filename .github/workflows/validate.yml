@@ -1,0 +1,32 @@
+name: Validate
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Skills and templates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Compile scripts
+        run: python -m compileall -q scripts
+
+      - name: Validate skills
+        run: python scripts/validate_skills.py
+
+      - name: Test Markdown templates
+        run: python scripts/test_templates.py

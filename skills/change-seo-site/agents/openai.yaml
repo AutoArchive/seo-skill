@@ -1,0 +1,4 @@
+interface:
+  display_name: "Change SEO Site"
+  short_description: "Ship verified SEO changes with anonymous direct commits"
+  default_prompt: "Use $change-seo-site to ship one evidence-backed improvement with an anonymous direct commit, wait for exact-commit CI and production deployment, verify the public result, and push the closeout record."
