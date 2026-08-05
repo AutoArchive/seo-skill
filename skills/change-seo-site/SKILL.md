@@ -183,22 +183,13 @@ live verification, and whether any residual risk remains.
 
 ### 5. Validate and create the real pull request
 
-Run the repository's smallest authoritative checks. The shared SEO-data checker
-is optional and intentionally narrow:
-
-```bash
-python .github/seo-skills/scripts/validate_seo_data.py \
-  --data-root .github/seo-data
-```
-
-Do not restructure Markdown or add labels merely to make the checker happy; it
-cannot prove an SEO change is correct. Read the intended diff and generated
-output. Review correctness, SEO semantics,
-public-data safety, scope, blast radius, regressions, tests, rollback, and
-submodule compatibility. Stage explicit paths, commit, push the fresh branch,
-and create a real non-draft pull request. Its body must state evidence, baseline,
-scope, affected and unaffected routes, tests, rollback, deployment target,
-acceptance check, and any submodule update.
+Run the consuming repository's smallest authoritative checks. Read the intended
+diff and generated output. Review correctness, SEO semantics, public-data safety,
+scope, blast radius, regressions, tests, rollback, and submodule compatibility.
+Stage explicit paths, commit, push the fresh branch, and create a real non-draft
+pull request. Its body must state evidence, baseline, scope, affected and
+unaffected routes, tests, rollback, deployment target, acceptance check, and any
+submodule update.
 
 ### 6. Wait for CI and self-review
 
