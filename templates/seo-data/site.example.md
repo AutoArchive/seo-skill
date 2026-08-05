@@ -15,6 +15,24 @@
 - Repository-hosted agent scheduler: prohibited
 - Model-provider credentials in repository: prohibited
 
+## Analytics
+
+- Runtime analytics required: yes
+- Primary runtime provider: `google-analytics-4`
+- Runtime implementation location: source-controlled site configuration
+- Runtime verification URL: `https://example.com/`
+- Search analytics required: `google-search-console`
+- Search evidence route: Google Drive export described below
+- Infrastructure analytics: `cloudflare` when the production zone is available
+- Sensitive query handling: strip sensitive query parameters before page-view transmission
+- Forbidden analytics payloads: user content, credentials, imported filenames, document titles derived from private content, reading text, reading progress, private source URLs, cookies, authorization values, and user-level identifiers
+
+Runtime analytics is mandatory. Do not remove, disable, replace, gate, or
+materially reduce it without an explicit site-owner instruction recorded in the
+relevant pull request and daily report. Public browser measurement IDs may live
+in runtime source; private account/property identifiers and credentials may not
+be stored here.
+
 ## Google data
 
 - Google Drive enabled: yes
@@ -39,5 +57,5 @@
 
 The deployment workflow may build and publish the site, but it must not host or
 schedule the SEO agent. Store only durable public metadata here. Never add
-property IDs, Drive IDs, Cloudflare IDs, account identifiers, personal emails,
-credentials, or private URLs.
+private property IDs, Drive IDs, Cloudflare IDs, account identifiers, personal
+emails, credentials, raw analytics rows, or private URLs.
