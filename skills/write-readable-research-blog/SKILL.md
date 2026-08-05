@@ -1,6 +1,6 @@
 ---
 name: write-readable-research-blog
-description: Turn a verified research packet into an accessible academic-style blog article. Use after deep research when the article must preserve evidence, counterarguments, citations, and original synthesis while remaining clear to non-specialist readers and avoiding repetitive self-negating or jargon-heavy prose.
+description: Turn a verified research packet into an accessible academic-style blog article. Use after deep research when the article must preserve evidence, counterarguments, citations, and original synthesis while presenting the reasoning through collaborative, affirmative prose.
 ---
 
 # Write Readable Research Blog
@@ -22,17 +22,18 @@ Use this sequence:
 ```text
 precise question
 → direct answer
-→ why the question is difficult
+→ concrete materials and historical setting
 → evidence and comparison
-→ counterevidence and boundary conditions
+→ competing readings and boundary conditions
 → original synthesis
 → implications and limitations
 → concise conclusion
 ```
 
-A good article feels like one sustained explanation. It should not feel like a
-research log, a stitched set of source summaries, a glossary, or a paper template
-filled mechanically.
+A good article feels like one sustained explanation. Each paragraph adds evidence,
+extends a comparison, clarifies a relationship, or advances the synthesis. The
+reader can follow the same materials and inferential steps that produced the
+article's judgment.
 
 ## Recommended article form
 
@@ -46,7 +47,7 @@ Adapt the structure to the question, but normally include:
 4. **Opening answer** — answer the question within the first 2–4 paragraphs.
    Give readers the useful result before the literature tour.
 5. **Question and scope** — define the object, period, languages, platforms, and
-   exclusions. Explain why common treatments create confusion.
+   selected focus. Explain why common treatments create confusion.
 6. **Materials or method** — describe source selection, comparison, corpus,
    experiment, or interpretive method briefly and concretely.
 7. **Main argument** — usually 3–6 sections, each advancing one subclaim through
@@ -55,8 +56,8 @@ Adapt the structure to the question, but normally include:
    explanation and show how it changes the thesis.
 9. **Editorial synthesis** — state the original insight, evidence combined,
    reasoning, scope, confidence, and revision conditions.
-10. **Limitations** — identify missing archives, uneven languages, sampling
-    limits, uncertain chronology, platform bias, or unavailable evidence.
+10. **Limitations** — identify archive coverage, language distribution, sampling
+    range, chronology, platform coverage, or evidence horizon.
 11. **Conclusion** — answer the research question directly and state what the
     article changes in our understanding.
 12. **References** — complete, consistently formatted, and limited to sources
@@ -86,15 +87,20 @@ informative heading is available.
   of a long paragraph should not leave readers guessing which sentence it
   supports.
 
-## Positive, direct argumentation
+## Collaborative affirmative argumentation
 
-Chinese analytical prose often falls into a repetitive corrective rhythm:
-“不是……而是……”, “并非……”, “不只是……”, “这并不意味着……”. These forms are useful
-when a real logical contrast depends on negation. Repeated use makes the author
-sound as if every paragraph is correcting an invisible opponent and gives the
-article an automated, defensive cadence.
+Treat the reader as a partner who can inspect the same materials and understand
+how the judgment forms. Begin with a concrete word, text, archive, platform scene,
+historical event, or experimental result. Let evidence drive the narrative.
+Present competing interpretations through the materials, periods, languages,
+platforms, populations, and methods that support them.
 
-Default to positive formulations:
+Collaboration comes from visible reasoning rather than frequent first-person
+plural language. Use “我们先看……” or a guiding question only when it improves the
+transition. The article may keep a continuous third-person analytical voice while
+still sharing the full path from evidence to conclusion.
+
+Useful positive formulations include:
 
 - “这个词的核心功能是……”
 - “现有证据支持三点判断……”
@@ -102,33 +108,45 @@ Default to positive formulations:
 - “中文传播增加了一个新的分类维度……”
 - “两组研究的差异来自材料范围……”
 - “这项结论适用于 2010 年后的平台语境……”
-- “资料仍不足以确定最早用例……”
+- “当前最早证据出现于……；更早时间保持开放……”
+- “两种解释分别照亮故事的不同阶段……”
 
-Use negation for evidence boundaries, factual correction, and explicit
-non-equivalence. Do not use it as the default opening gesture.
+### Affirmative-only publication rule
 
-### Self-negation style audit
+Published editorial prose uses affirmative syntax throughout. This covers the
+title, description, abstract, headings, body, captions, callouts, editorial
+synthesis, limitations, and conclusion.
 
-During the final edit, search for patterns such as:
+For Chinese prose, search every author-written field for negative and defensive
+markers, including:
 
-- `不是……而是……`
-- `并非`
-- `并不是`
-- `不只是` / `不仅仅是`
-- `这并不意味着`
-- `不能简单地说`
-- `与其说……不如说……`
-- `并不能证明`
+- `不`, `没`, `无`, `未`, `非`, `否`, `莫`, `勿`, `毋`, `弗`;
+- `不是……而是……`, `并非`, `并不是`, `而非`, `而不是`;
+- `并不`, `也不`, `从未`, `尚未`, `未能`, `未必`;
+- `不能`, `无法`, `难以`, `不足`, `不可`, `不得`, `不宜`, `不应`, `不必`, `无需`;
+- `这并不意味着`, `本文无意`, `需要澄清`, `需要指出`, `值得注意`;
+- sentences centered on denial, correction, anticipated objections,
+  disclaimers, or self-defense.
 
-For a 5,000-character Chinese article, more than three rhetorical contrast
-patterns usually signals a style problem. Rewrite excess cases as direct claims.
-Keep additional instances only when removing the negation would weaken a precise
-boundary or misstate the evidence. Avoid placing these constructions in adjacent
-paragraphs.
+The final count for author-written publication prose is zero. Apply the same
+semantic audit to equivalent constructions in other languages. Source-accurate
+quotations, official titles, proper names, code, and bibliographic entries retain
+their original wording.
 
-The audit is qualitative rather than a mechanical ban. Sentences such as “现有
-资料无法证明直接谱系” may be the most accurate scholarly wording and should
-remain.
+Use affirmative transformations:
+
+- “不是 A，而是 B” → “核心是 B；A 解释了其中一个侧面。”
+- “资料不足以确定最早用例” → “当前最早证据出现于某年；更早时间保持开放。”
+- “这并不意味着 X” → “这一结论覆盖 Y 范围。”
+- “本文不讨论 X” → “本文聚焦 Y。”
+- “无法证明直接谱系” → “现有材料支持相似性判断；谱系关系保持开放。”
+- “两者不能直接互译” → “两者分别承担不同的分类功能。”
+- “研究没有发现差异” → “两组结果在当前样本中保持一致。”
+- “避免使用某表达” → “优先采用某表达。”
+
+Express uncertainty through positive descriptions of scope. State the earliest
+verified date, materials examined, sample range, observed pattern, confidence,
+and evidence that could extend or revise the conclusion.
 
 ## Avoid automated academic mannerisms
 
@@ -158,8 +176,8 @@ Better:
 
 ## Accessible academic tone
 
-The desired tone is calm, precise, curious, and confident about evidence while
-transparent about uncertainty.
+The desired tone is calm, precise, curious, collaborative, and confident about
+evidence while transparent about uncertainty.
 
 Use:
 
@@ -167,7 +185,7 @@ Use:
 - concrete historical or textual examples;
 - explicit transitions showing why the next section follows;
 - calibrated claims such as “现有材料支持”, “在这一语料范围内”, “较强证据来自”,
-  and “这一解释仍需更早档案验证”;
+  “当前最早证据出现于”, and “更早档案将扩展这一判断”;
 - short explanations of method and source quality;
 - respectful distinctions among identity, expression, sexuality, performance,
   external labeling, and fictional genre.
@@ -253,7 +271,9 @@ Before finalizing, verify:
 - the conclusion answers the same question posed at the beginning;
 - the article still makes sense when citations are visually ignored;
 - citations remain sufficient when the prose is checked claim by claim;
-- the article sounds like one author reasoning, not a set of generated fragments.
+- the article sounds like one author reasoning with the reader;
+- author-written publication prose contains zero negative or defensive
+  constructions.
 
 Read the article aloud or simulate an oral reading. Rewrite sentences whose main
 verb appears too late, whose subject is unclear, or whose qualifiers obscure the
@@ -274,13 +294,18 @@ Complete two separate passes.
 ### Style pass
 
 - Remove filler openings and ceremonial transitions.
-- Rewrite excessive negative-antithesis constructions positively.
+- Rewrite every negative construction as a positive statement of scope,
+  evidence, relationship, chronology, or open question.
+- Rewrite every defensive sentence as a direct description of the article's
+  focus and supported range.
+- Run a literal marker search and a semantic defensive-language review.
+- Reach zero author-written negative constructions.
 - Break overloaded sentences and paragraphs.
 - Define jargon at first use.
 - Replace abstract claims with examples where needed.
 - Remove duplicated conclusions and source summaries.
 - Make section openings state their contribution directly.
-- Preserve nuance without surrounding every claim with defensive caveats.
+- Preserve nuance through precise affirmative boundaries.
 
 ## Completion criteria
 
@@ -293,7 +318,10 @@ The article is ready for repository delivery only when:
   present;
 - claim-level citations and bibliography are complete;
 - specialist concepts are explained in ordinary language;
-- rhetorical self-negation and academic filler have been reduced;
-- prose remains readable without sacrificing evidentiary boundaries;
+- the reader can follow the materials and inferential path;
+- author-written publication prose contains zero negative or defensive
+  constructions;
+- prose remains readable while evidence boundaries appear as precise positive
+  scope statements;
 - the article meets the consuming site's length, metadata, and editorial rules;
 - the author has completed separate evidence and style audits.

@@ -123,11 +123,19 @@ The article should normally contain:
 Meet the consuming site's minimum length without using filler. Length is an
 editorial floor, not evidence of quality.
 
-Use positive, direct analytical prose. During the style audit, reduce repeated
-forms such as “不是……而是……”, “并非”, “不只是”, “这并不意味着”, and “与其说……不如说……”.
-Retain negation when it defines an evidence boundary or a genuine
-non-equivalence. Explain specialist terms in ordinary language and use concrete
-examples whenever the argument becomes abstract.
+Use collaborative affirmative prose. Let concrete materials drive the narrative,
+show how comparisons produce judgments, and present competing interpretations
+through their evidence positions. Collaboration comes from visible reasoning;
+frequent “we” language and repeated rhetorical questions remain optional.
+
+Author-written titles, descriptions, abstracts, headings, body text, captions,
+callouts, synthesis, limitations, and conclusions must contain zero negative or
+defensive constructions. Run the literal and semantic audits defined by
+`$write-readable-research-blog`. Rewrite every denial, correction-first sentence,
+disclaimer, anticipated objection, and self-protective caveat as a direct positive
+statement of evidence, scope, relationship, chronology, confidence, or open
+question. Source-accurate quotations, official titles, proper names, code, and
+bibliographic entries retain their original wording.
 
 ## Article review packet
 
@@ -143,7 +151,9 @@ Before repository delivery, prepare a concise internal review packet containing:
 - known limitations;
 - duplication check result;
 - evidence-audit result;
-- style-audit result, including excessive self-negation review;
+- collaborative-language audit result;
+- zero-negation literal scan result;
+- defensive-language semantic review result;
 - target source path, generated URL, canonical URL, and production acceptance
   check.
 
@@ -211,7 +221,11 @@ the original research question and perform two separate domain passes:
 - Section order follows the argument.
 - Paragraphs have clear jobs and concrete examples.
 - Specialist vocabulary is explained.
-- Repetitive negative-antithesis constructions and academic filler are reduced.
+- The reader can follow the materials and inferential path.
+- Competing interpretations appear through their evidence positions.
+- Every author-written field passes the zero-negation literal scan.
+- Every defensive construction has become a positive statement of evidence,
+  scope, relationship, chronology, confidence, or open question.
 - The conclusion answers the original question.
 - The article reads as one authored argument rather than stitched summaries.
 
@@ -252,6 +266,8 @@ A research-publication cycle is complete only when:
 - the article contains a defensible original synthesis;
 - evidence and style audits passed;
 - the article meets site-specific length and structure rules without filler;
+- the article uses collaborative reasoning and zero author-written negative or
+  defensive constructions;
 - a real pull request passed all expected CI, a common from-scratch review, and
   both complete article review passes;
 - the pull request was squash-merged;
