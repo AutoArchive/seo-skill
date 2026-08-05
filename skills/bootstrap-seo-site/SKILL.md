@@ -1,6 +1,6 @@
 ---
 name: bootstrap-seo-site
-description: Perform the mandatory read-only first-run audit before an agent manages a website. Use when connecting SEO automation to a new site, when the production repository, branch, provider, domain, analytics, or deployment path is uncertain, or when an existing bootstrap has become stale. Prove the real production topology and record it before any content, SEO, analytics, DNS, build, or deployment behavior is changed.
+description: Perform the mandatory read-only first-run audit before an agent manages a website. Use when connecting SEO automation to a new site, when the production repository, branch, provider, domain, analytics, or deployment path is uncertain, or when a verified production map may have become stale. Prove the real production topology before any content, SEO, analytics, DNS, build, or deployment behavior is changed.
 ---
 
 # Bootstrap SEO Site
@@ -9,54 +9,69 @@ description: Perform the mandatory read-only first-run audit before an agent man
 
 Establish a verified production map before an agent is allowed to operate a
 website. The first run is not an optimization run. It is a read-only takeover
-audit whose job is to answer, with evidence:
+audit that determines, with evidence:
 
-- which public hostname is canonical;
-- which edge, DNS, hosting, and deployment providers serve it;
-- which provider project or service owns production;
-- which repository and branch are the production source of truth;
-- which build command and output directory create the deployed site;
-- which event or workflow triggers production deployment;
-- how an exact source commit is matched to a provider deployment and then to the
-  public hostname;
-- which analytics and search properties are actually active;
-- which other repositories, branches, preview deployments, generated branches,
-  or legacy platforms exist but do **not** serve production.
+- the canonical public hostname and redirect policy;
+- the DNS, edge, hosting, and deployment providers that actually serve it;
+- the provider project or service that owns production;
+- the source repository and production branch;
+- the repository root, build command, and output directory;
+- the event or integration that triggers production deployment;
+- how an exact source commit maps to a provider production deployment and then
+  to the canonical public hostname;
+- which analytics and search properties are active;
+- which repositories, branches, previews, generated branches, backups, and
+  legacy providers exist but do **not** serve production.
 
-A successful build, a generated `gh-pages` branch, a `CNAME` file, a preview URL,
-a provider dashboard entry, an HTTP 200 response, or a repository workflow name
-is never sufficient by itself. Production must be proven end to end.
+A successful build, generated `gh-pages` branch, `CNAME` file, preview URL,
+provider build log, repository workflow, or HTTP 200 response is never sufficient
+by itself. Production must be proven end to end.
+
+## Stable consumer-data layout
+
+This skill must not add, remove, or rename files under `.github/seo-data`.
+Bootstrap evidence is stored only in the existing files:
+
+- durable production topology and bootstrap state in `site.md`, primarily under
+  its existing `## Deployment` section;
+- the current verified summary in `status.md`;
+- detailed evidence, rejected candidate paths, and decisions in the applicable
+  `daily/YYYY-MM-DD.md` report;
+- future work in `plan.md`;
+- only genuine human-only or permission blockers in `block.md`.
+
+Do not create `bootstrap.md` or another new SEO-data file. Do not rename existing
+headings solely for bootstrap.
 
 ## Mandatory gate
 
-Until bootstrap is complete and recorded in
-`.github/seo-data/bootstrap.md`, the agent must not:
+Until bootstrap is complete in `site.md`, the agent must not:
 
 - change content, metadata, structured data, navigation, redirects, robots,
   sitemap, analytics, performance settings, dependencies, build settings, DNS,
   custom domains, deployment configuration, or provider configuration;
 - create or merge a site-change pull request;
-- claim that a repository, branch, workflow, generated branch, or provider project
-  is production;
+- claim that a repository, branch, workflow, generated branch, or provider
+  project is production;
 - report a deployment as successful.
 
-The bootstrap run may create a metadata-only pull request that adds the pinned
-skill submodule and verified `.github/seo-data` files. It must not alter rendered
-site behavior. If the production chain cannot be proven because access is
-missing or systems conflict, stop site mutation and report the exact missing
-evidence. Do not guess.
+The bootstrap run may create a metadata-only pull request that adds or updates
+the pinned skill submodule, existing `.github/seo-data` files, and repository CI
+needed to validate the existing metadata contract. It must not alter rendered
+site behavior or provider configuration.
 
-An explicit user request for an immediate repair does not waive bootstrap. Finish
-the read-only topology audit first, then perform the repair in the same operating
-cycle only after the production path is proven.
+If the production chain cannot be proven because provider access is missing or
+systems conflict, stop site mutation and record the exact missing evidence. Do
+not guess. An urgent repair request does not waive bootstrap: complete the
+read-only production audit first, then repair through the verified path in the
+same operating cycle when safe.
 
 ## Invocation conditions
 
 Invoke this skill when any of the following is true:
 
 - the site has never been managed by these skills;
-- `bootstrap.md` is missing;
-- `Bootstrap status` is not `complete`;
+- `site.md` does not contain a completed, verified production map;
 - the canonical hostname, DNS, CDN, hosting provider, provider project, source
   repository, production branch, build command, output directory, deployment
   trigger, or analytics implementation may have changed;
@@ -66,28 +81,23 @@ Invoke this skill when any of the following is true:
   transfer, or build-system replacement occurred;
 - deployment verification previously produced a false positive.
 
-When in doubt, re-bootstrap. A stale bootstrap blocks normal daily operation.
+When in doubt, re-bootstrap. A stale production map blocks normal operation.
 
-## Required evidence classes
+## Required evidence
 
-Use all connected provider and repository tools that are available. The final
-map must combine multiple independent evidence classes rather than relying on a
-single artifact.
+### 1. Public hostname and edge
 
-### 1. Public hostname and edge evidence
-
-Inspect the canonical public hostname and relevant redirects. Record:
+Inspect the canonical hostname and redirects. Record public-safe evidence for:
 
 - canonical scheme and hostname;
 - apex and `www` behavior;
-- DNS target class or provider-visible routing without committing private zone or
-  account IDs;
+- DNS target class or provider-visible routing;
 - response headers, TLS hostname, CDN or platform fingerprints, cache behavior,
   and redirect chain;
-- a representative set of public routes, including homepage, robots, sitemap,
-  assets, and a recently changed page;
-- any deployment marker, build identifier, source revision, or content fingerprint
-  visible from production.
+- representative routes: homepage, robots, sitemap, assets, language routes, and
+  a recently changed page;
+- any deployment marker, build identifier, source revision, or uniquely
+  attributable content fingerprint visible from production.
 
 Do not infer the source repository from page branding or a GitHub link.
 
@@ -97,23 +107,23 @@ Inspect every plausible website repository and deployment branch. Record:
 
 - repository owner/name and visibility;
 - default branch and recent commits;
-- site generator or application framework;
-- provider configuration files and deployment workflows;
+- framework or site generator;
+- provider configuration files and delivery workflows;
 - build commands and output directories;
-- generated branches such as `gh-pages` and whether they are production,
-  legacy, preview, backup, or unused;
-- submodules, theme repositories, manager repositories, and backup repositories;
-- evidence for or against each repository being the production source.
+- generated branches such as `gh-pages` and whether each is production, legacy,
+  preview, backup, or unused;
+- submodules, theme repositories, manager repositories, and backups;
+- evidence for or against each candidate being the production source.
 
 A repository containing the newest content is not necessarily connected to
 production. A branch receiving generated files is not necessarily served by the
 canonical domain.
 
-### 3. Provider project audit
+### 3. Provider project
 
 Use the actual hosting provider connection whenever available. For Cloudflare
-Pages, Vercel, Netlify, GitHub Pages, Workers, object storage, or another platform,
-record the public-safe portions of:
+Pages, Vercel, Netlify, GitHub Pages, Workers, object storage, or another
+platform, inspect the public-safe portions of:
 
 - provider and project or service name;
 - custom domains attached to the project;
@@ -122,16 +132,15 @@ record the public-safe portions of:
 - build command and output directory;
 - root directory or monorepo path;
 - deployment trigger;
-- latest successful production deployment, its source commit, and timestamp;
+- latest successful production deployment, source commit, and timestamp;
 - preview deployment behavior;
 - relevant environment variable **names**, never secret values;
-- whether a second provider or legacy deployment still exists.
+- any second provider or legacy deployment.
 
-Provider project names may be recorded when public-safe. Never commit account,
-zone, property, project IDs that the repository policy treats as private,
-credentials, tokens, private dashboard URLs, or full provider API responses.
+Never commit credentials, account or zone IDs, private dashboard URLs, or full
+provider responses.
 
-### 4. End-to-end production proof
+### 4. End-to-end proof
 
 Prove one exact chain:
 
@@ -142,15 +151,14 @@ source repository + production branch + exact commit
     -> expected public content or immutable deployment marker
 ```
 
-Use provider deployment evidence plus independent public verification. Preferred
-proof includes an immutable commit marker exposed by the deployed site. When the
-site has no marker, use a uniquely attributable content fingerprint and record
-that the proof is weaker. Never substitute a preview deployment or generated
-branch for the canonical hostname.
+Use provider deployment evidence plus independent public verification. Prefer an
+immutable commit marker exposed by the deployed site. If none exists, use a
+uniquely attributable content fingerprint and record the weaker evidence level.
+Never substitute a preview or generated branch for the canonical hostname.
 
 Explicitly list every plausible but rejected path and why it is not production.
 
-### 5. Analytics and search audit
+### 5. Analytics and search
 
 Invoke `$ensure-site-analytics` only as a read-only audit during bootstrap. Map:
 
@@ -160,103 +168,119 @@ Invoke `$ensure-site-analytics` only as a read-only audit during bootstrap. Map:
 - Search Console coverage;
 - infrastructure analytics provider;
 - public-safe evidence routes;
-- discrepancies between source, generated output, production runtime, and
-  provider evidence.
+- discrepancies among source, generated output, production runtime, and provider
+  evidence.
 
 Do not repair analytics during bootstrap. Record defects for the first permitted
-site-change cycle after the production topology is complete.
+site-change cycle after production ownership is proven.
 
-### 6. Baseline and safety snapshot
+### 6. Baseline and rollback
 
-Before any future mutation, record a compact baseline:
+Record a compact baseline in the existing status and daily files:
 
 - representative public URLs and observed status;
-- current title, canonical, robots, sitemap, language routing, analytics loader,
-  and deployment marker behavior;
+- title, canonical, robots, sitemap, language routing, analytics loader, and
+  deployment marker behavior;
 - current production commit and provider deployment;
-- known broken routes or production regressions;
-- rollback path and last known good deployment when the provider exposes it;
+- known broken routes or regressions;
+- rollback path and last known good deployment when available;
 - repositories or branches that must not be modified for production changes.
 
-## Bootstrap record
+## Required `site.md` fields
 
-Create `.github/seo-data/bootstrap.md` from the shared template. It must contain
-verified, public-safe facts and at minimum:
+Keep the existing `site.md` file and headings. Under its existing
+`## Deployment` section, record verified public-safe fields with these labels:
 
-- `Bootstrap status: complete`;
-- verification date;
-- canonical production URL;
-- production provider and project or service;
-- DNS or edge provider;
-- production source repository and branch;
-- build command and output directory;
-- deployment trigger;
-- exact last verified production commit;
-- provider deployment evidence method;
-- public deployment verification method;
-- production chain verification result;
-- known preview, legacy, backup, and non-production paths;
-- analytics and Search Console state;
-- invalidation conditions.
+- `Bootstrap status: complete`
+- `Bootstrap verified at: YYYY-MM-DD`
+- `Production chain verified: yes`
+- `Bootstrap evidence strength: strong` or an explicitly qualified weaker value
+- `Provider`
+- `Production project or service`
+- `Production source repository`
+- `Production source branch`
+- `Repository root or monorepo path`
+- `Production build command`
+- `Production output directory`
+- `Production deployment trigger`
+- `Last verified production commit`
+- `Provider deployment evidence method`
+- `Public deployment verification method`
+- `Verification URL`
+- `Preview or non-production paths`
+- `Bootstrap invalidation conditions`
 
-Update `site.md`, `status.md`, `plan.md`, and `block.md` to agree with the
-bootstrap. Contradictions block completion.
+These fields supplement the existing structure; they do not create a new file or
+heading. `site.md`, `status.md`, and the daily report must agree.
+
+## Backward-compatible validation
+
+Updating the shared submodule must not make every legacy consumer fail
+immediately. The shared validator therefore remains compatible by default.
+
+After a site completes bootstrap, update its existing CI command to opt into the
+strict gate:
+
+```bash
+python .github/seo-skills/scripts/validate_seo_data.py \
+  --data-root .github/seo-data \
+  --require-bootstrap
+```
+
+The opt-in must be included in the metadata-only bootstrap pull request. Once
+enabled, it must not be removed unless the site is intentionally decommissioned
+or explicitly migrated through a reviewed change.
 
 ## Bootstrap pull request
 
-The bootstrap pull request is metadata-only except for adding the pinned skill
-submodule and repository-local validation needed to protect the metadata
-contract. It must not change the rendered site or provider configuration.
+The bootstrap pull request must be metadata-only except for the pinned submodule
+and validator invocation. It must include:
 
-The pull request must include:
-
-- the evidence used to identify production;
+- evidence identifying production;
 - candidate paths examined and rejected;
-- the verified end-to-end production chain;
-- known uncertainty and evidence strength;
+- the end-to-end production chain;
+- uncertainty and evidence strength;
 - analytics state;
-- changed metadata files;
+- changed existing metadata files;
 - validation performed;
-- confirmation that no site behavior changed.
+- confirmation that rendered site and provider behavior did not change.
 
-Wait for existing CI, self-review the complete diff, and squash-merge. Human
-review is not required unless repository policy enforces it. After merge, reload
-the files from the default branch and confirm the bootstrap record is present.
-Only then may normal daily or site-change operation begin.
+Wait for existing CI, self-review the complete diff, and squash-merge. Reload
+`site.md` from the default branch and confirm the strict bootstrap validator is
+enabled. Only then may normal operation begin.
 
 ## Invalidation and re-bootstrap
 
-Bootstrap immediately becomes stale when any of these changes or is credibly
-suspected to have changed:
+Bootstrap becomes stale when any of these changes or is credibly suspected to
+have changed:
 
 - canonical domain, apex/`www` policy, DNS target, CDN, proxy, or edge provider;
-- hosting or deployment provider;
-- provider project or service;
+- hosting provider or provider project;
 - source repository, production branch, monorepo root, build command, output
-  directory, deployment trigger, or deployment credentials route;
+  directory, deployment trigger, or credential route;
 - site generator or platform architecture;
 - analytics provider or URL reporting policy;
 - public production content no longer matches the expected source commit;
 - a second deployment path starts serving the canonical hostname.
 
-When invalidated, normal operations freeze. Re-run this skill and update the
-bootstrap record through a metadata-only pull request before changing the site.
+When invalidated, normal operations freeze. Re-run this skill and update only the
+existing SEO-data files through a metadata-only pull request before changing the
+site.
 
 ## Completion criteria
 
-Bootstrap is complete only when all are true:
+Bootstrap is complete only when:
 
-- the canonical hostname and redirect behavior are known;
-- the real production provider project is identified;
-- the production source repository and branch are identified;
+- the canonical hostname and redirects are known;
+- the real provider project is identified;
+- the source repository and production branch are identified;
 - build command, output directory, and deployment trigger are identified;
-- an exact source commit is matched to a production deployment;
-- that deployment is independently matched to the canonical public hostname;
+- an exact commit is matched to a provider production deployment;
+- that deployment is independently matched to the canonical hostname;
 - preview, legacy, generated, backup, and rejected paths are documented;
 - analytics and search state are audited without mutation;
-- `.github/seo-data/bootstrap.md` and related metadata agree;
-- the metadata-only bootstrap pull request passed CI, was self-reviewed, and was
-  squash-merged.
+- the existing `site.md`, `status.md`, and daily report agree;
+- CI uses `--require-bootstrap` and passes;
+- the metadata-only bootstrap pull request was self-reviewed and squash-merged.
 
-If any item is missing, bootstrap is incomplete and site mutation remains
-prohibited.
+If any item is missing, site mutation remains prohibited.
