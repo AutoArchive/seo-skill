@@ -9,8 +9,8 @@ description: Research, write, review, and publish one substantial evidence-backe
 
 Produce one useful long-form research article from question selection through
 public verification. This single skill owns research, writing, article review,
-and publication. Site-specific topics, length floors, source thresholds, and
-editorial voice remain in the consuming repository.
+and publication. Site-specific topics and editorial identity remain in the
+consuming repository.
 
 ## Start with the point
 
@@ -20,47 +20,83 @@ Before research, write two sentences internally:
 - **Reader use:** what a reader can understand, decide, translate, interpret, or
   do better after reading it.
 
-Choose a focused question that can support an original answer. The thesis and
-reader use must appear clearly in the opening paragraphs, guide every main
-section, and return in the conclusion. A reader should always be able to explain
-what the article argues and why the argument matters.
+The thesis and reader use appear clearly in the opening paragraphs, guide every
+main section, and return in the conclusion. A reader should always be able to
+explain what the article argues and why the argument matters.
 
-## Research
+## Research depth
 
-Use enough high-quality material to support the thesis. Search every materially
-relevant language and combine scholarly work with primary, archival,
-institutional, lexicographic, contemporaneous, or community evidence as the
-question requires.
+Use multiple rounds of public-web Deep Research and Sider Scholar. Search every
+materially relevant language. Research involving Japanese concepts must include
+Japanese-language queries and Japanese research or primary material.
 
-Read the sources that carry the argument. Check claims against the underlying
-material, search for serious counterevidence, revise the thesis when the evidence
-changes its scope, and keep citations next to the claims they support. Clearly
-separate source findings from the article's own synthesis.
+A normal article uses at least 40 substantive sources:
+
+- at least 20 academic sources, including peer-reviewed papers, preprints,
+  conference or workshop papers, theses, dissertations, academic books, or book
+  chapters;
+- at least 20 primary, community, archival, institutional, lexicographic,
+  contemporaneous-journalism, specialist-blog, creator, platform, or other
+  first-hand sources.
+
+The counts are floors for a normal article. Broader, disputed, historical, or
+cross-language claims may require more. Search snippets, AI summaries, citation
+lists, and pages that merely repeat another source serve discovery only.
+
+Research proceeds in several rounds:
+
+1. map definitions, history, major interpretations, and relevant languages;
+2. use Sider Scholar and public scholarly search to find academic literature;
+3. collect primary, community, archival, platform, and specialist-blog material;
+4. deep-read the sources that carry the thesis;
+5. run a separate search for counterevidence, earlier cases, competing
+   explanations, and communities that use the terms differently;
+6. revise the thesis and scope;
+7. verify every material claim and bibliography entry.
+
+Keep claim-level citations close to the supported text. Clearly separate source
+findings from the article's original synthesis.
 
 ## Write a rich article
 
-Use the consuming site's strongest existing long-form work as the local baseline
-for density, paragraph development, rhythm, and depth. Preserve the context and
-reasoning that make the evidence meaningful.
+The Chinese main text contains at least 5,000 Chinese characters, excluding front
+matter and bibliography. Use the consuming site's strongest existing long-form
+work as the local baseline for density, paragraph development, rhythm, and depth.
+Preserve the context and reasoning that make the evidence meaningful.
 
 A substantial section normally develops:
 
-- the concrete material or example;
-- the historical, linguistic, social, technical, or literary context;
-- the relevant source interpretation;
+- concrete material, examples, or cases;
+- historical, linguistic, social, technical, or literary context;
+- relevant source interpretations;
 - comparison with another case or explanation;
-- the connection back to the thesis;
-- the consequence for the reader.
+- counterevidence or boundary conditions;
+- connection back to the central thesis;
+- consequence or use for the reader.
 
 Paragraphs should feel complete and naturally connected. Short paragraphs may
 mark a turn or conclusion; repeated one- or two-sentence fragments usually signal
 that evidence or reasoning has been compressed too far. Tables and lists may
-clarify a comparison, while the main argument remains in developed prose.
+clarify comparisons, while the main argument remains in developed prose.
 
 Content richness has priority over superficial brevity. Preserve useful examples,
 competing interpretations, mechanisms, limitations, and implications. A style
-edit changes expression while retaining the article's thesis, evidence, nuance,
-and practical value.
+edit changes expression while retaining the thesis, evidence, nuance, and
+practical value.
+
+## Required article content
+
+The finished article includes:
+
+- a clear question and central thesis;
+- an explicit explanation of the article's usefulness;
+- developed evidence-led sections;
+- in-text citations;
+- serious counterevidence or alternative explanations;
+- limitations and evidence boundaries;
+- an original, clearly identified synthesis or insight;
+- a conclusion that returns to the thesis and reader use;
+- a complete bibliography containing the sources actually used.
 
 ## Language
 
@@ -77,8 +113,8 @@ quotations, official titles, proper names, code, and bibliography entries retain
 their original wording.
 
 This language rule never justifies removing evidence, counterarguments,
-limitations, qualifications, or explanation. Express every boundary positively
-and fully.
+limitations, qualifications, explanation, or the article's thesis. Express every
+boundary positively and fully.
 
 ## Review
 
@@ -88,11 +124,16 @@ Review the complete article from the beginning and answer these questions:
 2. Is the article's practical or intellectual use explicit?
 3. Does every section advance the thesis through developed evidence and
    explanation?
-4. Does the article match or exceed the site's established long-form richness and
-   paragraph quality?
-5. Are counterevidence, limitations, and original synthesis represented fairly?
-6. Does every material factual claim have an adequate citation?
-7. Does the prose remain collaborative, natural, affirmative, and free of
+4. Does the article match or exceed the site's established long-form richness,
+   paragraph length, flow, and depth?
+5. Are at least 40 substantive sources represented, including at least 20
+   academic and 20 primary, community, archival, institutional, or specialist
+   sources?
+6. Were multiple public-web research rounds and Sider Scholar used, with Japanese
+   research for Japanese concepts?
+7. Are counterevidence, limitations, and original synthesis represented fairly?
+8. Does every material factual claim have an adequate citation?
+9. Does the prose remain collaborative, natural, affirmative, and free of
    defensive constructions?
 
 Revise until every answer is yes.
@@ -107,6 +148,8 @@ provider deployment, and confirm the canonical public article.
 
 ## Completion
 
-The work is complete when the article has a clear thesis and reader use, rich and
-well-supported prose, complete citations, a clean final review, a merged pull
-request, and verified production output on the canonical site.
+The work is complete when the article has a clear thesis and reader use, at least
+5,000 Chinese main-text characters, at least 40 substantive sources in the
+required composition, rich and well-supported prose, in-text citations,
+counterevidence, limitations, original synthesis, a clean final review, a merged
+pull request, and verified production output on the canonical site.
