@@ -33,24 +33,17 @@ shared collection.
   Console CSV exports from Google Drive, obtains Cloudflare traffic evidence
   through Cloudflare MCP or GraphQL, and writes a public-safe daily Markdown
   record.
-- [`deep-research-blog`](skills/deep-research-blog/SKILL.md) researches one
-  narrow, durable question through multilingual query decomposition, scholarly
-  and primary-source reading, a claim–evidence–counterevidence matrix,
-  falsification search, original synthesis, and citation verification.
-- [`write-readable-research-blog`](skills/write-readable-research-blog/SKILL.md)
-  turns a verified research packet into a clear academic-style blog with a
-  direct answer, sustained argument, counterevidence, labeled synthesis,
-  limitations, claim-level citations, and accessible Chinese prose.
-- [`publish-research-blog`](skills/publish-research-blog/SKILL.md) orchestrates a
-  complete research-publication cycle from a site-defined editorial program
-  through deep research, readable writing, pull-request delivery, actual
-  production deployment, and independent public verification.
+- [`research-blog`](skills/research-blog/SKILL.md) owns one complete long-form
+  research publication: multi-round public-web and Sider Scholar research,
+  multilingual evidence collection, a clear thesis and reader use, rich developed
+  prose, citations, counterevidence, limitations, original synthesis, pull-request
+  delivery, production deployment, and public verification.
 
 ## Skill boundaries
 
 - `$operate-seo-site` decides what the current operating cycle should do and in
   which order.
-- Evidence and content skills own their domain analysis and quality criteria.
+- `$research-blog` owns research, writing, article review, and publication quality.
 - `$deliver-github-pr` owns how every repository change is implemented and
   carried through PR, CI, final review, merge, applicable production deployment,
   public acceptance, and closeout.
@@ -60,19 +53,15 @@ reference inside `$deliver-github-pr`, not a second delivery skill.
 
 ## Research publication boundary
 
-The shared skills define reusable research and writing methods. Topic programs
-belong to each consuming site's existing editorial plan. A site may maintain
-programs such as terminology history, literary and media research,
-cross-language comparison, or repeated AI and translation experiments without
-hard-coding those subjects into this shared repository.
+The shared skill defines the reusable research and writing method. Topic programs,
+local editorial identity, and site-specific acceptance checks belong to each
+consuming site's existing editorial files.
 
 Long-form research publication should invoke the skills in this order:
 
 ```text
 site editorial plan
-→ $deep-research-blog
-→ $write-readable-research-blog
-→ $publish-research-blog
+→ $research-blog
 → $deliver-github-pr
 ```
 
@@ -80,10 +69,20 @@ The public product is a coherent article. Search logs, claim matrices, source
 notes, JSON, and metadata are supporting infrastructure and do not replace the
 article.
 
-Readable academic prose is a quality requirement. The writing skill favors
-positive, direct claims and concrete examples. It audits repetitive rhetorical
-forms such as “不是……而是……”, “并非”, “不只是”, and “这并不意味着” while preserving
-negation that is necessary for a precise evidence boundary.
+A normal research article uses multiple rounds of public-web Deep Research and
+Sider Scholar, searches every materially relevant language, and includes Japanese
+research when Japanese concepts are involved. The normal source floor is 40
+substantive sources: at least 20 academic sources and at least 20 primary,
+community, archival, institutional, specialist-blog, creator, or platform
+sources. Chinese main text is at least 5,000 characters unless the consuming site
+sets a higher floor.
+
+The article keeps one clear thesis and one explicit reader use from opening to
+conclusion. It matches or exceeds the consuming site's strongest long-form work in
+content richness, paragraph development, flow, and depth. Author-written prose is
+collaborative, affirmative, and free of defensive constructions while preserving
+all evidence, counterarguments, limitations, qualifications, and original
+synthesis.
 
 ## Consumer repository configuration
 
@@ -113,17 +112,17 @@ The site chooses its approved provider, but an absent, silently disabled, or
 unverified runtime analytics implementation is a technical defect, not a normal
 privacy mode.
 
-Each site must make the operating answer discoverable in its notes: which
-runtime provider is expected, where it is implemented, how production is
-checked, whether query strings are included, where search evidence arrives, and
-which data must never be collected. A paragraph, list, table, or repository
-instruction is equally valid; exact labels are not required.
+Each site must make the operating answer discoverable in its notes: which runtime
+provider is expected, where it is implemented, how production is checked, whether
+query strings are included, where search evidence arrives, and which data must
+never be collected. A paragraph, list, table, or repository instruction is equally
+valid; exact labels are not required.
 
 Infrastructure analytics such as Cloudflare should also be documented whenever
 the production provider exposes it. Agents must not remove, disable, replace,
 gate, materially reduce, redact, or expand existing analytics based on their own
-preference. Such a change requires an explicit site-owner instruction recorded
-in the pull request and daily report.
+preference. Such a change requires an explicit site-owner instruction recorded in
+the pull request and daily report.
 
 When the site chooses full-URL reporting, transmit the complete browser URL,
 including the query string. When it chooses path-only reporting, omit the query
@@ -139,11 +138,11 @@ repository through connected tools and invokes
 while the consuming repository's `.github/seo-data/daily-task.md` contains only
 site-specific priorities, exclusions, rotations, and acceptance checks.
 
-Do not add a GitHub Actions workflow, repository cron job, webhook runner,
-hosted bot, provider SDK, or model-runner configuration solely to execute these
-skills. A consuming repository must not require `OPENAI_API_KEY` or another
-model-provider credential for SEO scheduling. Existing CI and deployment
-workflows remain valid and may be observed or used for delivery.
+Do not add a GitHub Actions workflow, repository cron job, webhook runner, hosted
+bot, provider SDK, or model-runner configuration solely to execute these skills. A
+consuming repository must not require `OPENAI_API_KEY` or another model-provider
+credential for SEO scheduling. Existing CI and deployment workflows remain valid
+and may be observed or used for delivery.
 
 ### Google export automation is provider-managed
 
@@ -196,12 +195,12 @@ checks, or report a preview as production.
 
 ## Public-data boundary
 
-Assume this repository and consuming repositories are public. Raw exports stay
-in Google Drive or the analytics provider. Public browser measurement IDs may
-remain in runtime source because clients must receive them. Never commit
-credentials, OAuth material, personal emails, private account/property/zone/Drive
-IDs, IP addresses, user-level analytics rows, raw provider exports, cookies,
-authorization values, or full API responses.
+Assume this repository and consuming repositories are public. Raw exports stay in
+Google Drive or the analytics provider. Public browser measurement IDs may remain
+in runtime source because clients must receive them. Never commit credentials,
+OAuth material, personal emails, private account/property/zone/Drive IDs, IP
+addresses, user-level analytics rows, raw provider exports, cookies, authorization
+values, or full API responses.
 
 ## License
 
