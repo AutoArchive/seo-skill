@@ -18,6 +18,19 @@ materially reduce, redact, or expand analytics based on agent preference; only
 an explicit site-owner instruction recorded in the pull request and daily report
 may change that requirement.
 
+## Preserve the consuming repository contract
+
+Treat the consuming repository's existing `.github/seo-data` files, headings,
+titles, section order, and prose as a stable site-owned interface. A shared skill
+or validator update must not cause an incidental schema migration.
+
+Do not rename files or headings, replace daily-report titles, reorder sections,
+add `promotion.md`, or copy starter templates over established content merely to
+satisfy the shared submodule. Add missing semantic declarations—such as analytics
+labels—in the most natural existing location. Templates are examples for new
+repositories only. Change an established layout only when the site owner's
+instructions or the consuming repository itself explicitly require that change.
+
 Use `$collect-seo-data` from
 `.github/seo-skills/skills/collect-seo-data/SKILL.md` for the single site defined
 in `.github/seo-data/site.md`. When a justified site improvement is in scope,
@@ -25,16 +38,17 @@ also use `$change-seo-site` from
 `.github/seo-skills/skills/change-seo-site/SKILL.md`.
 
 Treat `.github/seo-data/daily-task.md` as the site-specific execution entrypoint.
-Create a fresh branch from the current remote default branch using the prefix in
-`site.md`. Check the `seo-skills` submodule remote and include an available
-allowed update in the same branch. Collect configured read-only evidence, then
-write or append `.github/seo-data/daily/YYYY-MM-DD.md`. Maintain `status.md`,
-`plan.md`, and `block.md` according to their roles. Keep raw provider data and
-private credentials outside Git.
+Create a fresh branch from the current remote default branch using the site's
+established branch convention. Check the `seo-skills` submodule remote and
+include an available allowed update in the same branch only after reviewing its
+complete diff and confirming compatibility with the existing consumer layout.
+Collect configured read-only evidence, then update the site's existing daily and
+durable status records according to their established roles. Keep raw provider
+data and private credentials outside Git.
 
 ## Mandatory analytics audit
 
-During every run, inspect the analytics contract in `site.md`, source code,
+During every run, inspect the analytics semantics in `site.md`, source code,
 generated output, canonical production URL, and provider evidence. Confirm that:
 
 - the named runtime provider is implemented and deployed;
@@ -51,8 +65,9 @@ generated output, canonical production URL, and provider evidence. Confirm that:
 
 If runtime analytics is absent, broken, or contradicts the URL policy, repair it
 during the same operating cycle through a focused pull request, exact deployment
-verification, public runtime verification, and closeout. A Drive export or script
-tag alone is not sufficient proof.
+verification, public runtime verification, and closeout. A provider export or
+script tag alone is not sufficient proof. Preserve the site's SEO-data layout
+while recording the required evidence.
 
 ## Same-cycle technical repair requirement
 
@@ -75,10 +90,11 @@ and verified before the cycle is closed.
 
 If the defect cannot be completed because an external system enforces a
 human-only action, permission is absent, or no safe rollback path exists, record
-the exact evidence, mitigation attempted, and required external action in
-`block.md` through the normal pull-request lifecycle. Provider queues that run
-past local midnight do not turn the repair into planned backlog; continue the
-same operation until it reaches a truthful terminal outcome.
+the exact evidence, mitigation attempted, and required external action in the
+site's existing blocker record through the normal pull-request lifecycle.
+Provider queues that run past local midnight do not turn the repair into planned
+backlog; continue the same operation until it reaches a truthful terminal
+outcome.
 
 Implement one coherent outcome per main pull request. Run the smallest relevant
 local validation, inspect the intended diff, push the branch, and create a real
@@ -88,17 +104,17 @@ same daily cycle when required by the same-cycle technical repair rule.
 
 Wait for every required and expected existing CI check. Then self-review the
 complete final diff, commits, generated output, analytics behavior, URL policy,
-and check results. Fix every issue on the same branch and repeat CI and the
-complete review. After green CI and a clean final review, squash-merge the pull
-request. Attempt to delete the merged head branch only when the available
-repository tool supports safe branch deletion. No human or second reviewer is
-required.
+consumer-layout preservation, and check results. Fix every issue on the same
+branch and repeat CI and the complete review. After green CI and a clean final
+review, squash-merge the pull request. Attempt to delete the merged head branch
+only when the available repository tool supports safe branch deletion. No human
+or second reviewer is required.
 
 Merged head-branch deletion is best-effort cleanup, not a completion criterion.
-Do not create a `block.md` item, require human action, delay closeout, or mark the
-cycle incomplete merely because the connector cannot delete branches or a
-merged automation branch remains. Never force-delete a default, protected,
-active, or unrelated branch.
+Do not create a blocker, require human action, delay closeout, or mark the cycle
+incomplete merely because the connector cannot delete branches or a merged
+automation branch remains. Never force-delete a default, protected, active, or
+unrelated branch.
 
 For a site change, identify the production deployment triggered by the exact
 squash commit, wait for success, and verify the changed behavior on the public
@@ -106,13 +122,13 @@ URL. When analytics may be affected, verify the expected production loader,
 configuration, owner-selected full-URL or path-only behavior, and provider
 evidence state. A passing PR check or HTTP 200 alone is not proof of deployment.
 
-After deployment verification, create a metadata-only closeout branch and
-non-draft pull request. Update the same day's report and `status.md` with the
-real PR, squash commit, CI, deployment, analytics verification, URL policy, and
-live-verification evidence. Wait for CI, self-review, and squash-merge the
-closeout pull request as well.
+After deployment verification, update the site's existing closeout/daily/status
+records through its normal pull-request process. Do not introduce a new closeout
+file or document outline unless the consuming repository already requires it.
+Wait for CI, self-review, and squash-merge the closeout pull request as well.
 
-No normal step requires human approval. Record a task in `block.md` only if an
-external system enforces a human-only action or the required permission is
-absent. Never force-push, bypass checks, expose credentials, contradict the
-owner-selected URL policy, or fabricate completion.
+No normal step requires human approval. Record a blocker only if an external
+system enforces a human-only action or the required permission is absent. Never
+force-push, bypass checks, expose credentials, contradict the owner-selected URL
+policy, restructure consumer data for shared-template conformity, or fabricate
+completion.
