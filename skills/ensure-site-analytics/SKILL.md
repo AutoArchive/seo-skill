@@ -1,6 +1,6 @@
 ---
 name: ensure-site-analytics
-description: Require, preserve, verify, and repair analytics for every SEO-managed production site. Use during site onboarding, every scheduled operating cycle, and any change that may affect analytics scripts, page-view collection, Search Console, infrastructure analytics, consent behavior, URL reporting, or analytics privacy boundaries.
+description: Require, preserve, verify, and repair analytics for every SEO-managed production site without rewriting the consuming repository's SEO-data structure. Use during site onboarding, every scheduled operating cycle, and any change that may affect analytics scripts, page-view collection, Search Console, infrastructure analytics, consent behavior, URL reporting, or analytics privacy boundaries.
 ---
 
 # Ensure Site Analytics
@@ -17,7 +17,15 @@ At minimum, each site must declare and maintain:
 - an explicit URL reporting policy chosen by the site owner: `full-url` or `path-only`;
 - a documented analytics data boundary for content, credentials, identifiers, cookies, authorization values, and application-specific state.
 
-Runtime analytics and provider exports are separate requirements. A GA4 CSV in Drive does not prove the production site still loads GA4. A script tag alone does not prove data collection works. Verify both implementation and resulting evidence.
+Runtime analytics and provider exports are separate requirements. A provider export does not prove the production site still loads analytics, and a script tag alone does not prove evidence arrives. Verify both implementation and resulting evidence.
+
+## Consumer layout is immutable by default
+
+`.github/seo-data` belongs to the consuming repository. Do not rename files or headings, reorder sections, replace document titles, introduce `promotion.md`, or copy shared templates into an established site merely to satisfy this skill.
+
+For an existing repository, add or update the required semantic declarations in the site's most natural existing location. The shared validator must validate meaning, public-data safety, and stable entrypoints without imposing a common Markdown outline. Templates define a recommended starting point for new repositories only.
+
+A layout change is allowed only when the site owner or the consuming repository's own instructions independently require it; it must never be an incidental consequence of updating the shared submodule.
 
 ## Ownership rule
 
@@ -29,18 +37,18 @@ Public GA measurement IDs and equivalent client-side identifiers may remain in s
 
 ## Required site metadata
 
-`.github/seo-data/site.md` must contain an `## Analytics` section with all of the following:
+The consuming repository's existing `.github/seo-data/site.md` must contain the following semantic declarations anywhere in its current layout:
 
 - `Runtime analytics required: yes`
-- a named primary runtime provider;
-- a source-controlled implementation location;
-- a public runtime verification URL;
-- `URL reporting: full-url` or `URL reporting: path-only`;
-- Search Console requirement and evidence route;
-- infrastructure analytics provider or an accurate unavailable state;
-- an explicit analytics payload policy.
+- a named `Primary runtime provider`
+- a source-controlled implementation location
+- a public `Runtime verification URL`
+- `URL reporting: full-url` or `URL reporting: path-only`
+- required search analytics and its evidence route
+- infrastructure analytics provider or an accurate unavailable state
+- an explicit `Analytics payload policy`
 
-The shared validator must reject a consuming repository that omits this section, marks runtime analytics as optional, leaves the primary provider unnamed, or omits the URL reporting mode.
+No particular heading name, section order, title, or surrounding prose is required. The shared validator must reject missing semantics, not consumer-specific formatting.
 
 ## Operating workflow
 
@@ -48,13 +56,13 @@ The shared validator must reject a consuming repository that omits this section,
 
 Inspect source, built output, and the public production URL. Confirm that the expected analytics loader and configuration are present, execute on the canonical production page, and are not blocked by accidental CSP, consent, environment, routing, static-export, or deployment regressions.
 
-For single-page applications, confirm route or view measurement is intentional. Verify that the transmitted page URL matches the owner-selected `URL reporting` policy. Under `full-url`, complete query strings—including application import URLs or other state carried in the address bar—must be transmitted. Under `path-only`, query strings must be omitted.
+For single-page applications, confirm route or view measurement is intentional. Verify that the transmitted page URL matches the owner-selected `URL reporting` policy. Under `full-url`, complete query strings must be transmitted. Under `path-only`, query strings must be omitted.
 
 Never add extra custom events containing local filenames, reading text, reading progress, credentials, cookies, authorization values, or application storage values unless the owner separately and explicitly authorizes those fields in `site.md`.
 
 ### 2. Audit evidence availability
 
-Use `$collect-seo-data` to inspect finalized GA4 and Search Console exports and available infrastructure analytics. Label missing, stale, partial, sampled, delayed, or schema-drifted evidence accurately. Never convert missing analytics into zero traffic.
+Use `$collect-seo-data` to inspect finalized analytics and Search Console exports and available infrastructure analytics. Label missing, stale, partial, sampled, delayed, or schema-drifted evidence accurately. Never convert missing analytics into zero traffic.
 
 If runtime instrumentation is present but no evidence arrives after the provider's normal delay, diagnose measurement configuration, deployment identity, filters, consent, script loading, network requests, URL policy, and export routing.
 
@@ -62,22 +70,23 @@ If runtime instrumentation is present but no evidence arrives after the provider
 
 Missing or removed runtime analytics, an invalid measurement configuration, broken page-view collection, URL reporting that contradicts `site.md`, absent Search Console ownership, or a production deployment that omits expected analytics is an actionable technical defect. Invoke `$change-seo-site` and repair it during the same operating cycle whenever a safe path exists.
 
-The repair must use a fresh branch, real non-draft pull request, required CI, complete final self-review, squash merge, exact deployment verification, public runtime verification, and metadata closeout. Do not defer it merely because another site or content change already shipped that day.
+The repair must use a fresh branch, real non-draft pull request, required CI, complete final self-review, squash merge, exact deployment verification, public runtime verification, and metadata closeout. Preserve the site's existing `.github/seo-data` layout throughout the repair.
 
 ### 4. Verify production without committing raw analytics data
 
 Verification may inspect public HTML, built assets, browser-visible measurement configuration, CSP, public network destinations, provider debug output, and aggregate reports. Do not commit full request logs, cookies, client IDs, IP addresses, raw event payloads, private provider URLs, or account/property identifiers.
 
-Record the provider, implementation path, public verification URL, verification time, expected page-view behavior, URL reporting mode, evidence status, PR, CI, squash commit, deployment, and any residual risk in the daily report and `status.md`.
+Record the provider, implementation path, public verification URL, verification time, expected page-view behavior, URL reporting mode, evidence status, PR, CI, squash commit, deployment, and any residual risk in the site's existing daily and status records without reformatting them to match a shared template.
 
 ## Completion criteria
 
 Analytics work is complete only when:
 
-- `site.md` declares the required analytics baseline and URL reporting mode;
+- `site.md` declares the required analytics semantics and URL reporting mode;
 - the primary runtime analytics implementation is present in source and built output;
 - the canonical production site exposes the expected implementation;
-- production page-view transmission matches the owner-selected full-URL or path-only policy;
+- production page-view transmission matches the owner-selected policy;
 - Search Console and infrastructure analytics states are accurately documented;
 - provider evidence is collected or truthfully marked pending/unavailable;
+- the consumer's established SEO-data layout remains intact;
 - all repair and closeout pull requests are squash-merged after green CI and clean self-review.
