@@ -105,8 +105,8 @@ repair when combining them would reduce reviewability.
 After technical work, select at most one speculative or experimental site
 improvement supported by current evidence. Do not invent a change to make the
 schedule appear productive. When the site-specific task calls for a long-form
-research article, invoke `$publish-research-blog`. Perform promotion only when
-the site's instructions authorize the channel, content, and acceptance check.
+research article, invoke `$research-blog`. Perform promotion only when the site's
+instructions authorize the channel, content, and acceptance check.
 
 ### 5. Record public-safe results
 
