@@ -17,6 +17,56 @@ A coherent change remains the unit of one main pull request. It is not a daily
 quota. A daily operating cycle may and must deliver multiple focused pull
 requests when independent actionable technical defects are discovered.
 
+## Incremental change and blast-radius policy
+
+Search-facing production changes must be incremental, independently reviewable,
+reversible, and attributable to one clear problem or hypothesis. A coherent
+outcome is not permission to modernize or rewrite the whole site at once.
+
+Before editing rendered behavior, capture the current production baseline that
+is relevant to the proposed change. Depending on scope, this includes the exact
+source commit and release, affected canonical URLs, titles and descriptions,
+route and redirect ownership, navigation, sitemap and robots output, structured
+data, representative screenshots, generated HTML, internal links, analytics
+window and source freshness, and the current public acceptance result. Missing
+analytics is uncertainty, not evidence that a broad change is safe.
+
+For routine SEO, GEO, content, and product-site work:
+
+- change the smallest independently deployable public behavior that can test the
+  hypothesis or fix the observed problem;
+- preserve unrelated design, copy, navigation, routes, canonical ownership,
+  redirects, metadata, analytics, and content;
+- prefer additive or local edits before replacement, deletion, consolidation,
+  or migration;
+- isolate variables where practical: do not change page purpose, information
+  architecture, navigation, visual system, titles, descriptions, and route
+  ownership in one experiment;
+- state the blast radius, affected route family, expected search/user effect,
+  acceptance check, and exact rollback before implementation;
+- verify representative unaffected pages when a shared component or template is
+  modified.
+
+A routine cycle must not perform an unphased full-site redesign, bulk content
+rewrite, mass route or canonical migration, navigation and information-
+architecture replacement, design-system replacement, or simultaneous
+content/metadata/redirect overhaul. Qualitative preference, a new template,
+missing analytics, a desire to make the site look modern, or a general SEO audit
+is not sufficient evidence for such a change.
+
+When a large migration is genuinely required, split it into independently
+reviewable and deployable phases. Each phase must preserve a usable production
+site, define its own acceptance checks and rollback point, and avoid depending on
+unmerged later phases for correctness. Establish the migration baseline and plan
+before the first rendered phase. Do not remove indexed content or public routes
+until their replacement, redirect behavior, canonical ownership, internal links,
+sitemap output, and production rendering have been verified.
+
+The only exception to incremental delivery is an active production incident or
+confirmed severe regression for which a smaller safe repair or rollback is not
+available. Even then, prefer restoring the last known-good public behavior over
+combining the repair with redesign or unrelated improvement work.
+
 ## Invocation boundary
 
 Invoke this skill from an authorized scheduler outside the consuming repository,
@@ -83,10 +133,13 @@ the same-cycle SLA. Then define one coherent outcome for each main pull request.
 For every outcome, define before editing:
 
 - the observed problem and supporting evidence;
+- the current production baseline and why the proposed blast radius is the
+  smallest safe one;
 - the target public page or behavior;
 - files expected to change;
+- affected and representative unaffected routes;
 - local validation and expected CI;
-- the production deployment and live acceptance check.
+- the production deployment, live acceptance check, and rollback path.
 
 A routine scheduled run may select at most one speculative or experimental SEO
 improvement. This limit does not apply to confirmed technical defects that must
@@ -107,7 +160,9 @@ Do not edit submodule files locally.
 Follow the site's architecture and content rules. Preserve public paths,
 canonical ownership, navigation, and unrelated content unless evidence-backed
 scope explicitly requires a change. Prefer reversible, source-controlled,
-testable changes visible in generated output.
+testable changes visible in generated output. Enforce the incremental change and
+blast-radius policy above; do not turn a focused improvement into an incidental
+site migration.
 
 This skill authorizes site changes, pull-request delivery, squash merge,
 deployment wait, verification, corrective pull requests, and safe rollback
@@ -117,9 +172,10 @@ endorsements.
 ### 4. Record the work
 
 Write or append `.github/seo-data/daily/YYYY-MM-DD.md`. Record evidence, intended
-outcome, changed files, validation, submodule movement, and pending delivery
-fields. Update `status.md` with current facts and `plan.md` with future work. Use
-`block.md` only for a genuine human-only or permission blocker.
+outcome, baseline, blast radius, changed files, rollback, validation, submodule
+movement, and pending delivery fields. Update `status.md` with current facts and
+`plan.md` with future work. Use `block.md` only for a genuine human-only or
+permission blocker.
 
 For same-cycle technical repairs, explicitly record discovery time, severity,
 user or crawler impact, root cause, mitigation, repair PR, CI, exact deployment,
@@ -135,9 +191,10 @@ python .github/seo-skills/scripts/validate_seo_data.py \
 ```
 
 Read the intended diff and generated output. Review correctness, SEO semantics,
-public-data safety, scope, regressions, tests, and submodule compatibility.
-Stage explicit paths, commit, push the fresh branch, and create a real non-draft
-pull request. Its body must state evidence, scope, tests, deployment target,
+public-data safety, scope, blast radius, regressions, tests, rollback, and
+submodule compatibility. Stage explicit paths, commit, push the fresh branch,
+and create a real non-draft pull request. Its body must state evidence, baseline,
+scope, affected and unaffected routes, tests, rollback, deployment target,
 acceptance check, and any submodule update.
 
 ### 6. Wait for CI and self-review
@@ -181,6 +238,9 @@ or missing permission is the true cause.
 Inspect the public site and verify the acceptance check defined before editing,
 including relevant visible content, title, description, canonical, structured
 data, links, robots/sitemap output, headers, redirects, or performance signal.
+Verify the affected route and the representative unaffected routes selected in
+the baseline so an unexpected shared-template regression is not mistaken for a
+successful focused change.
 
 Create a metadata-only closeout branch and non-draft pull request. Update today's
 report and `status.md` with the main PR, squash commit, CI, deployment, public
@@ -199,7 +259,8 @@ Do not report completion until all are true:
 - all required and expected CI checks passed;
 - the agent completed a clean final diff review after CI;
 - the exact squash commit deployed successfully to production;
-- the changed behavior was verified on the public site;
+- the changed behavior and representative unaffected behavior were verified on
+  the public site;
 - a closeout pull request recorded the evidence and was squash-merged.
 
 Deletion of merged automation branches is not required for completion.
