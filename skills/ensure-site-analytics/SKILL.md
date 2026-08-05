@@ -23,7 +23,7 @@ Runtime analytics and provider exports are separate requirements. A provider exp
 
 `.github/seo-data` belongs to the consuming repository. Do not rename files or headings, reorder sections, replace document titles, introduce `promotion.md`, or copy shared templates into an established site merely to satisfy this skill.
 
-For an existing repository, add or update the required semantic declarations in the site's most natural existing location. The shared validator must validate meaning, public-data safety, and stable entrypoints without imposing a common Markdown outline. Templates define a recommended starting point for new repositories only.
+For an existing repository, record missing operating context in the site's most natural existing location only when it helps a future operator make or verify a decision. Do not add labels solely to satisfy tooling. The lightweight shared checker does not parse analytics prose. Templates define a recommended starting point for new repositories only.
 
 A layout change is allowed only when the site owner or the consuming repository's own instructions independently require it; it must never be an incidental consequence of updating the shared submodule.
 
@@ -35,20 +35,15 @@ The site owner also controls URL reporting. When `site.md` says `URL reporting: 
 
 Public GA measurement IDs and equivalent client-side identifiers may remain in source-controlled runtime configuration because browsers must receive them. Private account IDs, property IDs, credentials, API tokens, OAuth material, raw exports, cookies, and user-level rows must remain outside Git.
 
-## Required site metadata
+## Useful operating context
 
-The consuming repository's existing `.github/seo-data/site.md` must contain the following semantic declarations anywhere in its current layout:
-
-- `Runtime analytics required: yes`
-- a named `Primary runtime provider`
-- a source-controlled implementation location
-- a public `Runtime verification URL`
-- `URL reporting: full-url` or `URL reporting: path-only`
-- required search analytics and its evidence route
-- infrastructure analytics provider or an accurate unavailable state
-- an explicit `Analytics payload policy`
-
-No particular heading name, section order, title, or surrounding prose is required. The shared validator must reject missing semantics, not consumer-specific formatting.
+A future operator should be able to discover the expected runtime provider,
+implementation location, public verification route, URL-reporting choice,
+search-evidence route, infrastructure source when available, and data boundary.
+Use the site's existing prose, list, table, code comments, or repository
+instructions. Do not duplicate facts or add fixed labels when the answer is
+already clear, and do not treat documentation presence as proof that analytics
+works.
 
 ## Operating workflow
 

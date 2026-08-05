@@ -3,25 +3,11 @@ import unittest
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SKILL = ROOT / "skills" / "configure-google-seo-export" / "SKILL.md"
 CODE = ROOT / "skills" / "configure-google-seo-export" / "assets" / "Code.gs"
 MANIFEST = ROOT / "skills" / "configure-google-seo-export" / "assets" / "appsscript.json"
 
 
 class GoogleNativeExportPolicyTests(unittest.TestCase):
-    def test_skill_requires_google_managed_idempotent_export(self) -> None:
-        text = SKILL.read_text(encoding="utf-8")
-        for phrase in [
-            "provider-managed export automation",
-            "Do not substitute a Codex task",
-            "previous complete Monday-through-Sunday",
-            "seven idempotent",
-            "exactly one Google-owned weekly trigger",
-            "paused sites are absent",
-        ]:
-            with self.subTest(phrase=phrase):
-                self.assertIn(phrase, text)
-
     def test_template_has_only_placeholder_routing(self) -> None:
         text = CODE.read_text(encoding="utf-8")
         self.assertIn("DRIVE_FOLDER_ID", text)

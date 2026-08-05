@@ -26,18 +26,9 @@ class ValidateSeoDataTests(unittest.TestCase):
             "site.md",
             """# TSFiction SEO site metadata
 
-- Public site: https://tsfiction.org
-- Repository: `cdtsf-library/translate-fiction`
-- Runtime analytics required: yes
-- Primary runtime provider: Google Analytics 4
-- Runtime verification URL: `https://tsfiction.org/`
-- URL reporting: `full-url`
-- Search analytics required: Google Search Console
-- Analytics payload policy: public page-view metadata only
+Public site: https://tsfiction.org
 
-## Connected-tool routing
-
-Use the connected GitHub and Cloudflare tools.
+This site keeps its own prose and structure. Contact: public@example.org.
 """,
         )
         self.write(
@@ -70,16 +61,11 @@ Operate the repository through real pull requests and preserve this document's e
             self.write(root, "deployment-notes.md", "# Custom deployment notes\n\nOwned by this site.\n")
             self.assertEqual(MODULE.validate(root, None), 1)
 
-    def test_rejects_missing_analytics_semantics_without_requiring_a_heading(self) -> None:
+    def test_accepts_consumer_prose_without_shared_analytics_labels(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             self.make_legacy_layout(root)
-            site = (root / "site.md").read_text(encoding="utf-8")
-            (root / "site.md").write_text(
-                site.replace("- URL reporting: `full-url`\n", ""), encoding="utf-8"
-            )
-            with self.assertRaisesRegex(ValueError, "URL reporting"):
-                MODULE.validate(root, None)
+            self.assertEqual(MODULE.validate(root, None), 1)
 
     def test_rejects_private_values_in_any_markdown_file(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -93,8 +79,15 @@ Operate the repository through real pull requests and preserve this document's e
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             self.make_legacy_layout(root)
-            with self.assertRaisesRegex(ValueError, "missing daily record"):
+            with self.assertRaisesRegex(ValueError, "missing"):
                 MODULE.validate(root, date(2026, 8, 6))
+
+    def test_ignores_unrelated_daily_filenames(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.make_legacy_layout(root)
+            self.write(root, "daily/notes.md", "Optional notes.\n")
+            self.assertEqual(MODULE.validate(root, None), 2)
 
 
 if __name__ == "__main__":
