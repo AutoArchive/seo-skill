@@ -1,0 +1,4 @@
+interface:
+  display_name: "Audit SEO Site"
+  short_description: "Create reproducible SEO findings and route the work"
+  default_prompt: "Use $audit-seo-site to build an evidence-backed baseline for one canonical production site, produce typed findings, repair confirmed defects, and route speculative opportunities through controlled SEO experiments."

@@ -18,7 +18,15 @@ TEMPLATES = ROOT / "templates" / "seo-data"
 def main() -> int:
     with tempfile.TemporaryDirectory(prefix="seo-skill-templates-") as directory:
         data_root = Path(directory)
-        for name in ("site", "daily-task", "promotion", "status", "plan", "block"):
+        for name in (
+            "site",
+            "daily-task",
+            "promotion",
+            "status",
+            "plan",
+            "block",
+            "experiments",
+        ):
             shutil.copyfile(TEMPLATES / f"{name}.example.md", data_root / f"{name}.md")
         daily_dir = data_root / "daily"
         daily_dir.mkdir()

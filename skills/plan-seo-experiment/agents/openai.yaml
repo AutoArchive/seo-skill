@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plan SEO Experiment"
+  short_description: "Run one falsifiable SEO change with observation locks"
+  default_prompt: "Use $plan-seo-experiment to design, implement, observe, and evaluate one evidence-backed SEO experiment without changing locked resources before the finalized observation window matures."

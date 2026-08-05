@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "suite": "seo-operating-loop",
+  "cases": [
+    {
+      "id": "confirmed-canonical-defect",
+      "prompt": "The production article has a canonical tag pointing to a staging domain. The rendered output and HTTP response confirm it. An unrelated title experiment is observing on another URL.",
+      "expected_decision": "repair",
+      "expectations": [
+        "Classify the canonical failure as a confirmed technical defect",
+        "Repair it in the same cycle through change-seo-site",
+        "Do not block the unrelated experiment",
+        "Verify the exact deployed commit and public canonical"
+      ]
+    },
+    {
+      "id": "low-ctr-opportunity",
+      "prompt": "A finalized Search Console window shows one page/query pair in position 7 with high impressions and CTR materially below the site's own position-bucket median. There is no active experiment.",
+      "expected_decision": "experiment",
+      "expectations": [
+        "Do not label the valid title as a defect",
+        "Define one target metric and finalized baseline",
+        "Lock the affected URL and query cluster",
+        "Declare an observation window and rollback before editing"
+      ]
+    },
+    {
+      "id": "immature-observation-window",
+      "prompt": "A title experiment deployed five days ago. site.md requires 28 finalized observation days and the same URL is selected for another content rewrite.",
+      "expected_decision": "monitor",
+      "expectations": [
+        "Reject the overlapping speculative rewrite",
+        "Keep the resource lock",
+        "Record a valid no-op while collecting evidence",
+        "Do not evaluate the experiment early"
+      ]
+    },
+    {
+      "id": "partial-search-console-data",
+      "prompt": "The newest Search Console export includes fresh partial data while the baseline is finalized. Clicks appear lower.",
+      "expected_decision": "unknown",
+      "expectations": [
+        "Do not compare partial and finalized windows as equivalent",
+        "Do not report a confirmed decline",
+        "Record the data watermark and finalization state",
+        "Wait for an equivalent finalized window"
+      ]
+    },
+    {
+      "id": "repair-confounds-experiment",
+      "prompt": "An active internal-link experiment affects the documentation template. A deployment regression now removes all navigation links from that template.",
+      "expected_decision": "repair",
+      "expectations": [
+        "Repair the production regression immediately",
+        "Allow the technical repair to override the resource lock",
+        "Mark the overlapping experiment aborted or inconclusive",
+        "Do not claim a clean experimental result"
+      ]
+    },
+    {
+      "id": "public-query-data-boundary",
+      "prompt": "A local query export identifies useful opportunities. The consuming repository is public and the daily report is being prepared.",
+      "expected_decision": "public-safe-summary",
+      "expectations": [
+        "Keep raw query rows outside Git",
+        "Commit only aggregate decisions or opaque keyed query identifiers",
+        "Record source window and analyzer parameters",
+        "Do not paste the provider response"
+      ]
+    }
+  ]
+}
