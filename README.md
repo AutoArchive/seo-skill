@@ -66,26 +66,21 @@ positive, direct claims and concrete examples. It audits repetitive rhetorical
 forms such as “不是……而是……”, “并非”, “不只是”, and “这并不意味着” while preserving
 negation that is necessary for a precise evidence boundary.
 
-## Consumer-owned data contract
+## Consumer repository configuration
 
-`.github/seo-data` is a stable, consumer-owned interface. Shared skills describe
-the operational questions a site must answer, but do not turn Markdown into a
-schema or require wording solely for machine validation.
+The files under `.github/seo-data` are maintained by each consuming repository.
+The templates in this repository are starting points, not a schema enforced by
+this repository.
 
-A submodule update must not, solely for compatibility with this repository:
+A difference from the shared examples alone does not require a migration. When a
+current skill explicitly introduces new information or an operating artifact,
+the consuming repository may add the minimum fields, files, or workflow changes
+needed to follow that requirement. The consuming repository may choose the most
+suitable filenames, headings, section order, and prose unless the current skill
+explicitly defines an interface.
 
-- rename existing SEO-data files or headings;
-- reorder existing sections;
-- replace a site's established title or daily-report format;
-- require `promotion.md` or another optional file that the site did not already
-  use;
-- copy template prose over site-specific operating instructions.
-
-The lightweight checker verifies only that the stable entrypoints and `daily/`
-directory exist and scans for a small set of high-confidence credential or
-private-routing mistakes. It does not parse headings, require analytics labels,
-reject public contact addresses, or grade prose. Templates are onboarding
-examples for new sites, not a migration schema for existing sites.
+This repository does not ship a validator or CI check for the structure of a
+consuming repository's `.github/seo-data` directory.
 
 ## Mandatory analytics baseline
 
@@ -94,8 +89,8 @@ The site chooses its approved provider, but an absent, silently disabled, or
 unverified runtime analytics implementation is a technical defect, not a normal
 privacy mode.
 
-Each site must make the operating answer discoverable in its existing notes:
-which runtime provider is expected, where it is implemented, how production is
+Each site must make the operating answer discoverable in its notes: which
+runtime provider is expected, where it is implemented, how production is
 checked, whether query strings are included, where search evidence arrives, and
 which data must never be collected. A paragraph, list, table, or repository
 instruction is equally valid; exact labels are not required.
@@ -108,8 +103,7 @@ in the pull request and daily report.
 
 When the site chooses full-URL reporting, transmit the complete browser URL,
 including the query string. When it chooses path-only reporting, omit the query
-string. Verify the implemented behavior directly; do not infer it from a
-validator-friendly sentence.
+string. Verify the implemented behavior directly.
 
 ## Scheduler boundary
 
@@ -140,8 +134,7 @@ repositories contain policy and filenames, not those identifiers.
 
 ## Recommended onboarding layout
 
-The following is a recommendation for a new repository, not a required layout
-for an existing consumer:
+The following is one reasonable starting point for a new repository:
 
 ```text
 .github/
@@ -156,21 +149,21 @@ for an existing consumer:
     `-- daily/YYYY-MM-DD.md     # consumer-defined daily record
 ```
 
-For a new site, copy whichever starter files are useful and then edit the copies.
-For an existing site, preserve its current layout and add only missing semantic
-declarations in the most natural existing location.
+For a new site, copy whichever starter files are useful. For an existing site,
+apply explicit new skill requirements with the minimum necessary changes; no
+change is needed merely because its layout differs from this example.
 
 ## Consuming-repository pull-request contract
 
 Configure the schedule in the authorized session-level scheduler, not in the
 website repository. Each daily run must:
 
-1. read and enforce `$ensure-site-analytics`;
-2. preserve the consumer-owned `.github/seo-data` layout;
+1. read and enforce the applicable pinned skills;
+2. apply explicit current skill requirements with the minimum necessary
+   consuming-repository changes;
 3. invoke the research-publication skills when long-form research content is in
    scope;
-4. create a fresh branch and update the site's existing daily record and durable
-   status files as appropriate;
+4. create a fresh branch and update the site's operating records as appropriate;
 5. include the intended data or site changes and any reviewed submodule update;
 6. create a real, non-draft pull request;
 7. wait until all required and expected CI checks finish successfully;

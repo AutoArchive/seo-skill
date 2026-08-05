@@ -104,7 +104,7 @@ ordinary technical decision or a queued check as a human blocker.
 ### 6. Update Markdown state
 
 Write or append `.github/seo-data/daily/YYYY-MM-DD.md` using the site's local
-date and `templates/seo-data/daily.example.md`. Record:
+date and the site's normal record format. Record:
 
 - scope, window, source status, and finalization state;
 - aggregate source-native metrics labelled `GA4`, `GSC`, or `Cloudflare`;
@@ -124,19 +124,10 @@ outside Git.
 
 ### 7. Validate and create a real pull request
 
-Optionally run the lightweight safety checker:
-
-```bash
-python .github/seo-skills/scripts/validate_seo_data.py \
-  --data-root .github/seo-data
-```
-
-It checks stable entrypoints and high-confidence private-data mistakes; it does
-not prove data correctness or require a Markdown schema. Do not rewrite valid
-site-owned prose to appease it. Run relevant repository tests, inspect the
-actual evidence and intended diff, then stage only intended data files and the
-submodule pointer, commit, push, and create a non-draft pull request. Do not
-substitute a direct default-branch push, issue, draft PR, or local commit.
+Run relevant consuming-repository checks, inspect the actual evidence and
+intended diff, then stage only intended data files and the submodule pointer.
+Commit, push, and create a non-draft pull request. Do not substitute a direct
+default-branch push, issue, draft PR, or local commit.
 
 ### 8. Wait for CI, self-review, and squash merge
 

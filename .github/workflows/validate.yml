@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   validate:
-    name: Skills and templates
+    name: Skills
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -27,6 +27,3 @@ jobs:
 
       - name: Validate skills
         run: python scripts/validate_skills.py
-
-      - name: Test Markdown templates
-        run: python scripts/test_templates.py

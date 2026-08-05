@@ -21,11 +21,10 @@ replace it.
 
 ## Production topology gate
 
-Before selecting or publishing content, verify that the consuming site's existing
-`site.md` or equivalent durable instructions accurately identify the canonical
-hostname, actual production provider, provider project or service, production
-source repository, production branch, build command, output directory, and
-verification method.
+Before selecting or publishing content, verify that the consuming site's durable
+instructions accurately identify the canonical hostname, actual production
+provider, provider project or service, production source repository, production
+branch, build command, output directory, and verification method.
 
 When public content does not match the repository believed to be live, or when
 multiple deployment paths exist, freeze publication and invoke the site's
@@ -33,30 +32,26 @@ bootstrap or production-topology audit. A generated branch, preview deployment,
 passing repository workflow, `CNAME` file, or HTTP 200 response is not production
 proof.
 
-Do not change the consuming repository's `.github/seo-data` file structure. Use
-its existing files and headings.
-
 ## Site context boundary
 
-The standard site-owned file set is `site.md`, `position.md`, `plan.md`,
+A site may use files such as `site.md`, `position.md`, `plan.md`,
 `daily-task.md`, `status.md`, `block.md`, `promotion.md`, and daily records.
-`site.md` holds technical production, deployment, analytics, and verification
-facts. `position.md` holds mission, readers, research programs, editorial
+`site.md` can hold technical production, deployment, analytics, and verification
+facts. `position.md` can hold mission, readers, research programs, editorial
 boundaries, article form, language, and style. Site-specific content stays in the
 consuming repository.
 
-The shared validator does not enforce that every standard file exists and does
-not migrate established layouts. A missing standard file should be added through
-a focused site-specific pull request rather than turning a submodule update into
-a compatibility failure.
+This list is guidance, not a structure enforced by the shared repository. If the
+current pinned skill or the consuming site's own instructions explicitly require
+a missing file or operating artifact, add it through a focused site-specific pull
+request with only the minimum necessary change.
 
 ## Editorial program and topic selection
 
-Read the site's existing `position.md`, editorial plan, and recent articles. A
-durable site may organize work into several research programs, such as
-terminology history, literary and media analysis, cross-language comparison, or
-repeated technical experiments. These programs belong to the site, not this
-shared skill.
+Read the site's editorial position, plan, and recent articles. A durable site may
+organize work into several research programs, such as terminology history,
+literary and media analysis, cross-language comparison, or repeated technical
+experiments. These programs belong to the site, not this shared skill.
 
 Select one narrow question that advances one program and fits into a larger chain
 of articles. Prefer questions that:
@@ -159,8 +154,8 @@ not publish private notes or copyrighted source excerpts.
 Invoke `$change-seo-site` for the actual repository change.
 
 The main pull request must include the article and only closely related site
-changes. A recurring publication program may also update the site's existing
-daily record, status, or editorial plan without restructuring those files.
+changes. A recurring publication program may also update or add the site-owned
+operating record explicitly required for the current publication cycle.
 
 The pull-request body must state:
 
@@ -174,7 +169,7 @@ The pull-request body must state:
 - production provider and exact acceptance check;
 - submodule update status when applicable.
 
-Run the consuming repository's authoritative validators. Where available, check:
+Run the consuming repository's authoritative checks. Where available, check:
 
 - front matter and real publication date;
 - minimum main-text length;
@@ -241,8 +236,8 @@ Verify the canonical public hostname independently. At minimum confirm:
 A source file in the repository, generated file in a deployment branch, passing
 workflow, or HTTP 200 alone does not complete publication.
 
-Complete the consuming site's existing closeout process without changing its
-SEO-data layout.
+Complete the consuming site's closeout process, adding only records explicitly
+required by the current skill or site instructions.
 
 ## Completion criteria
 
@@ -257,5 +252,4 @@ A research-publication cycle is complete only when:
 - the pull request was squash-merged;
 - the exact commit deployed through the actual production provider;
 - the canonical public article was independently verified;
-- the site's existing status or closeout record contains truthful delivery
-  evidence.
+- the site's status or closeout record contains truthful delivery evidence.
