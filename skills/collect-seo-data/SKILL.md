@@ -75,8 +75,8 @@ Do not mutate DNS, cache, Workers, Pages, security, or analytics settings.
 
 Evidence collection is not a reporting-only boundary. When collection, public
 inspection, repository state, CI, or deployment evidence reveals a reproducible
-and actionable technical defect, invoke `$change-seo-site` during the same
-scheduled operating cycle and local calendar day.
+and actionable technical defect, invoke `$deliver-github-pr` as a search-facing
+site change during the same scheduled operating cycle and local calendar day.
 
 Do not defer build, CI, deployment, runtime, data-generation, crawlability,
 indexability, robots.txt, sitemap, canonical, redirect, metadata,
@@ -120,8 +120,8 @@ defects to `$operate-seo-site` or the direct caller. It invokes
 `$deliver-github-pr` for the real pull request, complete CI wait, from-scratch
 final review, squash merge, and closeout.
 
-Any technical repair initiated by this skill must also satisfy
-`$change-seo-site` production deployment and public verification before the
+Any technical repair initiated by this skill must complete
+`$deliver-github-pr` production deployment and public verification before the
 operating cycle is complete. A collection-only run does not require deployment
 waiting unless its changes affect rendered output.
 

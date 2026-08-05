@@ -1,4 +1,0 @@
-interface:
-  display_name: "Change SEO Site"
-  short_description: "Ship verified incremental SEO changes through pull requests"
-  default_prompt: "Use $change-seo-site to ship one evidence-backed, reversible improvement through $deliver-github-pr, complete CI and a from-scratch final review, then verify the exact production deployment and representative unaffected routes."

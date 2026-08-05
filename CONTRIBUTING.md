@@ -65,9 +65,9 @@ behavior, fix that consuming repository rather than generalizing it here.
 ## Consuming repositories
 
 Website production changes must follow the incremental-change and blast-radius
-policy in `$change-seo-site`: make the smallest independently deployable and
-reversible change, preserve unrelated behavior, and verify affected and
-representative unaffected pages.
+policy in `$deliver-github-pr`'s search-facing site-change reference: make the
+smallest independently deployable and reversible change, preserve unrelated
+behavior, and verify affected and representative unaffected pages.
 
 Templates are examples, not automatically enforced schemas. Do not create a
 shared validator or CI job to enforce consuming repositories' filenames,

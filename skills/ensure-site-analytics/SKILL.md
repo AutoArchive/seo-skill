@@ -59,12 +59,11 @@ If runtime instrumentation is present but no evidence arrives after the provider
 
 ### 3. Repair in the same cycle
 
-Missing or removed runtime analytics, an invalid measurement configuration, broken page-view collection, URL reporting that contradicts the owner-selected policy, absent Search Console ownership, or a production deployment that omits expected analytics is an actionable technical defect. Invoke `$change-seo-site` and repair it during the same operating cycle whenever a safe path exists.
+Missing or removed runtime analytics, an invalid measurement configuration, broken page-view collection, URL reporting that contradicts the owner-selected policy, absent Search Console ownership, or a production deployment that omits expected analytics is an actionable technical defect. Invoke `$deliver-github-pr` as a search-facing site change and repair it during the same operating cycle whenever a safe path exists.
 
-The repair must use `$change-seo-site`, including `$deliver-github-pr` with
-complete expected CI and a from-scratch final review after CI, followed by
-squash merge, exact deployment verification, public runtime verification, and
-metadata closeout.
+The repair must complete `$deliver-github-pr` with complete expected CI and a
+from-scratch final review after CI, followed by squash merge, exact deployment
+verification, public runtime verification, and metadata closeout.
 
 ### 4. Verify production without committing raw analytics data
 
