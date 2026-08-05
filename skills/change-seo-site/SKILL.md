@@ -7,11 +7,15 @@ description: Implement and deliver an evidence-backed SEO or GEO change in a web
 
 ## Overview
 
-Ship one coherent SEO improvement from current evidence to verified production.
-Every consuming-repository change uses a real pull request, waits for CI,
-receives a complete final self-review, squash-merges, waits for the exact
+Ship evidence-backed SEO improvements from current evidence to verified
+production. Every consuming-repository change uses a real pull request, waits
+for CI, receives a complete final self-review, squash-merges, waits for the exact
 production deployment, verifies the live result, and closes out the Markdown
 operating record.
+
+A coherent change remains the unit of one main pull request. It is not a daily
+quota. A daily operating cycle may and must deliver multiple focused pull
+requests when independent actionable technical defects are discovered.
 
 ## Invocation boundary
 
@@ -37,18 +41,56 @@ When current analytics are needed, use `$collect-seo-data` first. Do not invent 
 site change merely to satisfy the schedule. A no-op day may update only the daily
 evidence record, but it still follows the pull-request lifecycle.
 
+## Same-cycle technical repair SLA
+
+A reproducible technical defect discovered during a scheduled run must be
+repaired during that same operating cycle and local calendar day whenever a safe
+technical path exists. This requirement covers, at minimum:
+
+- failed, stuck, or non-reproducible builds and CI;
+- failed deployments, runtime errors, broken production routes, or data-generation failures;
+- crawlability, indexability, robots.txt, sitemap, canonical, redirect, metadata,
+  structured-data, server-rendering, and internal-link regressions;
+- broken primary user flows, severe accessibility defects, and material
+  performance regressions;
+- broken external or internal links that materially damage discovery or use.
+
+Technical repair preempts routine content, promotion, source-discovery, and SEO
+experiment work. Do not move an actionable defect into `plan.md` only because a
+different change was already selected. The one-coherent-outcome rule is per pull
+request, not per day: deliver additional focused pull requests when independent
+repairs should not be combined.
+
+For a production regression, continue through diagnosis, repair or safe
+rollback, CI, squash merge, exact production-deployment verification, public
+acceptance checks, and metadata closeout. If provider queues cross local
+midnight, continue the same repair operation rather than classifying it as
+future planned work.
+
+Only a genuine human-only action, absent permission, legal constraint, billing
+approval, or lack of a safe rollback path may prevent same-cycle completion. In
+that case, record exact evidence, mitigation attempted, and the required external
+action in `block.md` through a real pull request. Never disguise an ordinary
+technical decision or queued check as a human blocker.
+
 ## Workflow
 
-### 1. Select one evidence-backed change
+### 1. Triage evidence and define pull-request units
 
-Use current data, `status.md`, `plan.md`, repository issues, and live inspection
-to choose at most one coherent outcome. Define before editing:
+Use current data, `status.md`, `plan.md`, repository issues, CI/deployment state,
+and live inspection to identify work. First classify any technical defects under
+the same-cycle SLA. Then define one coherent outcome for each main pull request.
+For every outcome, define before editing:
 
 - the observed problem and supporting evidence;
 - the target public page or behavior;
 - files expected to change;
 - local validation and expected CI;
 - the production deployment and live acceptance check.
+
+A routine scheduled run may select at most one speculative or experimental SEO
+improvement. This limit does not apply to confirmed technical defects that must
+be repaired under the same-cycle SLA.
 
 ### 2. Prepare branch and dependency update
 
@@ -68,8 +110,9 @@ scope explicitly requires a change. Prefer reversible, source-controlled,
 testable changes visible in generated output.
 
 This skill authorizes site changes, pull-request delivery, squash merge,
-deployment wait, verification, and corrective pull requests without human
-approval. It does not authorize exposing secrets or fabricating endorsements.
+deployment wait, verification, corrective pull requests, and safe rollback
+without human approval. It does not authorize exposing secrets or fabricating
+endorsements.
 
 ### 4. Record the work
 
@@ -77,6 +120,10 @@ Write or append `.github/seo-data/daily/YYYY-MM-DD.md`. Record evidence, intende
 outcome, changed files, validation, submodule movement, and pending delivery
 fields. Update `status.md` with current facts and `plan.md` with future work. Use
 `block.md` only for a genuine human-only or permission blocker.
+
+For same-cycle technical repairs, explicitly record discovery time, severity,
+user or crawler impact, root cause, mitigation, repair PR, CI, exact deployment,
+live verification, and whether any residual risk remains.
 
 ### 5. Validate and create the real pull request
 
@@ -146,7 +193,9 @@ unsupported without affecting closeout completion.
 
 Do not report completion until all are true:
 
-- a real change pull request exists and is squash-merged;
+- every confirmed same-cycle technical defect has either been repaired and
+  verified or has a truthful human-only blocker with mitigation evidence;
+- each real change pull request exists and is squash-merged;
 - all required and expected CI checks passed;
 - the agent completed a clean final diff review after CI;
 - the exact squash commit deployed successfully to production;
