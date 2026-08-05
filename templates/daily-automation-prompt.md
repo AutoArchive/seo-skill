@@ -9,6 +9,15 @@ the consuming repository does not need `OPENAI_API_KEY` or an equivalent secret.
 Existing CI and deployment workflows may be observed or used for delivery, but
 must not host the SEO agent.
 
+Always use `$ensure-site-analytics` from
+`.github/seo-skills/skills/ensure-site-analytics/SKILL.md`. Every canonical
+production site must preserve and verify runtime analytics, Search Console, and
+infrastructure analytics where available. Missing, removed, disabled, leaking,
+or unverified analytics is an actionable technical defect. Do not remove,
+materially reduce, redact, or expand analytics based on agent preference; only
+an explicit site-owner instruction recorded in the pull request and daily report
+may change that requirement.
+
 Use `$collect-seo-data` from
 `.github/seo-skills/skills/collect-seo-data/SKILL.md` for the single site defined
 in `.github/seo-data/site.md`. When a justified site improvement is in scope,
@@ -20,19 +29,41 @@ Create a fresh branch from the current remote default branch using the prefix in
 `site.md`. Check the `seo-skills` submodule remote and include an available
 allowed update in the same branch. Collect configured read-only evidence, then
 write or append `.github/seo-data/daily/YYYY-MM-DD.md`. Maintain `status.md`,
-`plan.md`, and `block.md` according to their roles. Keep raw data and private
-identifiers outside Git.
+`plan.md`, and `block.md` according to their roles. Keep raw provider data and
+private credentials outside Git.
+
+## Mandatory analytics audit
+
+During every run, inspect the analytics contract in `site.md`, source code,
+generated output, canonical production URL, and provider evidence. Confirm that:
+
+- the named runtime provider is implemented and deployed;
+- public page views are intentionally collected;
+- URL reporting exactly matches `URL reporting: full-url` or `path-only`;
+- `full-url` includes the complete browser query string without agent redaction;
+- `path-only` omits the query string;
+- no extra custom events containing credentials, cookies, authorization values,
+  local files, or application storage have been introduced without explicit
+  owner authorization;
+- Search Console and infrastructure analytics states are accurate;
+- missing or stale provider evidence is labelled missing or stale rather than
+  converted to zero.
+
+If runtime analytics is absent, broken, or contradicts the URL policy, repair it
+during the same operating cycle through a focused pull request, exact deployment
+verification, public runtime verification, and closeout. A Drive export or script
+tag alone is not sufficient proof.
 
 ## Same-cycle technical repair requirement
 
 Technical defects take priority over routine SEO experiments, source discovery,
 content production, reporting, and promotion work. When the run discovers a
 reproducible and actionable defect in build, CI, deployment, data generation,
-runtime behavior, crawlability, indexability, accessibility, performance,
-broken links, redirects, canonical signals, metadata, structured data,
-robots.txt, sitemap output, server rendering, or primary user flows, repair it
-during the same scheduled operating cycle and local calendar day whenever a
-safe technical path exists.
+runtime behavior, analytics, crawlability, indexability, accessibility,
+performance, broken links, redirects, canonical signals, metadata, structured
+data, robots.txt, sitemap output, server rendering, or primary user flows,
+repair it during the same scheduled operating cycle and local calendar day
+whenever a safe technical path exists.
 
 Do not intentionally defer an actionable defect to a future daily run merely
 because another improvement was planned or because one pull request already
@@ -56,11 +87,12 @@ draft PR, or local commit. Multiple focused pull requests may be completed in th
 same daily cycle when required by the same-cycle technical repair rule.
 
 Wait for every required and expected existing CI check. Then self-review the
-complete final diff, commits, generated output, and check results. Fix every
-issue on the same branch and repeat CI and the complete review. After green CI
-and a clean final review, squash-merge the pull request. Attempt to delete the
-merged head branch only when the available repository tool supports safe branch
-deletion. No human or second reviewer is required.
+complete final diff, commits, generated output, analytics behavior, URL policy,
+and check results. Fix every issue on the same branch and repeat CI and the
+complete review. After green CI and a clean final review, squash-merge the pull
+request. Attempt to delete the merged head branch only when the available
+repository tool supports safe branch deletion. No human or second reviewer is
+required.
 
 Merged head-branch deletion is best-effort cleanup, not a completion criterion.
 Do not create a `block.md` item, require human action, delay closeout, or mark the
@@ -70,14 +102,17 @@ active, or unrelated branch.
 
 For a site change, identify the production deployment triggered by the exact
 squash commit, wait for success, and verify the changed behavior on the public
-URL. A passing PR check or HTTP 200 alone is not proof of deployment.
+URL. When analytics may be affected, verify the expected production loader,
+configuration, owner-selected full-URL or path-only behavior, and provider
+evidence state. A passing PR check or HTTP 200 alone is not proof of deployment.
 
 After deployment verification, create a metadata-only closeout branch and
 non-draft pull request. Update the same day's report and `status.md` with the
-real PR, squash commit, CI, deployment, and live-verification evidence. Wait for
-CI, self-review, and squash-merge the closeout pull request as well.
+real PR, squash commit, CI, deployment, analytics verification, URL policy, and
+live-verification evidence. Wait for CI, self-review, and squash-merge the
+closeout pull request as well.
 
 No normal step requires human approval. Record a task in `block.md` only if an
 external system enforces a human-only action or the required permission is
-absent. Never force-push, bypass checks, expose credentials, or fabricate
-completion.
+absent. Never force-push, bypass checks, expose credentials, contradict the
+owner-selected URL policy, or fabricate completion.

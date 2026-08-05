@@ -10,6 +10,10 @@ shared collection.
 
 ## Skills
 
+- [`ensure-site-analytics`](skills/ensure-site-analytics/SKILL.md) requires every
+  canonical production site to preserve, verify, and repair runtime analytics,
+  Search Console coverage, infrastructure analytics where available, and the
+  site-owner-selected URL and payload policy.
 - [`collect-seo-data`](skills/collect-seo-data/SKILL.md) reads GA4 and Search
   Console CSV exports from Google Drive, obtains Cloudflare traffic evidence
   through Cloudflare MCP or GraphQL, and writes a public-safe daily Markdown
@@ -18,6 +22,35 @@ shared collection.
   evidence-backed site improvement through a real pull request, waits for CI,
   self-reviews the final diff, squash-merges it, and waits for deployment and
   live verification.
+
+## Mandatory analytics baseline
+
+Every canonical production site managed by these skills must have analytics.
+The site chooses its approved provider, but an absent, silently disabled, or
+unverified runtime analytics implementation is a technical defect, not a normal
+privacy mode.
+
+At minimum each site must maintain:
+
+- one runtime web analytics provider for public page views, using GA4 by default
+  when an existing GA4 measurement configuration is available;
+- Google Search Console coverage;
+- infrastructure traffic analytics such as Cloudflare when the production
+  provider exposes it;
+- an explicit owner-selected URL reporting mode: `full-url` or `path-only`;
+- an explicit analytics payload policy.
+
+Agents must not remove, disable, replace, gate, materially reduce, redact, or
+expand existing analytics based on their own preference. Such a change requires
+an explicit site-owner instruction recorded in the pull request and daily
+report. When `site.md` says `full-url`, the complete browser URL, including the
+query string, must be transmitted. When it says `path-only`, the query string
+must be omitted.
+
+The consuming repository's `.github/seo-data/site.md` must include the required
+`## Analytics` contract. The shared validator rejects sites that omit it, mark
+runtime analytics as optional, fail to name a primary provider, or omit the URL
+reporting mode and payload policy.
 
 ## Scheduler boundary
 
@@ -78,20 +111,23 @@ website repository. Each invocation uses
 or the consuming repository's `.github/seo-data/daily-task.md`. Every daily run
 in a consuming website repository must:
 
-1. create a fresh branch and write or append
+1. read and enforce `$ensure-site-analytics`, including source, built output,
+   production runtime, URL policy, Search Console, infrastructure analytics,
+   and provider evidence;
+2. create a fresh branch and write or append
    `.github/seo-data/daily/YYYY-MM-DD.md`;
-2. include the intended data or site changes and any available submodule update;
-3. push the branch and create a real, non-draft pull request;
-4. wait until all required and expected CI checks finish successfully;
-5. self-review the complete final diff, commits, and check results;
-6. fix issues on the same branch and repeat CI and self-review when needed;
-7. squash-merge the pull request without human review, then attempt to delete
+3. include the intended data or site changes and any available submodule update;
+4. push the branch and create a real, non-draft pull request;
+5. wait until all required and expected CI checks finish successfully;
+6. self-review the complete final diff, commits, and check results;
+7. fix issues on the same branch and repeat CI and self-review when needed;
+8. squash-merge the pull request without human review, then attempt to delete
    its merged head branch when the available repository tool supports safe
    branch deletion;
-8. for a site change, wait for the exact squash commit's production deployment
-   and verify the public result;
-9. open a metadata-only closeout pull request with the verified delivery facts,
-   then apply the same CI, self-review, and squash-merge rules to that closeout.
+9. for a site change, wait for the exact squash commit's production deployment
+   and verify the public result, including expected analytics when affected;
+10. open a metadata-only closeout pull request with the verified delivery facts,
+    then apply the same CI, self-review, and squash-merge rules to that closeout.
 
 Merged head-branch deletion is best-effort repository hygiene, not a completion
 criterion. A connector that does not expose branch deletion, or a harmless
@@ -112,10 +148,14 @@ is not complete.
 ## Public-data boundary
 
 Assume this repository and consuming repositories are public. Raw exports stay
-in Google Drive or the analytics provider. Never commit credentials, OAuth
-material, personal emails, account/zone/Drive IDs, IP addresses, user-level
-analytics, raw query rows, private URLs, or full API responses. Daily Markdown
-may contain aggregated metrics, public URLs, source status, date windows, export
+in Google Drive or the analytics provider. Public browser measurement IDs may
+remain in runtime source because clients must receive them. Never commit
+credentials, OAuth material, personal emails, private account/property/zone/Drive
+IDs, IP addresses, user-level analytics rows, raw provider exports, cookies,
+authorization values, or full API responses. A site may explicitly choose to
+transmit full public browser URLs to its analytics provider; that runtime policy
+must be disclosed in `site.md` and public site documentation. Daily Markdown may
+contain aggregated metrics, public URLs, source status, date windows, export
 filenames, checksums, decisions, changed files, PR/CI/deployment URLs, and
 verification results.
 

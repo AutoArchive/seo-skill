@@ -11,7 +11,13 @@ from pathlib import Path
 
 
 REQUIRED_FILES = {
-    "site.md": ("# Site metadata", "## Identity", "## Repository", "## Deployment"),
+    "site.md": (
+        "# Site metadata",
+        "## Identity",
+        "## Repository",
+        "## Analytics",
+        "## Deployment",
+    ),
     "daily-task.md": ("# Daily SEO task", "## Objective", "## Required sequence", "## Daily completion"),
     "promotion.md": ("# Promotion strategy", "## Audience", "## Channels", "## Operating rules"),
     "status.md": ("# SEO status", "## Current state", "## Current signals"),
@@ -35,6 +41,24 @@ PRIVATE_LABEL_RE = re.compile(
 )
 SECRET_LABEL_RE = re.compile(
     r"(?im)^\s*[-*]?\s*(?:api\s+key|api\s+token|access\s+token|password|secret|email)\s*:\s*(?!none\s*$|not recorded\s*$).+"
+)
+ANALYTICS_REQUIRED_RE = re.compile(
+    r"(?im)^\s*[-*]\s*Runtime analytics required:\s*yes\s*$"
+)
+PRIMARY_ANALYTICS_RE = re.compile(
+    r"(?im)^\s*[-*]\s*Primary runtime provider:\s*(?!`?(?:none|disabled|optional|not configured)`?\s*$).+\S\s*$"
+)
+RUNTIME_VERIFICATION_RE = re.compile(
+    r"(?im)^\s*[-*]\s*Runtime verification URL:\s*`?https://[^\s`]+`?\s*$"
+)
+URL_REPORTING_RE = re.compile(
+    r"(?im)^\s*[-*]\s*URL reporting:\s*`?(?:full-url|path-only)`?\s*$"
+)
+SEARCH_ANALYTICS_RE = re.compile(
+    r"(?im)^\s*[-*]\s*Search analytics required:\s*(?!`?(?:none|no|optional|disabled)`?\s*$).+\S\s*$"
+)
+PAYLOAD_POLICY_RE = re.compile(
+    r"(?im)^\s*[-*]\s*Analytics payload policy:\s*.+\S\s*$"
 )
 
 
@@ -63,10 +87,29 @@ def scan_public(path: Path, text: str) -> None:
             raise ValueError(f"{label} in {path}:{line}")
 
 
+def validate_analytics_contract(path: Path, text: str) -> None:
+    checks = (
+        (ANALYTICS_REQUIRED_RE, "runtime analytics must be explicitly required: yes"),
+        (PRIMARY_ANALYTICS_RE, "a primary runtime analytics provider is required"),
+        (RUNTIME_VERIFICATION_RE, "a public HTTPS runtime analytics verification URL is required"),
+        (URL_REPORTING_RE, "URL reporting must be full-url or path-only"),
+        (SEARCH_ANALYTICS_RE, "search analytics must be required"),
+        (PAYLOAD_POLICY_RE, "the analytics payload policy is required"),
+    )
+    for pattern, message in checks:
+        if not pattern.search(text):
+            raise ValueError(f"{message} in {path}")
+
+
 def validate(data_root: Path, expected_date: date | None) -> int:
+    loaded: dict[str, str] = {}
     for filename, headings in REQUIRED_FILES.items():
         path = data_root / filename
-        scan_public(path, read_required(path, headings))
+        text = read_required(path, headings)
+        scan_public(path, text)
+        loaded[filename] = text
+
+    validate_analytics_contract(data_root / "site.md", loaded["site.md"])
 
     daily_dir = data_root / "daily"
     if not daily_dir.is_dir():
