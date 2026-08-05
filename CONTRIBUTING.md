@@ -40,6 +40,28 @@ cannot work without them. When a requested change is genuinely large, split it
 into independently useful phases that keep the current skills usable and
 reversible after each phase.
 
+## Rationale and site neutrality
+
+Use the pull request as the durable record of why a shared change exists. State:
+
+- the observed problem or explicit requested capability;
+- why the solution belongs in the reusable skill layer instead of one consuming
+  repository;
+- why the diff is the smallest compatible change;
+- which shared operating behavior changes and which behavior is preserved.
+
+Shared skills must remain site-neutral. Remove consuming-site domains, names,
+repositories, account or property identifiers, folder names, operator details,
+private strategy, and site-specific editorial instructions from shared files.
+Use neutral placeholders such as `example.com` only when an example is needed.
+Keep actual site facts and policies in the consuming repository.
+
+Before merge, inspect the complete diff and search changed shared files for
+site-specific names, domains, URLs, identifiers, credentials, and copied daily
+instructions. Record the site-neutrality result in the pull-request description.
+If a request originates from one site but has not been requested as reusable
+behavior, fix that consuming repository rather than generalizing it here.
+
 ## Consuming repositories
 
 Website production changes must follow the incremental-change and blast-radius
@@ -68,4 +90,6 @@ requests it or the requested feature cannot be validated safely otherwise.
 
 Deliver changes through a focused pull request. Review the final diff for
 unrequested files, changed operating contracts, and scope expansion before
-merge. Follow the repository's normal CI, self-review, and squash-merge process.
+merge. The pull-request description must record the rationale, shared-layer
+applicability, compatibility boundary, and site-neutrality review. Follow the
+repository's normal CI, self-review, and squash-merge process.

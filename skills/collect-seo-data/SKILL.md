@@ -8,17 +8,15 @@ description: Collect and normalize public-safe SEO evidence for one website from
 ## Overview
 
 Collect read-only evidence for exactly one configured site, keep raw data out of
-Git, update the site's Markdown operating record, and deliver every consuming-
-repository run through a real pull request with CI, self-review, and squash merge.
+Git, and update the site's public-safe Markdown operating record. During a
+scheduled site cycle, `$operate-seo-site` owns common prioritization and delivery.
 
 ## Invocation boundary
 
-Invoke this skill from an authorized scheduler outside the consuming repository,
-preferably a ChatGPT or equivalent session-level scheduled task. Do not add or
-modify GitHub Actions, repository cron jobs, webhooks, hosted agent runners, or
-model-provider credential configuration to execute this skill. Existing CI and
-deployment workflows may be observed or used for delivery, but must not host the
-SEO agent. The invoking session owns model access and connected-tool credentials.
+Normally invoke this skill from `$operate-seo-site`. A direct manual collection
+must still use the consuming repository's instructions and the shared
+pull-request delivery contract; it does not create a separate scheduling or
+delivery policy.
 
 ## Required context
 
@@ -30,10 +28,8 @@ From the consuming repository root, read completely:
 - `.github/seo-data/promotion.md` when data supports a promotion decision;
 - the newest relevant file under `.github/seo-data/daily/`.
 
-Read [`references/google-drive.md`](references/google-drive.md),
-[`references/cloudflare.md`](references/cloudflare.md), and
-[`../../references/pull-request-delivery.md`](../../references/pull-request-delivery.md)
-before collection or delivery.
+Read [`references/google-drive.md`](references/google-drive.md) and
+[`references/cloudflare.md`](references/cloudflare.md) before collection.
 
 Stop rather than combine unrelated properties if `site.md` is missing or names
 more than one canonical site. Do not put credentials or private source IDs into
@@ -41,16 +37,11 @@ Markdown metadata.
 
 ## Workflow
 
-### 1. Prepare the delivery branch and skills
+### 1. Confirm the prepared site scope
 
-Inspect branch, upstream, dirty files, and submodule state. Fetch the remote
-default branch and create a fresh branch using the prefix in `site.md`. Preserve
-unrelated work; never stash, reset, or force-push it.
-
-Fetch the `seo-skills` submodule remote. If its allowed default branch has a
-newer commit, update the submodule pointer on the same branch and record both old
-and new commits. If there is no update, say so. Never edit shared skill files
-from the consuming repository.
+Use the canonical site, branch, submodule decision, data window, and private-data
+boundary established by `$operate-seo-site` or the direct caller. Preserve
+unrelated work and never combine evidence from different properties.
 
 ### 2. Establish the data window
 
@@ -122,33 +113,17 @@ Raw rows, search queries, user events, IP addresses, personal emails,
 credentials, private URLs, account IDs, zone IDs, and Drive file/folder IDs stay
 outside Git.
 
-### 7. Validate and create a real pull request
+### 7. Return to the common operating lifecycle
 
-Run relevant consuming-repository checks, inspect the actual evidence and
-intended diff, then stage only intended data files and the submodule pointer.
-Commit, push, and create a non-draft pull request. Do not substitute a direct
-default-branch push, issue, draft PR, or local commit.
-
-### 8. Wait for CI, self-review, and squash merge
-
-Wait for all required and expected existing CI checks. Missing, queued, skipped,
-cancelled, timed-out, or failed checks are not success. Then read the complete
-final diff, commits, generated output, and check results. Fix every issue on the
-same branch and repeat CI and the complete review.
-
-After green CI and a clean final self-review, squash-merge the pull request and
-delete the branch. No human or second reviewer is required.
-
-### 9. Close out final delivery facts
-
-Open a metadata-only closeout pull request that records the main pull request,
-squash commit, and CI evidence in today's report and `status.md`. Wait for its
-CI, self-review its final diff, and squash-merge it. A collection-only run does
-not require deployment waiting unless metadata changes rendered output.
+Return the evidence, source qualifications, Markdown changes, and discovered
+defects to `$operate-seo-site` or the direct caller. It owns the real pull
+request, CI wait, final self-review, squash merge, and closeout under
+[`../../references/pull-request-delivery.md`](../../references/pull-request-delivery.md).
 
 Any technical repair initiated by this skill must also satisfy
-`$change-seo-site` production deployment, public verification, and metadata
-closeout requirements before the operating cycle is complete.
+`$change-seo-site` production deployment and public verification before the
+operating cycle is complete. A collection-only run does not require deployment
+waiting unless its changes affect rendered output.
 
 ## Failure rules
 
