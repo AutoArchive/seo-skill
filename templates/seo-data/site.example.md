@@ -6,17 +6,6 @@
 - Site name: `example.com`
 - Timezone: `America/Los_Angeles`
 
-## Bootstrap
-
-- Bootstrap required: yes
-- Bootstrap record: `.github/seo-data/bootstrap.md`
-- Normal site mutation allowed only when bootstrap status is complete: yes
-
-`bootstrap.md` is the production-topology source of truth. Do not copy these
-example values into a consuming repository without independently verifying the
-actual domain, provider project, source repository, branch, build settings,
-deployment trigger, and canonical public output.
-
 ## Repository
 
 - Default branch: `main`
@@ -40,14 +29,8 @@ deployment trigger, and canonical public output.
 
 Runtime analytics is mandatory. Do not remove, disable, replace, gate, or
 materially reduce it without an explicit site-owner instruction recorded in the
-relevant pull request and daily report. The site owner selects either
-`full-url` or `path-only`; agents must implement that mode exactly and must not
-silently redact or expand URL reporting. Public browser measurement IDs may live
-in runtime source; private account/property identifiers and credentials may not
-be stored here.
-
-Bootstrap audits analytics read-only. Repairs begin only after the production
-chain is independently verified.
+relevant pull request and daily report. Bootstrap audits analytics read-only;
+repairs begin only after production ownership is proven.
 
 ## Google data
 
@@ -66,6 +49,10 @@ chain is independently verified.
 
 ## Deployment
 
+- Bootstrap status: complete
+- Bootstrap verified at: 2026-01-01
+- Production chain verified: yes
+- Bootstrap evidence strength: strong
 - Provider: `cloudflare-pages`
 - Production project or service: `example-site`
 - Production source repository: `owner/repository`
@@ -75,18 +62,19 @@ chain is independently verified.
 - Production output directory: `public`
 - Production deployment trigger: provider Git integration on pushes to `main`
 - Production environment: `production`
-- Verification URL: `https://www.example.com/deployment.json`
+- Last verified production commit: `0123456789abcdef0123456789abcdef01234567`
 - Provider deployment evidence method: connected provider production deployment matched to exact source commit
 - Public deployment verification method: immutable deployment marker plus representative changed page
-- Preview or non-production paths: pull-request previews and any generated branches listed in `bootstrap.md`
+- Verification URL: `https://www.example.com/deployment.json`
+- Preview or non-production paths: pull-request previews and generated branches documented in the daily bootstrap report
+- Bootstrap invalidation conditions: domain, DNS or edge, provider project, source repository or branch, build command, output directory, deployment trigger, platform architecture, analytics provider, URL policy, or public commit correspondence changes
 
-These values must agree with `.github/seo-data/bootstrap.md` and the current
-provider configuration. A repository workflow, generated branch, preview,
-`CNAME`, provider log, or HTTP 200 is not sufficient evidence that this is the
-production path.
+These values are examples only. `$bootstrap-seo-site` must independently verify
+the actual production topology before replacing them. A repository workflow,
+generated branch, preview, `CNAME`, provider log, or HTTP 200 response is not
+sufficient evidence by itself.
 
-The deployment workflow or provider integration may build and publish the site,
-but it must not host or schedule the SEO agent. Store only durable public
-metadata here. Never add private property IDs, Drive IDs, Cloudflare account or
-zone IDs, personal emails, credentials, raw analytics rows, cookies,
-authorization values, private provider URLs, or full API responses.
+Store only durable public metadata here. Never add private property IDs, Drive
+IDs, Cloudflare account or zone IDs, personal emails, credentials, raw analytics
+rows, cookies, authorization values, private provider URLs, or full API
+responses.
