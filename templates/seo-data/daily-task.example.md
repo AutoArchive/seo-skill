@@ -9,8 +9,15 @@ Run one fully autonomous, evidence-backed SEO operating cycle for the site in
 
 - Frequency: daily
 - Timezone: use `site.md`
+- Configuration owner: authorized session-level scheduler outside this repository
 - Data window: use the lookback and finalization lag in `site.md`
 - Maximum site changes: one coherent change per main pull request
+
+The repository must not contain a GitHub Actions workflow, cron job, webhook,
+hosted agent runner, or model-provider credential whose purpose is to execute
+this task. The invoking session supplies model access and connected tools.
+Existing CI and deployment workflows may remain and may be used as delivery
+evidence; they do not run the SEO agent.
 
 ## Required sequence
 
@@ -19,18 +26,20 @@ Run one fully autonomous, evidence-backed SEO operating cycle for the site in
 2. Fetch the remote default branch and create a fresh branch from it.
 3. Check whether the `seo-skills` submodule has an allowed update and include an
    available update in the same main pull request.
-4. Collect finalized Google Drive and Cloudflare evidence without committing
-   raw data or private identifiers.
+4. Collect finalized configured evidence without committing raw data or private
+   identifiers. Mark disabled or unavailable sources accurately; never convert
+   missing data into zero.
 5. Write or append `.github/seo-data/daily/YYYY-MM-DD.md`; refresh `status.md`,
    maintain future work in `plan.md`, and keep `block.md` limited to genuine
    human-only or permission blockers.
 6. When evidence supports a site improvement, implement at most one coherent
    change and define its production acceptance check before editing.
 7. Validate locally, push the branch, and create a real non-draft pull request.
-8. Wait for all required and expected CI, self-review the complete final diff,
-   fix and repeat if needed, then squash-merge and delete the branch.
+8. Wait for all required and expected existing CI, self-review the complete
+   final diff, fix and repeat if needed, then squash-merge and delete the branch.
 9. For a site change, wait for the exact squash commit to deploy successfully
-   and verify the changed behavior on the public site.
+   through the repository's existing delivery path and verify the changed
+   behavior on the public site.
 10. Open a metadata-only closeout pull request with final evidence; wait for CI,
     self-review, and squash-merge it.
 11. Continue autonomously while safe progress is possible. Record a `block.md`

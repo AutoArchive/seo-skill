@@ -11,6 +11,9 @@
 - Default branch: `main`
 - Automation branch prefix: `seo/`
 - Skill submodule path: `.github/seo-skills`
+- Scheduler owner: authorized session-level task outside the repository
+- Repository-hosted agent scheduler: prohibited
+- Model-provider credentials in repository: prohibited
 
 ## Google data
 
@@ -34,5 +37,7 @@
 - Production environment: `production`
 - Verification URL: `https://example.com`
 
-Store only durable public metadata here. Never add property IDs, Drive IDs,
-Cloudflare IDs, account identifiers, personal emails, credentials, or private URLs.
+The deployment workflow may build and publish the site, but it must not host or
+schedule the SEO agent. Store only durable public metadata here. Never add
+property IDs, Drive IDs, Cloudflare IDs, account identifiers, personal emails,
+credentials, or private URLs.
