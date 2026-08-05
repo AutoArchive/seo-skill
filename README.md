@@ -18,10 +18,48 @@ shared collection.
   Console CSV exports from Google Drive, obtains Cloudflare traffic evidence
   through Cloudflare MCP or GraphQL, and writes a public-safe daily Markdown
   record.
+- [`deep-research-blog`](skills/deep-research-blog/SKILL.md) researches one
+  narrow, durable question through multilingual query decomposition, scholarly
+  and primary-source reading, a claim–evidence–counterevidence matrix,
+  falsification search, original synthesis, and citation verification.
+- [`write-readable-research-blog`](skills/write-readable-research-blog/SKILL.md)
+  turns a verified research packet into a clear academic-style blog with a
+  direct answer, sustained argument, counterevidence, labeled synthesis,
+  limitations, claim-level citations, and accessible Chinese prose.
+- [`publish-research-blog`](skills/publish-research-blog/SKILL.md) orchestrates a
+  complete research-publication cycle from a site-defined editorial program
+  through deep research, readable writing, pull-request delivery, actual
+  production deployment, and independent public verification.
 - [`change-seo-site`](skills/change-seo-site/SKILL.md) implements one
   evidence-backed site improvement through a real pull request, waits for CI,
   self-reviews the final diff, squash-merges it, and waits for deployment and
   live verification.
+
+## Research publication boundary
+
+The shared skills define reusable research and writing methods. Topic programs
+belong to each consuming site's existing editorial plan. A site may maintain
+programs such as terminology history, literary and media research,
+cross-language comparison, or repeated AI and translation experiments without
+hard-coding those subjects into this shared repository.
+
+Long-form research publication should invoke the skills in this order:
+
+```text
+site editorial plan
+→ $deep-research-blog
+→ $write-readable-research-blog
+→ $publish-research-blog / $change-seo-site delivery
+```
+
+The public product is a coherent article. Search logs, claim matrices, source
+notes, JSON, and metadata are supporting infrastructure and do not replace the
+article.
+
+Readable academic prose is a quality requirement. The writing skill favors
+positive, direct claims and concrete examples. It audits repetitive rhetorical
+forms such as “不是……而是……”, “并非”, “不只是”, and “这并不意味着” while preserving
+negation that is necessary for a precise evidence boundary.
 
 ## Consumer-owned data contract
 
@@ -68,8 +106,8 @@ preference. Such a change requires an explicit site-owner instruction recorded
 in the pull request and daily report.
 
 When `site.md` says `full-url`, the complete browser URL, including the query
-string, must be transmitted. When it says `path-only`, the query string must be
-omitted. The shared validator checks these semantic declarations without
+string, must be transmitted. When `site.md` says `path-only`, the query string
+must be omitted. The shared validator checks these semantic declarations without
 requiring an `## Analytics` heading or any other document restructuring.
 
 ## Scheduler boundary
@@ -115,17 +153,19 @@ website repository. Each daily run must:
 
 1. read and enforce `$ensure-site-analytics`;
 2. preserve the consumer-owned `.github/seo-data` layout;
-3. create a fresh branch and update the site's existing daily record and durable
+3. invoke the research-publication skills when long-form research content is in
+   scope;
+4. create a fresh branch and update the site's existing daily record and durable
    status files as appropriate;
-4. include the intended data or site changes and any reviewed submodule update;
-5. create a real, non-draft pull request;
-6. wait until all required and expected CI checks finish successfully;
-7. self-review the complete final diff, commits, generated output, submodule
+5. include the intended data or site changes and any reviewed submodule update;
+6. create a real, non-draft pull request;
+7. wait until all required and expected CI checks finish successfully;
+8. self-review the complete final diff, commits, generated output, submodule
    movement, and check results;
-8. fix issues on the same branch and repeat CI and self-review when needed;
-9. squash-merge without human review;
-10. verify the exact production deployment and public result;
-11. complete any site-required metadata closeout through the same PR discipline.
+9. fix issues on the same branch and repeat CI and self-review when needed;
+10. squash-merge without human review;
+11. verify the exact production deployment and public result;
+12. complete any site-required metadata closeout through the same PR discipline.
 
 Merged head-branch deletion is best-effort repository hygiene, not a completion
 criterion. Never push automated consuming-repository changes directly to the
