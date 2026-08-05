@@ -1,17 +1,19 @@
-# Search-facing site change policy
+# Search-facing site change execution
 
 Read this reference only for a website change that affects content, metadata,
 structured data, internal links, crawlability, performance, analytics, routes,
 or other search-facing public behavior.
 
-## Keep the change incremental
+When `$operate-seo-site` calls delivery, its
+[search-facing change policy](../../operate-seo-site/SKILL.md#search-facing-change-policy)
+has already selected the smallest acceptable blast radius. This reference
+applies that approved boundary during implementation, PR review, deployment,
+and public verification. A direct `$deliver-github-pr` caller must establish the
+same baseline and boundary before editing.
 
-Make the smallest independently deployable, reversible, and reviewable change
-that fixes one observed problem or tests one supported hypothesis. Preserve
-unrelated design, copy, navigation, public paths, canonical ownership,
-redirects, metadata, analytics, and content.
+## Enforce the approved boundary
 
-Before editing, capture the relevant production baseline and state:
+Carry these caller-supplied facts into the pull-request scope and final review:
 
 - evidence for the problem or hypothesis;
 - affected route family and representative unaffected routes;
@@ -19,11 +21,10 @@ Before editing, capture the relevant production baseline and state:
 - exact public acceptance check; and
 - rollback point.
 
-Prefer additive or local edits before replacement, deletion, consolidation, or
-migration. Do not combine page purpose, information architecture, navigation,
-visual system, titles, descriptions, and route ownership in one routine change.
-Missing analytics or a general desire to modernize is not evidence that a broad
-change is safe.
+Reject implementation drift beyond the approved routes and behavior. Prefer
+additive or local edits before replacement, deletion, consolidation, or
+migration. Preserve unrelated design, copy, navigation, public paths, canonical
+ownership, redirects, metadata, analytics, and content.
 
 Split a necessary large migration into independently useful, deployable phases.
 Each phase must preserve a usable production site, have its own acceptance and
@@ -51,9 +52,9 @@ moving an actionable technical defect into a future plan.
 ## Supply domain checks to delivery
 
 Follow the consuming site's architecture and content rules. Validate generated
-output and search semantics locally. Give `$deliver-github-pr` the baseline,
-blast radius, affected and unaffected routes, deployment target, public
-acceptance checks, and rollback.
+output and search semantics locally. Verify the baseline, blast radius, affected
+and unaffected routes, deployment target, public acceptance checks, and rollback
+remain accurate after the final diff.
 
 After deployment, public verification must inspect the changed behavior rather
 than availability alone. Verify representative unaffected routes whenever a

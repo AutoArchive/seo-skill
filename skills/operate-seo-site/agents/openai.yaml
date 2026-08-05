@@ -1,4 +1,4 @@
 interface:
   display_name: "Operate SEO Site"
   short_description: "Run one complete site-specific SEO operating cycle"
-  default_prompt: "Use $operate-seo-site to run this repository's configured SEO operating cycle and deliver truthful production results."
+  default_prompt: "Use $operate-seo-site to run this repository's configured SEO operating cycle, keep search-facing changes incremental with the minimum blast radius, and deliver truthful production results."
