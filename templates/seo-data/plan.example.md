@@ -15,14 +15,10 @@ out of this file.
 ## Operating constraints
 
 - Raw analytics stay outside Git.
-- Every automated change uses a fresh branch and a real non-draft pull request.
-- Required and expected CI must pass before the final automated self-review.
-- A clean final review is followed by squash merge; human review is not needed.
-- Site changes wait for the exact squash commit's production deployment and
-  public verification.
-- Post-merge evidence is recorded through a metadata-only closeout pull request
-  that follows the same CI, self-review, and squash-merge rules.
-- Normal operation does not require human approval.
+- Record only durable constraints specific to this site's audience, product,
+  content, or risk boundary.
+- Do not repeat the branch, pull-request, CI, deployment, or closeout contract;
+  `$operate-seo-site` owns that shared workflow.
 
 Short-term fixes, one-off audits, and remediation backlogs belong in GitHub
 issues, not in this durable plan.

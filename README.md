@@ -10,6 +10,11 @@ shared collection.
 
 ## Skills
 
+- [`operate-seo-site`](skills/operate-seo-site/SKILL.md) is the common entrypoint
+  for one complete site operating cycle. It reads the repository-specific daily
+  task, reviews the pinned skills, verifies analytics, collects evidence,
+  prioritizes same-cycle technical repair, invokes optional content work, and
+  carries every change through truthful delivery and closeout.
 - [`configure-google-seo-export`](skills/configure-google-seo-export/SKILL.md)
   configures Google-managed weekly GA4 and Search Console CSV exports into one
   Drive folder per site, including an idempotent immediate backfill and a
@@ -110,8 +115,10 @@ string. Verify the implemented behavior directly.
 The scheduler lives outside every consuming repository. The preferred setup is
 an authorized ChatGPT or other session-level scheduled task that opens the
 repository through connected tools and invokes
-[`templates/daily-automation-prompt.md`](templates/daily-automation-prompt.md)
-or the consuming repository's `.github/seo-data/daily-task.md`.
+[`operate-seo-site`](skills/operate-seo-site/SKILL.md). The reusable launcher is
+[`templates/daily-automation-prompt.md`](templates/daily-automation-prompt.md),
+while the consuming repository's `.github/seo-data/daily-task.md` contains only
+site-specific priorities, exclusions, rotations, and acceptance checks.
 
 Do not add a GitHub Actions workflow, repository cron job, webhook runner,
 hosted bot, provider SDK, or model-runner configuration solely to execute these
@@ -141,7 +148,7 @@ The following is one reasonable starting point for a new repository:
 |-- seo-skills/                 # this repository as a pinned submodule
 `-- seo-data/
     |-- site.md                 # durable public metadata and tool routing
-    |-- daily-task.md           # site-specific autonomous daily entrypoint
+    |-- daily-task.md           # short site-specific operating checklist
     |-- status.md               # current verified operating state
     |-- plan.md                 # future work and durable public strategy
     |-- block.md                # only genuinely human-only blockers
@@ -156,27 +163,16 @@ change is needed merely because its layout differs from this example.
 ## Consuming-repository pull-request contract
 
 Configure the schedule in the authorized session-level scheduler, not in the
-website repository. Each daily run must:
+website repository. Invoke `$operate-seo-site` for each scheduled cycle and use
+[`references/pull-request-delivery.md`](references/pull-request-delivery.md) as
+the detailed delivery contract. Every automated change still requires a fresh
+branch, real non-draft pull request, all required and expected CI, complete final
+self-review, squash merge, and truthful closeout. Rendered site changes also
+require the exact production deployment and public verification.
 
-1. read and enforce the applicable pinned skills;
-2. apply explicit current skill requirements with the minimum necessary
-   consuming-repository changes;
-3. invoke the research-publication skills when long-form research content is in
-   scope;
-4. create a fresh branch and update the site's operating records as appropriate;
-5. include the intended data or site changes and any reviewed submodule update;
-6. create a real, non-draft pull request;
-7. wait until all required and expected CI checks finish successfully;
-8. self-review the complete final diff, commits, generated output, submodule
-   movement, and check results;
-9. fix issues on the same branch and repeat CI and self-review when needed;
-10. squash-merge without human review;
-11. verify the exact production deployment and public result;
-12. complete any site-required metadata closeout through the same PR discipline.
-
-Merged head-branch deletion is best-effort repository hygiene, not a completion
-criterion. Never push automated consuming-repository changes directly to the
-default branch, bypass checks, or report a preview as production.
+Merged head-branch deletion remains best-effort repository hygiene. Never push
+automated consuming-repository changes directly to the default branch, bypass
+checks, or report a preview as production.
 
 ## Public-data boundary
 
