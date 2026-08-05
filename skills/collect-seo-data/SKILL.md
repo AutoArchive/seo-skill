@@ -80,7 +80,28 @@ both returned data and GraphQL errors.
 
 Do not mutate DNS, cache, Workers, Pages, security, or analytics settings.
 
-### 5. Update Markdown state
+### 5. Escalate discovered technical defects immediately
+
+Evidence collection is not a reporting-only boundary. When collection, public
+inspection, repository state, CI, or deployment evidence reveals a reproducible
+and actionable technical defect, invoke `$change-seo-site` during the same
+scheduled operating cycle and local calendar day.
+
+Do not defer build, CI, deployment, runtime, data-generation, crawlability,
+indexability, robots.txt, sitemap, canonical, redirect, metadata,
+structured-data, server-rendering, internal-link, accessibility, performance, or
+primary user-flow failures merely because the original task was data collection.
+Technical repair preempts routine analysis and content work. The one-coherent-
+change rule applies per pull request, not per day; use additional focused pull
+requests when independent defects must be repaired separately.
+
+If a safe repair cannot be completed because an external system requires a
+human-only action, permission is absent, or no safe rollback path exists, record
+exact evidence, impact, mitigation attempted, and required external action in
+`block.md` through the normal pull-request lifecycle. Do not classify an
+ordinary technical decision or a queued check as a human blocker.
+
+### 6. Update Markdown state
 
 Write or append `.github/seo-data/daily/YYYY-MM-DD.md` using the site's local
 date and `templates/seo-data/daily.example.md`. Record:
@@ -89,6 +110,8 @@ date and `templates/seo-data/daily.example.md`. Record:
 - aggregate source-native metrics labelled `GA4`, `GSC`, or `Cloudflare`;
 - export filenames and optional SHA-256 checksums, never Drive URLs or IDs;
 - work performed, submodule movement, validation, decisions, and follow-ups;
+- every technical defect discovered, its disposition, and same-cycle repair or
+  truthful blocker evidence;
 - delivery fields known at the time.
 
 Update `status.md` with the newest verified window and signals. Keep future work
@@ -99,7 +122,7 @@ Raw rows, search queries, user events, IP addresses, personal emails,
 credentials, private URLs, account IDs, zone IDs, and Drive file/folder IDs stay
 outside Git.
 
-### 6. Validate and create a real pull request
+### 7. Validate and create a real pull request
 
 Run:
 
@@ -113,7 +136,7 @@ pointer, inspect the staged diff, commit, push, and create a non-draft pull
 request. Do not substitute a direct default-branch push, issue, draft PR, or
 local commit.
 
-### 7. Wait for CI, self-review, and squash merge
+### 8. Wait for CI, self-review, and squash merge
 
 Wait for all required and expected existing CI checks. Missing, queued, skipped,
 cancelled, timed-out, or failed checks are not success. Then read the complete
@@ -123,12 +146,16 @@ same branch and repeat CI and the complete review.
 After green CI and a clean final self-review, squash-merge the pull request and
 delete the branch. No human or second reviewer is required.
 
-### 8. Close out final delivery facts
+### 9. Close out final delivery facts
 
 Open a metadata-only closeout pull request that records the main pull request,
 squash commit, and CI evidence in today's report and `status.md`. Wait for its
 CI, self-review its final diff, and squash-merge it. A collection-only run does
 not require deployment waiting unless metadata changes rendered output.
+
+Any technical repair initiated by this skill must also satisfy
+`$change-seo-site` production deployment, public verification, and metadata
+closeout requirements before the operating cycle is complete.
 
 ## Failure rules
 
@@ -140,3 +167,5 @@ not require deployment waiting unless metadata changes rendered output.
   through a pull request; do not fabricate completion.
 - If metrics are unchanged, today's Markdown entry is still delivered through
   the required pull-request lifecycle.
+- A confirmed actionable technical defect may not be reduced to a follow-up or
+  plan item when a safe same-cycle repair path exists.

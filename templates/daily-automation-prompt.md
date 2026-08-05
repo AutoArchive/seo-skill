@@ -23,10 +23,37 @@ write or append `.github/seo-data/daily/YYYY-MM-DD.md`. Maintain `status.md`,
 `plan.md`, and `block.md` according to their roles. Keep raw data and private
 identifiers outside Git.
 
-Implement at most one coherent site improvement per main pull request. Run the
-smallest relevant local validation, inspect the intended diff, push the branch,
-and create a real non-draft pull request. Never substitute a direct default-
-branch push, issue, draft PR, or local commit.
+## Same-cycle technical repair requirement
+
+Technical defects take priority over routine SEO experiments, source discovery,
+content production, reporting, and promotion work. When the run discovers a
+reproducible and actionable defect in build, CI, deployment, data generation,
+runtime behavior, crawlability, indexability, accessibility, performance,
+broken links, redirects, canonical signals, metadata, structured data,
+robots.txt, sitemap output, server rendering, or primary user flows, repair it
+during the same scheduled operating cycle and local calendar day whenever a
+safe technical path exists.
+
+Do not intentionally defer an actionable defect to a future daily run merely
+because another improvement was planned or because one pull request already
+exists. The one-coherent-change limit applies per main pull request, not per day.
+Use additional focused pull requests when independent repairs cannot be reviewed
+coherently together. A production regression or failed deployment preempts
+routine work and must be diagnosed, repaired or safely rolled back, deployed,
+and verified before the cycle is closed.
+
+If the defect cannot be completed because an external system enforces a
+human-only action, permission is absent, or no safe rollback path exists, record
+the exact evidence, mitigation attempted, and required external action in
+`block.md` through the normal pull-request lifecycle. Provider queues that run
+past local midnight do not turn the repair into planned backlog; continue the
+same operation until it reaches a truthful terminal outcome.
+
+Implement one coherent outcome per main pull request. Run the smallest relevant
+local validation, inspect the intended diff, push the branch, and create a real
+non-draft pull request. Never substitute a direct default-branch push, issue,
+draft PR, or local commit. Multiple focused pull requests may be completed in the
+same daily cycle when required by the same-cycle technical repair rule.
 
 Wait for every required and expected existing CI check. Then self-review the
 complete final diff, commits, generated output, and check results. Fix every
