@@ -31,8 +31,15 @@ branch push, issue, draft PR, or local commit.
 Wait for every required and expected existing CI check. Then self-review the
 complete final diff, commits, generated output, and check results. Fix every
 issue on the same branch and repeat CI and the complete review. After green CI
-and a clean final review, squash-merge the pull request and delete the branch.
-No human or second reviewer is required.
+and a clean final review, squash-merge the pull request. Attempt to delete the
+merged head branch only when the available repository tool supports safe branch
+deletion. No human or second reviewer is required.
+
+Merged head-branch deletion is best-effort cleanup, not a completion criterion.
+Do not create a `block.md` item, require human action, delay closeout, or mark the
+cycle incomplete merely because the connector cannot delete branches or a
+merged automation branch remains. Never force-delete a default, protected,
+active, or unrelated branch.
 
 For a site change, identify the production deployment triggered by the exact
 squash commit, wait for success, and verify the changed behavior on the public
