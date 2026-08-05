@@ -146,8 +146,9 @@ Before repository delivery, prepare a concise internal review packet containing:
 - target source path, generated URL, canonical URL, and production acceptance
   check.
 
-Use this packet to write the pull-request description and final self-review. Do
-not publish private notes or copyrighted source excerpts.
+Use this packet to write the pull-request description and perform the post-CI
+from-scratch domain review. Do not publish private notes or copyrighted source
+excerpts.
 
 ## Repository delivery
 
@@ -183,13 +184,12 @@ Run the consuming repository's authoritative checks. Where available, check:
 - invalid dates or placeholder content;
 - duplicate title, slug, or substantially duplicated body.
 
-## CI and final self-review
+## CI and domain-specific final review
 
-Wait for every required and expected check. Missing, queued, skipped, cancelled,
-timed-out, and failed checks prohibit merge.
-
-After CI is green, review the complete final diff and generated output from the
-beginning. Perform two separate passes:
+Use `$deliver-github-pr` through `$change-seo-site` for complete expected CI and
+the common from-scratch final review. During that post-CI review, also restart
+the article review from the original research question and perform two separate
+domain passes:
 
 ### Evidence review
 
@@ -212,14 +212,14 @@ beginning. Perform two separate passes:
 - The conclusion answers the original question.
 - The article reads as one authored argument rather than stitched summaries.
 
-Fix every issue on the same branch, wait for CI again, and repeat the complete
-review.
+Fix every issue on the same branch, wait for complete CI again, restart the
+common review from the original request, and repeat both article passes.
 
 ## Merge, production, and public verification
 
-After green CI and clean self-review, squash-merge through `$change-seo-site`.
-Then identify the deployment produced by the actual production provider for the
-exact squash commit.
+After `$deliver-github-pr` returns a squash commit through `$change-seo-site`,
+identify the deployment produced by the actual production provider for that
+exact commit.
 
 Verify the canonical public hostname independently. At minimum confirm:
 
@@ -248,7 +248,8 @@ A research-publication cycle is complete only when:
 - the article contains a defensible original synthesis;
 - evidence and style audits passed;
 - the article meets site-specific length and structure rules without filler;
-- a real pull request passed all expected CI and a complete final self-review;
+- a real pull request passed all expected CI, a common from-scratch review, and
+  both complete article review passes;
 - the pull request was squash-merged;
 - the exact commit deployed through the actual production provider;
 - the canonical public article was independently verified;

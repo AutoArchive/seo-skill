@@ -91,5 +91,8 @@ requests it or the requested feature cannot be validated safely otherwise.
 Deliver changes through a focused pull request. Review the final diff for
 unrequested files, changed operating contracts, and scope expansion before
 merge. The pull-request description must record the rationale, shared-layer
-applicability, compatibility boundary, and site-neutrality review. Follow the
-repository's normal CI, self-review, and squash-merge process.
+applicability, compatibility boundary, and site-neutrality review. Invoke
+`$deliver-github-pr`, wait for the repository's `Skills` CI, then restart review
+from the original request and inspect the complete final base-to-head change.
+If that review requires a fix, rerun CI and restart the entire review again
+before squash merge.

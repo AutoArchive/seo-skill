@@ -1,6 +1,6 @@
 ---
 name: change-seo-site
-description: Implement and deliver an evidence-backed SEO or GEO change in a website repository through a real pull request. Use when changing content, metadata, structured data, internal links, crawlability, performance, or other search-facing behavior and the change must pass CI, receive an automated final self-review, squash merge, deploy successfully, and be verified on the public site.
+description: Implement and deliver an evidence-backed SEO or GEO change in a website repository through a real pull request. Use when changing content, metadata, structured data, internal links, crawlability, performance, or other search-facing behavior and the change must pass CI, receive a from-scratch final review after CI, squash merge, deploy successfully, and be verified on the public site.
 ---
 
 # Change SEO Site
@@ -9,9 +9,9 @@ description: Implement and deliver an evidence-backed SEO or GEO change in a web
 
 Ship evidence-backed SEO improvements from current evidence to verified
 production. Every consuming-repository change uses a real pull request, waits
-for CI, receives a complete final self-review, squash-merges, waits for the exact
-production deployment, verifies the live result, and closes out the Markdown
-operating record.
+for CI, receives a complete from-scratch final review, squash-merges, waits for
+the exact production deployment, verifies the live result, and closes out the
+Markdown operating record.
 
 A coherent change remains the unit of one main pull request. It is not a daily
 quota. A daily operating cycle may and must deliver multiple focused pull
@@ -84,8 +84,7 @@ Read completely:
 - `.github/seo-data/site.md`, `daily-task.md`, `status.md`, `plan.md`, and
   `block.md`;
 - the newest relevant reports in `.github/seo-data/daily/`;
-- [`references/deployment-verification.md`](references/deployment-verification.md);
-- [`../../references/pull-request-delivery.md`](../../references/pull-request-delivery.md).
+- [`references/deployment-verification.md`](references/deployment-verification.md).
 
 When current analytics are needed, use `$collect-seo-data` first. Do not invent a
 site change merely to satisfy the schedule. A no-op day may update only the daily
@@ -145,10 +144,10 @@ A routine scheduled run may select at most one speculative or experimental SEO
 improvement. This limit does not apply to confirmed technical defects that must
 be repaired under the same-cycle SLA.
 
-### 2. Prepare branch and dependency update
+### 2. Prepare delivery and dependency update
 
-Inspect branch, upstream, dirty files, and submodule state. Fetch the remote
-default branch and create a fresh branch using the prefix in `site.md`. Preserve
+Begin or continue `$deliver-github-pr` through its scope and branch-preparation
+steps. Use the fresh branch established for this pull request and preserve
 unrelated work.
 
 Fetch the `seo-skills` submodule remote. If a newer allowed commit exists,
@@ -181,41 +180,19 @@ For same-cycle technical repairs, explicitly record discovery time, severity,
 user or crawler impact, root cause, mitigation, repair PR, CI, exact deployment,
 live verification, and whether any residual risk remains.
 
-### 5. Validate and create the real pull request
+### 5. Deliver the main pull request
 
-Run the consuming repository's smallest authoritative checks. Read the intended
-diff and generated output. Review correctness, SEO semantics, public-data safety,
-scope, blast radius, regressions, tests, rollback, and submodule compatibility.
-Stage explicit paths, commit, push the fresh branch, and create a real non-draft
-pull request. Its body must state evidence, baseline, scope, affected and
+Resume `$deliver-github-pr` for validation, staging, commit, push, the real
+non-draft pull request, complete expected CI, from-scratch final review, repair
+loop, and squash merge. In addition to its common checks, review SEO semantics,
+public-data safety, blast radius, affected and representative unaffected routes,
+generated output, rollback, and submodule compatibility.
+
+The pull-request body must state evidence, baseline, scope, affected and
 unaffected routes, tests, rollback, deployment target, acceptance check, and any
-submodule update.
+submodule update. Capture the returned pull-request URL and exact squash commit.
 
-### 6. Wait for CI and self-review
-
-Wait until every required and expected existing CI check reaches success. Treat
-missing, queued, skipped, cancelled, timed-out, and failed checks as not ready.
-
-After CI is green, read the complete final pull-request diff, commits, generated
-output, and check results. Fix every issue on the same branch, wait for CI again,
-and repeat the complete self-review. No human or second reviewer is required.
-
-### 7. Squash merge and optional branch cleanup
-
-Only after green CI and a clean final self-review, squash-merge the real pull
-request. Capture the pull-request URL and resulting squash commit. Attempt to
-delete the merged head branch only when the available repository tool supports
-safe branch deletion.
-
-Merged head-branch deletion is best-effort repository hygiene, not a completion
-criterion. A connector that does not expose branch deletion, or a harmless
-failure to delete an already-merged automation branch, must not create a
-`block.md` item, require human action, delay closeout, or make the operation
-incomplete. Never force-delete a default, protected, active, or unrelated
-branch. Never push the automated change directly to the default branch, bypass
-checks, or force-push.
-
-### 8. Wait for production deployment
+### 6. Wait for production deployment
 
 Locate the production deployment triggered by the exact squash commit using the
 provider, workflow, environment, and verification URL in `site.md` plus live
@@ -223,11 +200,11 @@ repository configuration. Wait for a successful terminal state. A PR check,
 workflow URL, preview, or HTTP 200 alone does not prove deployment.
 
 If deployment fails, diagnose and deliver a corrective pull request through the
-same lifecycle, then repeat CI and deployment waiting. Continue while safe
-progress is possible. Record a blocker only when an external human-only action
-or missing permission is the true cause.
+same `$deliver-github-pr` lifecycle, then repeat deployment waiting. Continue
+while safe progress is possible. Record a blocker only when an external
+human-only action or missing permission is the true cause.
 
-### 9. Verify production and close out
+### 7. Verify production and close out
 
 Inspect the public site and verify the acceptance check defined before editing,
 including relevant visible content, title, description, canonical, structured
@@ -236,12 +213,11 @@ Verify the affected route and the representative unaffected routes selected in
 the baseline so an unexpected shared-template regression is not mistaken for a
 successful focused change.
 
-Create a metadata-only closeout branch and non-draft pull request. Update today's
-report and `status.md` with the main PR, squash commit, CI, deployment, public
-URL, verification time, and observed result. Wait for CI, self-review the entire
-closeout diff, and squash-merge it. No deployment wait is needed unless the
-closeout changes rendered output. Branch cleanup may be attempted or skipped as
-unsupported without affecting closeout completion.
+Update today's report and `status.md` with the main PR, squash commit, CI,
+deployment, public URL, verification time, and observed result. Invoke
+`$deliver-github-pr` again for the metadata-only closeout pull request, including
+its complete CI and from-scratch review. No deployment wait is needed unless the
+closeout changes rendered output.
 
 ## Completion criteria
 
@@ -251,7 +227,8 @@ Do not report completion until all are true:
   verified or has a truthful human-only blocker with mitigation evidence;
 - each real change pull request exists and is squash-merged;
 - all required and expected CI checks passed;
-- the agent completed a clean final diff review after CI;
+- the agent completed a clean from-scratch review of the complete final PR after
+  CI;
 - the exact squash commit deployed successfully to production;
 - the changed behavior and representative unaffected behavior were verified on
   the public site;
