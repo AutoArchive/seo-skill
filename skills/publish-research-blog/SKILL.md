@@ -36,12 +36,27 @@ proof.
 Do not change the consuming repository's `.github/seo-data` file structure. Use
 its existing files and headings.
 
+## Site context boundary
+
+The standard site-owned file set is `site.md`, `position.md`, `plan.md`,
+`daily-task.md`, `status.md`, `block.md`, `promotion.md`, and daily records.
+`site.md` holds technical production, deployment, analytics, and verification
+facts. `position.md` holds mission, readers, research programs, editorial
+boundaries, article form, language, and style. Site-specific content stays in the
+consuming repository.
+
+The shared validator does not enforce that every standard file exists and does
+not migrate established layouts. A missing standard file should be added through
+a focused site-specific pull request rather than turning a submodule update into
+a compatibility failure.
+
 ## Editorial program and topic selection
 
-Read the site's existing editorial plan and recent articles. A durable site may
-organize work into several research programs, such as terminology history,
-literary and media analysis, cross-language comparison, or repeated technical
-experiments. These programs belong to the site's plan, not this shared skill.
+Read the site's existing `position.md`, editorial plan, and recent articles. A
+durable site may organize work into several research programs, such as
+terminology history, literary and media analysis, cross-language comparison, or
+repeated technical experiments. These programs belong to the site, not this
+shared skill.
 
 Select one narrow question that advances one program and fits into a larger chain
 of articles. Prefer questions that:
