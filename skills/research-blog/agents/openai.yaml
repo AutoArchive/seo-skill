@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research Blog"
+  short_description: "Research, write, and publish a rich thesis-led article"
+  default_prompt: "Use $research-blog to produce one substantial evidence-backed article with a clear thesis, explicit reader use, at least 5,000 Chinese characters, at least 40 substantive sources split between academic and primary or community material, collaborative affirmative prose, complete citations, and verified production delivery."
