@@ -37,6 +37,20 @@ in `.github/seo-data/site.md`. When a justified site improvement is in scope,
 also use `$change-seo-site` from
 `.github/seo-skills/skills/change-seo-site/SKILL.md`.
 
+When the site's daily task requires a long-form research article, invoke
+`$publish-research-blog` from
+`.github/seo-skills/skills/publish-research-blog/SKILL.md`. It must invoke
+`$deep-research-blog` and `$write-readable-research-blog` completely before
+repository delivery. Site-specific research programs and topic rotation belong
+in the consuming site's existing editorial plan. The public product is a
+coherent article; search logs, source matrices, JSON, and metadata do not replace
+it.
+
+Research writing should use clear, positive, direct Chinese prose. During the
+style audit, reduce repetitive rhetorical forms such as “不是……而是……”, “并非”,
+“不只是”, and “这并不意味着”. Preserve negation when it establishes a precise
+evidence boundary or a genuine non-equivalence.
+
 Treat `.github/seo-data/daily-task.md` as the site-specific execution entrypoint.
 Create a fresh branch from the current remote default branch using the site's
 established branch convention. Check the `seo-skills` submodule remote and
@@ -104,11 +118,13 @@ same daily cycle when required by the same-cycle technical repair rule.
 
 Wait for every required and expected existing CI check. Then self-review the
 complete final diff, commits, generated output, analytics behavior, URL policy,
-consumer-layout preservation, and check results. Fix every issue on the same
-branch and repeat CI and the complete review. After green CI and a clean final
-review, squash-merge the pull request. Attempt to delete the merged head branch
-only when the available repository tool supports safe branch deletion. No human
-or second reviewer is required.
+consumer-layout preservation, and check results. For research articles, also
+review claim-level citations, source quality, counterevidence, original synthesis,
+readability, jargon explanations, and excessive rhetorical self-negation. Fix
+every issue on the same branch and repeat CI and the complete review. After green
+CI and a clean final review, squash-merge the pull request. Attempt to delete the
+merged head branch only when the available repository tool supports safe branch
+deletion. No human or second reviewer is required.
 
 Merged head-branch deletion is best-effort cleanup, not a completion criterion.
 Do not create a blocker, require human action, delay closeout, or mark the cycle

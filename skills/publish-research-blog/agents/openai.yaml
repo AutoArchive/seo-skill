@@ -1,0 +1,4 @@
+interface:
+  display_name: "Publish Research Blog"
+  short_description: "Deliver research articles through verified production"
+  default_prompt: "Use $publish-research-blog to advance one site-defined editorial program through deep research, readable academic writing, a real pull request, green CI, final self-review, squash merge, actual production-provider deployment, and independent public verification."
