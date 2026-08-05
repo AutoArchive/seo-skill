@@ -13,12 +13,14 @@
 
 ## Current signals
 
+- Runtime analytics: required; implementation and production verification pending
 - Google Analytics 4: not collected
 - Google Search Console: not collected
-- Cloudflare: not collected
+- Infrastructure analytics: not collected
+- Analytics privacy boundary: not yet verified
 
 ## Active focus
 
-- Bootstrap the first evidence collection run.
+- Bootstrap mandatory runtime analytics and the first evidence collection run.
 
 This file is the current verified summary. Detailed history belongs in `daily/`.
