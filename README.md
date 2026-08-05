@@ -85,11 +85,20 @@ in a consuming website repository must:
 4. wait until all required and expected CI checks finish successfully;
 5. self-review the complete final diff, commits, and check results;
 6. fix issues on the same branch and repeat CI and self-review when needed;
-7. squash-merge the pull request and delete its branch without human review;
+7. squash-merge the pull request without human review, then attempt to delete
+   its merged head branch when the available repository tool supports safe
+   branch deletion;
 8. for a site change, wait for the exact squash commit's production deployment
    and verify the public result;
 9. open a metadata-only closeout pull request with the verified delivery facts,
    then apply the same CI, self-review, and squash-merge rules to that closeout.
+
+Merged head-branch deletion is best-effort repository hygiene, not a completion
+criterion. A connector that does not expose branch deletion, or a harmless
+failure to delete an already-merged automation branch, must not create a
+`block.md` item, require human action, delay closeout, or make the daily cycle
+incomplete. Never force-delete a default, protected, active, or unrelated
+branch.
 
 The agent is authorized to perform every normal step without requesting human
 approval. Use `block.md` only when an external system actually requires a
