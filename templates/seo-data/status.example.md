@@ -14,10 +14,11 @@
 ## Current signals
 
 - Runtime analytics: required; implementation and production verification pending
+- URL reporting policy: not yet verified
 - Google Analytics 4: not collected
 - Google Search Console: not collected
 - Infrastructure analytics: not collected
-- Analytics privacy boundary: not yet verified
+- Analytics payload policy: not yet verified
 
 ## Active focus
 
