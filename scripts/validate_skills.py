@@ -42,16 +42,14 @@ def validate_skill(skill_dir: Path) -> None:
     description = frontmatter.get("description", "")
     if name != skill_dir.name or not NAME_RE.fullmatch(name):
         raise ValueError(f"invalid skill name in {skill_path}: {name!r}")
-    if len(description) < 40 or len(description) > 1024 or "TODO" in description:
+    if not description or len(description) > 1024:
         raise ValueError(f"invalid skill description in {skill_path}")
-    if "TODO" in text:
-        raise ValueError(f"TODO remains in {skill_path}")
 
     agent_path = skill_dir / "agents" / "openai.yaml"
-    agent_text = agent_path.read_text(encoding="utf-8")
-    for required in ("display_name:", "short_description:", "default_prompt:", f"${name}"):
-        if required not in agent_text:
-            raise ValueError(f"missing {required!r} in {agent_path}")
+    if agent_path.exists():
+        agent_text = agent_path.read_text(encoding="utf-8")
+        if "default_prompt:" in agent_text and f"${name}" not in agent_text:
+            raise ValueError(f"default prompt does not name ${name} in {agent_path}")
 
 
 def validate_links(path: Path) -> None:

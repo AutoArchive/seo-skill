@@ -68,9 +68,9 @@ negation that is necessary for a precise evidence boundary.
 
 ## Consumer-owned data contract
 
-`.github/seo-data` is a stable, consumer-owned interface. The shared skill may
-require durable semantic declarations, but it must not rewrite a consuming
-repository's document structure merely to match shared examples.
+`.github/seo-data` is a stable, consumer-owned interface. Shared skills describe
+the operational questions a site must answer, but do not turn Markdown into a
+schema or require wording solely for machine validation.
 
 A submodule update must not, solely for compatibility with this repository:
 
@@ -81,11 +81,11 @@ A submodule update must not, solely for compatibility with this repository:
   use;
 - copy template prose over site-specific operating instructions.
 
-The validator checks the stable entrypoints `site.md`, `daily-task.md`, the
-`daily/` directory, public-data safety, valid daily filenames, and required
-analytics declarations. It accepts consumer-specific files, titles, headings,
-section order, and prose. Templates are onboarding examples for new sites, not a
-migration schema for existing sites.
+The lightweight checker verifies only that the stable entrypoints and `daily/`
+directory exist and scans for a small set of high-confidence credential or
+private-routing mistakes. It does not parse headings, require analytics labels,
+reject public contact addresses, or grade prose. Templates are onboarding
+examples for new sites, not a migration schema for existing sites.
 
 ## Mandatory analytics baseline
 
@@ -94,15 +94,11 @@ The site chooses its approved provider, but an absent, silently disabled, or
 unverified runtime analytics implementation is a technical defect, not a normal
 privacy mode.
 
-At minimum each site's existing `site.md` must declare, anywhere in its current
-layout:
-
-- `Runtime analytics required: yes`;
-- a named primary runtime provider;
-- a public runtime verification URL;
-- `URL reporting: full-url` or `URL reporting: path-only`;
-- required search analytics;
-- an explicit analytics payload policy.
+Each site must make the operating answer discoverable in its existing notes:
+which runtime provider is expected, where it is implemented, how production is
+checked, whether query strings are included, where search evidence arrives, and
+which data must never be collected. A paragraph, list, table, or repository
+instruction is equally valid; exact labels are not required.
 
 Infrastructure analytics such as Cloudflare should also be documented whenever
 the production provider exposes it. Agents must not remove, disable, replace,
@@ -110,10 +106,10 @@ gate, materially reduce, redact, or expand existing analytics based on their own
 preference. Such a change requires an explicit site-owner instruction recorded
 in the pull request and daily report.
 
-When `site.md` says `full-url`, the complete browser URL, including the query
-string, must be transmitted. When `site.md` says `path-only`, the query string
-must be omitted. The shared validator checks these semantic declarations without
-requiring an `## Analytics` heading or any other document restructuring.
+When the site chooses full-URL reporting, transmit the complete browser URL,
+including the query string. When it chooses path-only reporting, omit the query
+string. Verify the implemented behavior directly; do not infer it from a
+validator-friendly sentence.
 
 ## Scheduler boundary
 

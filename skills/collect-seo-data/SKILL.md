@@ -124,17 +124,19 @@ outside Git.
 
 ### 7. Validate and create a real pull request
 
-Run:
+Optionally run the lightweight safety checker:
 
 ```bash
 python .github/seo-skills/scripts/validate_seo_data.py \
   --data-root .github/seo-data
 ```
 
-Run relevant repository tests. Stage only intended data files and the submodule
-pointer, inspect the staged diff, commit, push, and create a non-draft pull
-request. Do not substitute a direct default-branch push, issue, draft PR, or
-local commit.
+It checks stable entrypoints and high-confidence private-data mistakes; it does
+not prove data correctness or require a Markdown schema. Do not rewrite valid
+site-owned prose to appease it. Run relevant repository tests, inspect the
+actual evidence and intended diff, then stage only intended data files and the
+submodule pointer, commit, push, and create a non-draft pull request. Do not
+substitute a direct default-branch push, issue, draft PR, or local commit.
 
 ### 8. Wait for CI, self-review, and squash merge
 

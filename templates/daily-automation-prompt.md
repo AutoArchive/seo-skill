@@ -22,14 +22,14 @@ may change that requirement.
 
 Treat the consuming repository's existing `.github/seo-data` files, headings,
 titles, section order, and prose as a stable site-owned interface. A shared skill
-or validator update must not cause an incidental schema migration.
+or checker update must not cause an incidental schema migration.
 
 Do not rename files or headings, replace daily-report titles, reorder sections,
-add `promotion.md`, or copy starter templates over established content merely to
-satisfy the shared submodule. Add missing semantic declarations—such as analytics
-labels—in the most natural existing location. Templates are examples for new
-repositories only. Change an established layout only when the site owner's
-instructions or the consuming repository itself explicitly require that change.
+add `promotion.md`, copy starter templates, or add metadata labels merely to
+satisfy the shared submodule. Record missing context only when it helps operate
+or verify the site. Templates are examples for new repositories only. Change an
+established layout only when the site owner's instructions or the consuming
+repository itself explicitly require that change.
 
 Use `$collect-seo-data` from
 `.github/seo-skills/skills/collect-seo-data/SKILL.md` for the single site defined
