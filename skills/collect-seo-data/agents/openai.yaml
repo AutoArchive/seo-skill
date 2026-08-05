@@ -1,4 +1,4 @@
 interface:
   display_name: "Collect SEO Data"
   short_description: "Collect Google and Cloudflare SEO evidence"
-  default_prompt: "Use $collect-seo-data to collect today's Google Drive and Cloudflare evidence, update the Markdown SEO record, open a real pull request, wait for CI, self-review, squash merge, and merge the closeout pull request."
+  default_prompt: "Use $collect-seo-data to collect public-safe Google Drive and Cloudflare evidence, update the site records, and return the result for $deliver-github-pr delivery with complete CI and a from-scratch final review."

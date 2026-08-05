@@ -23,8 +23,7 @@ From the consuming repository, read completely:
 - repository instructions such as `AGENTS.md` or `CLAUDE.md`;
 - the site-owned metadata, daily task, current status, plan, and blocker record;
 - promotion or editorial instructions when relevant to today's scope;
-- the newest relevant daily records;
-- [`../../references/pull-request-delivery.md`](../../references/pull-request-delivery.md).
+- the newest relevant daily records.
 
 Use the consuming repository's existing filenames when its instructions define
 equivalent records. Shared templates are examples, not a schema.
@@ -44,9 +43,9 @@ operator that is still making progress.
 
 ### 2. Review the pinned skills
 
-Fetch the remote default branch and create a fresh operating branch before
-writing repository records or site changes. Follow the consuming repository's
-branch convention and preserve unrelated work.
+Before writing records or site changes for each planned pull request, begin
+`$deliver-github-pr` through its scope and branch-preparation steps. Use the
+fresh branch it prepares and preserve unrelated work.
 
 Inspect the `seo-skills` submodule and its allowed upstream branch. If a newer
 commit exists, review its complete diff and compatibility before including the
@@ -97,11 +96,11 @@ cycle.
 
 ### 6. Deliver and close out
 
-Follow the shared pull-request delivery reference for every consuming-repository
-change. Use a fresh branch, a real non-draft pull request, the smallest relevant
-local validation, all required and expected CI, and a complete final self-review.
-Fix problems on the same branch, repeat CI and review, then squash-merge without
-requiring a human or second reviewer.
+Invoke `$deliver-github-pr` for every main, corrective, and closeout change. It
+owns the fresh branch, real non-draft pull request, complete expected CI, and the
+mandatory from-scratch final review after CI. If that review finds a problem,
+fix it on the same branch, repeat CI, and restart the complete review before
+squash merge. No human or second reviewer is required.
 
 For every site change, invoke `$change-seo-site` through exact production
 deployment and public verification. A preview, workflow URL, script tag,
@@ -118,8 +117,8 @@ Complete the cycle only when:
 - every actionable technical defect is repaired and publicly verified, or has a
   truthful blocker with mitigation evidence;
 - today's site-specific work and public-safe evidence are recorded;
-- all main and closeout pull requests have green expected CI, a clean final
-  self-review, and a squash merge;
+- all main and closeout pull requests have green expected CI, a clean
+  from-scratch review of the complete final PR, and a squash merge;
 - every rendered site change has deployed from the exact squash commit and the
   affected and representative unaffected public behavior has been verified.
 

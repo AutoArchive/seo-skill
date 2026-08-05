@@ -1,0 +1,4 @@
+interface:
+  display_name: "Deliver GitHub PR"
+  short_description: "Open, review, and squash-merge one GitHub pull request"
+  default_prompt: "Use $deliver-github-pr to deliver this scoped change through a real pull request, green CI, a from-scratch final review, and squash merge."

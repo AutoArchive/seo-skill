@@ -23,10 +23,10 @@ and unrelated newer deployments do not satisfy the requirement.
 ## Respond to failure
 
 Read failed build/deployment logs, identify the narrow cause, and deliver a
-corrective pull request using the full validation, CI, final self-review,
-squash-merge, and deployment lifecycle. Do not retry blindly when inputs have
-not changed. Do not force-push, amend shared history, or rewrite another
-contributor's work.
+corrective pull request through `$deliver-github-pr`, including complete CI and
+a from-scratch final review, before repeating the deployment lifecycle. Do not
+retry blindly when inputs have not changed. Do not force-push, amend shared
+history, or rewrite another contributor's work.
 
 If the provider requires a permission or human-only account action that the
 automation cannot perform, write exact evidence and the minimal required action
@@ -57,4 +57,5 @@ The closeout pull request may change only
 `.github/seo-data/daily/YYYY-MM-DD.md`, `.github/seo-data/status.md`, and a
 resolved `block.md` item. It records facts that became available after the main
 pull request merged and must not smuggle in another site change. Wait for its
-CI, perform a final self-review, and squash-merge it.
+CI, perform the full `$deliver-github-pr` from-scratch review, and squash-merge
+it.

@@ -15,6 +15,10 @@ shared collection.
   task, reviews the pinned skills, verifies analytics, collects evidence,
   prioritizes same-cycle technical repair, invokes optional content work, and
   carries every change through truthful delivery and closeout.
+- [`deliver-github-pr`](skills/deliver-github-pr/SKILL.md) owns the reusable
+  GitHub lifecycle for main, corrective, and closeout changes: fresh branch,
+  real non-draft pull request, complete CI, a from-scratch final review after CI,
+  repair-and-review repetition when needed, and squash merge.
 - [`configure-google-seo-export`](skills/configure-google-seo-export/SKILL.md)
   configures Google-managed weekly GA4 and Search Console CSV exports into one
   Drive folder per site, including an idempotent immediate backfill and a
@@ -86,6 +90,11 @@ explicitly defines an interface.
 
 This repository does not ship a validator or CI check for the structure of a
 consuming repository's `.github/seo-data` directory.
+
+The repository's own [validation workflow](.github/workflows/validate.yml) has a
+narrow boundary: it compiles this repository's scripts and checks shared skill
+frontmatter and local Markdown links. It provides minimum pull-request CI for the
+shared package and never inspects or enforces a consuming site's files.
 
 ## Mandatory analytics baseline
 
@@ -164,11 +173,11 @@ change is needed merely because its layout differs from this example.
 
 Configure the schedule in the authorized session-level scheduler, not in the
 website repository. Invoke `$operate-seo-site` for each scheduled cycle and use
-[`references/pull-request-delivery.md`](references/pull-request-delivery.md) as
-the detailed delivery contract. Every automated change still requires a fresh
-branch, real non-draft pull request, all required and expected CI, complete final
-self-review, squash merge, and truthful closeout. Rendered site changes also
-require the exact production deployment and public verification.
+`$deliver-github-pr` for every main, corrective, and closeout pull request. Every
+automated change still requires a fresh branch, real non-draft pull request, all
+required and expected CI, a from-scratch final review of the complete PR after
+CI, squash merge, and truthful closeout. Rendered site changes also require the
+exact production deployment and public verification through `$change-seo-site`.
 
 Merged head-branch deletion remains best-effort repository hygiene. Never push
 automated consuming-repository changes directly to the default branch, bypass

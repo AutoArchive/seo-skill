@@ -116,9 +116,9 @@ outside Git.
 ### 7. Return to the common operating lifecycle
 
 Return the evidence, source qualifications, Markdown changes, and discovered
-defects to `$operate-seo-site` or the direct caller. It owns the real pull
-request, CI wait, final self-review, squash merge, and closeout under
-[`../../references/pull-request-delivery.md`](../../references/pull-request-delivery.md).
+defects to `$operate-seo-site` or the direct caller. It invokes
+`$deliver-github-pr` for the real pull request, complete CI wait, from-scratch
+final review, squash merge, and closeout.
 
 Any technical repair initiated by this skill must also satisfy
 `$change-seo-site` production deployment and public verification before the
