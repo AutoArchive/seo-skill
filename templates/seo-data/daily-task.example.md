@@ -4,7 +4,7 @@
 
 Run one fully autonomous, evidence-backed SEO operating cycle for the site in
 `site.md`. No normal step requires human approval. Every cycle preserves and
-verifies the site's mandatory analytics baseline.
+verifies the site's mandatory analytics baseline and owner-selected URL policy.
 
 ## Schedule
 
@@ -28,17 +28,21 @@ Every canonical production site must have runtime web analytics, Search Console
 coverage, and infrastructure analytics when the production provider exposes it.
 Read and enforce `$ensure-site-analytics` on every run.
 
-Do not remove, disable, replace, gate, or materially reduce analytics based on
-agent preference. An explicit site-owner instruction recorded in the pull
-request and daily report is required to change the implementation. Protect
-privacy by stripping sensitive query parameters and forbidding user content,
-credentials, imported filenames, private document titles, reading text,
-reading progress, private source URLs, cookies, authorization values, and
-user-level identifiers from analytics payloads.
+Do not remove, disable, replace, gate, materially reduce, redact, or expand
+analytics based on agent preference. An explicit site-owner instruction recorded
+in the pull request and daily report is required to change the implementation or
+URL reporting mode.
 
-Missing, broken, leaking, or unverified analytics is a same-cycle technical
-defect. A script tag or provider export alone is not proof: verify source,
-generated output, canonical production runtime, and provider evidence state.
+When `site.md` says `URL reporting: full-url`, send the complete browser URL,
+including its query string. When it says `URL reporting: path-only`, omit the
+query string. Do not silently change either mode. Do not introduce extra custom
+events containing credentials, cookies, authorization values, local files, or
+application storage unless separately authorized by the site owner.
+
+Missing, broken, leaking, policy-inconsistent, or unverified analytics is a
+same-cycle technical defect. A script tag or provider export alone is not proof:
+verify source, generated output, canonical production runtime, URL behavior, and
+provider evidence state.
 
 ## Same-cycle technical repair policy
 
@@ -70,11 +74,11 @@ midnight remain part of the same repair operation rather than future backlog.
 3. Check whether the `seo-skills` submodule has an allowed update and include an
    available update in the same main pull request.
 4. Audit analytics metadata, source, built output, canonical production runtime,
-   sensitive-query handling, Search Console, infrastructure analytics, and
+   owner-selected URL reporting, Search Console, infrastructure analytics, and
    provider evidence. Repair actionable defects in the same cycle.
 5. Collect finalized configured evidence without committing raw data or private
-   identifiers. Mark disabled or unavailable sources accurately; never convert
-   missing data into zero.
+   provider identifiers. Mark unavailable or partial sources accurately; never
+   convert missing data into zero.
 6. Triage every reproducible technical defect immediately. Invoke
    `$change-seo-site` and complete each actionable repair under the same-cycle
    policy before routine work continues.
@@ -86,13 +90,13 @@ midnight remain part of the same repair operation rather than future backlog.
    confirmed technical defects covered by the same-cycle policy.
 9. Validate locally, push each branch, and create real non-draft pull requests.
 10. Wait for all required and expected existing CI, self-review each complete
-    final diff, analytics behavior, generated output, and checks, fix and repeat
-    if needed, then squash-merge. Attempt to delete merged head branches when
-    safe deletion is supported, but treat branch cleanup as best-effort and
+    final diff, analytics and URL behavior, generated output, and checks, fix and
+    repeat if needed, then squash-merge. Attempt to delete merged head branches
+    when safe deletion is supported, but treat branch cleanup as best-effort and
     non-blocking.
 11. For each site change, wait for the exact squash commit to deploy successfully
     through the repository's existing delivery path and verify the changed
-    behavior and expected analytics on the public site.
+    behavior and expected analytics URL policy on the public site.
 12. Open metadata-only closeout pull requests with final evidence; wait for CI,
     self-review, and squash-merge them.
 13. Continue autonomously while safe progress is possible. Record a `block.md`
@@ -102,7 +106,8 @@ midnight remain part of the same repair operation rather than future backlog.
 
 ## Daily completion
 
-A day is complete only after mandatory analytics is present and verified, every
+A day is complete only after mandatory analytics is present and verified,
+production URL transmission matches `full-url` or `path-only` exactly, every
 confirmed actionable technical defect has been repaired and verified or has a
 truthful human-only blocker with mitigation evidence, and all main and closeout
 pull requests are squash-merged. A site-change day also requires successful
