@@ -64,10 +64,10 @@ behavior, fix that consuming repository rather than generalizing it here.
 
 ## Consuming repositories
 
-Website production changes must follow the incremental-change and blast-radius
-policy in `$deliver-github-pr`'s search-facing site-change reference: make the
-smallest independently deployable and reversible change, preserve unrelated
-behavior, and verify affected and representative unaffected pages.
+Website production changes must pass `$operate-seo-site`'s incremental-change
+and minimum-blast-radius decision gate. `$deliver-github-pr` then applies that
+approved boundary through implementation, review, deployment, and verification
+of affected and representative unaffected pages.
 
 Templates are examples, not automatically enforced schemas. Do not create a
 shared validator or CI job to enforce consuming repositories' filenames,

@@ -13,7 +13,8 @@ shared collection.
 - [`operate-seo-site`](skills/operate-seo-site/SKILL.md) is the common entrypoint
   for one complete site operating cycle. It reads the repository-specific daily
   task, reviews the pinned skills, verifies analytics, collects evidence,
-  prioritizes same-cycle technical repair, invokes optional content work, and
+  prioritizes same-cycle technical repair, enforces incremental search-facing
+  changes with the minimum blast radius, invokes optional content work, and
   carries every change through truthful delivery and closeout.
 - [`deliver-github-pr`](skills/deliver-github-pr/SKILL.md) owns the reusable
   delivery lifecycle for main, corrective, and closeout changes: focused
@@ -49,14 +50,15 @@ shared collection.
 ## Skill boundaries
 
 - `$operate-seo-site` decides what the current operating cycle should do and in
-  which order.
+  which order, and owns the incremental-change and minimum-blast-radius gate
+  before a search-facing change is approved.
 - Evidence and content skills own their domain analysis and quality criteria.
 - `$deliver-github-pr` owns how every repository change is implemented and
   carried through PR, CI, final review, merge, applicable production deployment,
   public acceptance, and closeout.
 
-Search-facing incremental-change and blast-radius rules are a conditional
-reference inside `$deliver-github-pr`, not a second delivery skill.
+`$deliver-github-pr` applies that approved boundary through its conditional
+search-facing execution reference; it does not choose or broaden the SEO work.
 
 ## Research publication boundary
 

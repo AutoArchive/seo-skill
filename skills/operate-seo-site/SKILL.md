@@ -28,6 +28,31 @@ From the consuming repository, read completely:
 Use the consuming repository's existing filenames when its instructions define
 equivalent records. Shared templates are examples, not a schema.
 
+## Search-facing change policy
+
+Before selecting or approving any change to content, metadata, structured data,
+internal links, crawlability, performance, analytics, routes, or other public
+search behavior, require the smallest independently deployable, reviewable, and
+reversible change that addresses one observed defect or tests one supported
+hypothesis.
+
+Capture the production baseline, affected route family, representative
+unaffected routes, expected effect, exact public acceptance check, and rollback
+point before implementation. Preserve unrelated design, copy, navigation,
+routes, canonical ownership, redirects, metadata, analytics, and content.
+
+Do not approve an unphased full-site redesign, bulk rewrite, mass route or
+canonical migration, or simultaneous overhaul of content, metadata, navigation,
+and redirects as routine SEO work. Split a necessary large change into
+independently useful phases with their own acceptance and rollback. During an
+active incident, prefer the smallest safe repair or restoration of the last
+known-good behavior.
+
+This is the operating-cycle decision gate. Pass the approved baseline, blast
+radius, affected and unaffected routes, acceptance checks, and rollback to
+`$deliver-github-pr`, whose search-facing reference owns the implementation and
+verification details.
+
 ## Operating cycle
 
 ### 1. Establish site scope and current truth
@@ -71,10 +96,11 @@ truthfully, and keep raw rows and private provider identifiers outside Git.
 ### 4. Triage work in priority order
 
 Handle reproducible technical defects before experiments, content, reporting,
-or promotion. When a safe repair or rollback exists, invoke
-`$deliver-github-pr` as a search-facing site change and finish it during the
-same operating cycle and local calendar day. Use a separate focused pull request
-for each independent repair when combining them would reduce reviewability.
+or promotion. Apply the search-facing change policy above before choosing the
+repair. When a safe repair or rollback exists, invoke `$deliver-github-pr` as a
+search-facing site change and finish it during the same operating cycle and
+local calendar day. Use a separate focused pull request for each independent
+repair when combining them would reduce reviewability.
 
 After technical work, select at most one speculative or experimental site
 improvement supported by current evidence. Do not invent a change to make the
