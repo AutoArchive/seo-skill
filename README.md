@@ -10,6 +10,11 @@ shared collection.
 
 ## Skills
 
+- [`configure-google-seo-export`](skills/configure-google-seo-export/SKILL.md)
+  configures Google-managed weekly GA4 and Search Console CSV exports into one
+  Drive folder per site, including an idempotent immediate backfill and a
+  Google Apps Script installable trigger that does not depend on an agent,
+  browser, or personal computer staying online.
 - [`ensure-site-analytics`](skills/ensure-site-analytics/SKILL.md) requires every
   canonical production site to preserve, verify, and repair runtime analytics,
   Search Console coverage, infrastructure analytics where available, and the
@@ -123,6 +128,19 @@ hosted bot, provider SDK, or model-runner configuration solely to execute these
 skills. A consuming repository must not require `OPENAI_API_KEY` or another
 model-provider credential for SEO scheduling. Existing CI and deployment
 workflows remain valid and may be observed or used for delivery.
+
+### Google export automation is provider-managed
+
+The external session scheduler runs the daily SEO agent. It must not be used to
+produce recurring GA4 or Search Console files. Configure those exports with
+[`configure-google-seo-export`](skills/configure-google-seo-export/SKILL.md): a
+Google Apps Script project owned by the Google account runs the weekly export
+inside Google and writes CSV artifacts to Drive. Codex, ChatGPT, Chrome, and the
+operator's computer may all be offline when that trigger fires.
+
+Keep site folder IDs, GA4 property IDs, OAuth grants, and other private routing
+values only in the private Apps Script project. The shared skill and consuming
+repositories contain policy and filenames, not those identifiers.
 
 ## Recommended onboarding layout
 

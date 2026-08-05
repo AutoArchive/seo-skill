@@ -1,0 +1,4 @@
+interface:
+  display_name: "Configure Google SEO Export"
+  short_description: "Set up Google-managed GA4 and GSC CSV exports"
+  default_prompt: "Use $configure-google-seo-export to configure a Google-owned weekly export, backfill the last complete week, and verify seven idempotent CSV files per active site."
