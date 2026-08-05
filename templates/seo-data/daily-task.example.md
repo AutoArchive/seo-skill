@@ -36,7 +36,9 @@ evidence; they do not run the SEO agent.
    change and define its production acceptance check before editing.
 7. Validate locally, push the branch, and create a real non-draft pull request.
 8. Wait for all required and expected existing CI, self-review the complete
-   final diff, fix and repeat if needed, then squash-merge and delete the branch.
+   final diff, fix and repeat if needed, then squash-merge. Attempt to delete the
+   merged head branch when safe deletion is supported, but treat branch cleanup
+   as best-effort and non-blocking.
 9. For a site change, wait for the exact squash commit to deploy successfully
    through the repository's existing delivery path and verify the changed
    behavior on the public site.
@@ -44,12 +46,14 @@ evidence; they do not run the SEO agent.
     self-review, and squash-merge it.
 11. Continue autonomously while safe progress is possible. Record a `block.md`
     item only when an external system enforces a human-only action or required
-    permission is absent.
+    permission is absent. A missing branch-deletion operation or an undeleted
+    merged automation branch is not a blocker.
 
 ## Daily completion
 
 A day is complete only after its main pull request and closeout pull request are
 squash-merged. A site-change day also requires a successful production
-deployment for the exact squash commit and public verification. A failed or
-missing CI check, failed deployment, local-only commit, issue, draft PR,
+deployment for the exact squash commit and public verification. Merged branch
+cleanup is optional repository hygiene and does not affect completion. A failed
+or missing CI check, failed deployment, local-only commit, issue, draft PR,
 workflow URL, or HTTP 200 alone is not completion.
