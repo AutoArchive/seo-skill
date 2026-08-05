@@ -1,4 +1,0 @@
-interface:
-  display_name: "Deep Research Blog"
-  short_description: "Research one narrow article through multilingual evidence"
-  default_prompt: "Use $deep-research-blog to research one narrow, durable question through multilingual search, scholarly and primary-source reading, counterevidence, a claim-evidence matrix, original synthesis, and citation verification."
