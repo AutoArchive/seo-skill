@@ -11,6 +11,15 @@ Collect read-only evidence for exactly one configured site, keep raw data out of
 Git, update the site's Markdown operating record, and deliver every consuming-
 repository run through a real pull request with CI, self-review, and squash merge.
 
+## Invocation boundary
+
+Invoke this skill from an authorized scheduler outside the consuming repository,
+preferably a ChatGPT or equivalent session-level scheduled task. Do not add or
+modify GitHub Actions, repository cron jobs, webhooks, hosted agent runners, or
+model-provider credential configuration to execute this skill. Existing CI and
+deployment workflows may be observed or used for delivery, but must not host the
+SEO agent. The invoking session owns model access and connected-tool credentials.
+
 ## Required context
 
 From the consuming repository root, read completely:
@@ -106,7 +115,7 @@ local commit.
 
 ### 7. Wait for CI, self-review, and squash merge
 
-Wait for all required and expected CI checks. Missing, queued, skipped,
+Wait for all required and expected existing CI checks. Missing, queued, skipped,
 cancelled, timed-out, or failed checks are not success. Then read the complete
 final diff, commits, generated output, and check results. Fix every issue on the
 same branch and repeat CI and the complete review.

@@ -13,6 +13,15 @@ receives a complete final self-review, squash-merges, waits for the exact
 production deployment, verifies the live result, and closes out the Markdown
 operating record.
 
+## Invocation boundary
+
+Invoke this skill from an authorized scheduler outside the consuming repository,
+preferably a ChatGPT or equivalent session-level scheduled task. Do not add or
+modify GitHub Actions, repository cron jobs, webhooks, hosted agent runners, or
+model-provider credential configuration to execute this skill. Existing CI and
+deployment workflows may be observed or used for delivery, but must not host the
+SEO agent. The invoking session owns model access and connected-tool credentials.
+
 ## Required context
 
 Read completely:
@@ -86,8 +95,8 @@ acceptance check, and any submodule update.
 
 ### 6. Wait for CI and self-review
 
-Wait until every required and expected CI check reaches success. Treat missing,
-queued, skipped, cancelled, timed-out, and failed checks as not ready.
+Wait until every required and expected existing CI check reaches success. Treat
+missing, queued, skipped, cancelled, timed-out, and failed checks as not ready.
 
 After CI is green, read the complete final pull-request diff, commits, generated
 output, and check results. Fix every issue on the same branch, wait for CI again,

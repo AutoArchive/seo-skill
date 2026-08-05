@@ -1,5 +1,14 @@
 # Daily SEO automation prompt
 
+This prompt is invoked by an authorized scheduler outside the consuming
+repository, preferably a ChatGPT or equivalent session-level scheduled task.
+Do not create or modify GitHub Actions, repository cron jobs, webhooks, hosted
+agent runners, or model-provider credential configuration to schedule this
+work. Use the model access and connected tools supplied by the invoking session;
+the consuming repository does not need `OPENAI_API_KEY` or an equivalent secret.
+Existing CI and deployment workflows may be observed or used for delivery, but
+must not host the SEO agent.
+
 Use `$collect-seo-data` from
 `.github/seo-skills/skills/collect-seo-data/SKILL.md` for the single site defined
 in `.github/seo-data/site.md`. When a justified site improvement is in scope,
@@ -9,21 +18,21 @@ also use `$change-seo-site` from
 Treat `.github/seo-data/daily-task.md` as the site-specific execution entrypoint.
 Create a fresh branch from the current remote default branch using the prefix in
 `site.md`. Check the `seo-skills` submodule remote and include an available
-allowed update in the same branch. Collect read-only Google Drive and Cloudflare
-evidence, then write or append `.github/seo-data/daily/YYYY-MM-DD.md`. Maintain
-`status.md`, `plan.md`, and `block.md` according to their roles. Keep raw data
-and private identifiers outside Git.
+allowed update in the same branch. Collect configured read-only evidence, then
+write or append `.github/seo-data/daily/YYYY-MM-DD.md`. Maintain `status.md`,
+`plan.md`, and `block.md` according to their roles. Keep raw data and private
+identifiers outside Git.
 
 Implement at most one coherent site improvement per main pull request. Run the
 smallest relevant local validation, inspect the intended diff, push the branch,
 and create a real non-draft pull request. Never substitute a direct default-
 branch push, issue, draft PR, or local commit.
 
-Wait for every required and expected CI check. Then self-review the complete
-final diff, commits, generated output, and check results. Fix every issue on the
-same branch and repeat CI and the complete review. After green CI and a clean
-final review, squash-merge the pull request and delete the branch. No human or
-second reviewer is required.
+Wait for every required and expected existing CI check. Then self-review the
+complete final diff, commits, generated output, and check results. Fix every
+issue on the same branch and repeat CI and the complete review. After green CI
+and a clean final review, squash-merge the pull request and delete the branch.
+No human or second reviewer is required.
 
 For a site change, identify the production deployment triggered by the exact
 squash commit, wait for success, and verify the changed behavior on the public

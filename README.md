@@ -19,6 +19,25 @@ shared collection.
   self-reviews the final diff, squash-merges it, and waits for deployment and
   live verification.
 
+## Scheduler boundary
+
+The scheduler lives outside every consuming repository. The preferred setup is
+an authorized ChatGPT or other session-level scheduled task that opens the
+repository through connected tools and invokes
+[`templates/daily-automation-prompt.md`](templates/daily-automation-prompt.md)
+or the consuming repository's `.github/seo-data/daily-task.md`.
+
+Do not add a GitHub Actions workflow, repository cron job, webhook runner,
+hosted bot, provider SDK, or model-runner configuration solely to execute these
+skills. A consuming repository must not require `OPENAI_API_KEY` or another
+model-provider credential for SEO scheduling. The invoking session owns its
+model access and connected-tool credentials outside Git.
+
+Existing repository CI and deployment workflows remain valid. The session-level
+scheduler may observe, wait for, or invoke an existing delivery workflow when
+that repository already uses it, but those workflows must not host the SEO
+agent itself.
+
 ## Consumer layout
 
 ```text
@@ -53,10 +72,11 @@ include the updated submodule pointer.
 
 ## Consuming-repository pull-request contract
 
-Use [`templates/daily-automation-prompt.md`](templates/daily-automation-prompt.md)
-with an authorized agent scheduler, or make the scheduler invoke the consuming
-repository's `.github/seo-data/daily-task.md`. Every daily run in a consuming
-website repository must:
+Configure the schedule in the authorized session-level scheduler, not in the
+website repository. Each invocation uses
+[`templates/daily-automation-prompt.md`](templates/daily-automation-prompt.md)
+or the consuming repository's `.github/seo-data/daily-task.md`. Every daily run
+in a consuming website repository must:
 
 1. create a fresh branch and write or append
    `.github/seo-data/daily/YYYY-MM-DD.md`;
