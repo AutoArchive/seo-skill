@@ -12,8 +12,8 @@ shared collection.
 
 - [`ensure-site-analytics`](skills/ensure-site-analytics/SKILL.md) requires every
   canonical production site to preserve, verify, and repair runtime analytics,
-  Search Console coverage, infrastructure analytics where available, and a
-  strict user-data boundary.
+  Search Console coverage, infrastructure analytics where available, and the
+  site-owner-selected URL and payload policy.
 - [`collect-seo-data`](skills/collect-seo-data/SKILL.md) reads GA4 and Search
   Console CSV exports from Google Drive, obtains Cloudflare traffic evidence
   through Cloudflare MCP or GraphQL, and writes a public-safe daily Markdown
@@ -37,19 +37,20 @@ At minimum each site must maintain:
 - Google Search Console coverage;
 - infrastructure traffic analytics such as Cloudflare when the production
   provider exposes it;
-- a documented privacy boundary that excludes user content, credentials,
-  imported filenames, book titles, reading text and progress, private source
-  URLs, cookies, authorization values, and sensitive query parameters.
+- an explicit owner-selected URL reporting mode: `full-url` or `path-only`;
+- an explicit analytics payload policy.
 
-Agents must not remove, disable, replace, gate, or materially reduce existing
-analytics based on their own preference. Such a change requires an explicit
-site-owner instruction recorded in the pull request and daily report. Address
-privacy by minimizing payloads and stripping sensitive values, not by silently
-removing measurement.
+Agents must not remove, disable, replace, gate, materially reduce, redact, or
+expand existing analytics based on their own preference. Such a change requires
+an explicit site-owner instruction recorded in the pull request and daily
+report. When `site.md` says `full-url`, the complete browser URL, including the
+query string, must be transmitted. When it says `path-only`, the query string
+must be omitted.
 
 The consuming repository's `.github/seo-data/site.md` must include the required
 `## Analytics` contract. The shared validator rejects sites that omit it, mark
-runtime analytics as optional, or fail to name a primary provider.
+runtime analytics as optional, fail to name a primary provider, or omit the URL
+reporting mode and payload policy.
 
 ## Scheduler boundary
 
@@ -110,8 +111,9 @@ website repository. Each invocation uses
 or the consuming repository's `.github/seo-data/daily-task.md`. Every daily run
 in a consuming website repository must:
 
-1. read and enforce `$ensure-site-analytics`, including source, built-output,
-   production, Search Console, infrastructure analytics, and privacy checks;
+1. read and enforce `$ensure-site-analytics`, including source, built output,
+   production runtime, URL policy, Search Console, infrastructure analytics,
+   and provider evidence;
 2. create a fresh branch and write or append
    `.github/seo-data/daily/YYYY-MM-DD.md`;
 3. include the intended data or site changes and any available submodule update;
@@ -149,11 +151,13 @@ Assume this repository and consuming repositories are public. Raw exports stay
 in Google Drive or the analytics provider. Public browser measurement IDs may
 remain in runtime source because clients must receive them. Never commit
 credentials, OAuth material, personal emails, private account/property/zone/Drive
-IDs, IP addresses, user-level analytics, raw query rows, private URLs, cookies,
-authorization values, or full API responses. Daily Markdown may contain
-aggregated metrics, public URLs, source status, date windows, export filenames,
-checksums, decisions, changed files, PR/CI/deployment URLs, and verification
-results.
+IDs, IP addresses, user-level analytics rows, raw provider exports, cookies,
+authorization values, or full API responses. A site may explicitly choose to
+transmit full public browser URLs to its analytics provider; that runtime policy
+must be disclosed in `site.md` and public site documentation. Daily Markdown may
+contain aggregated metrics, public URLs, source status, date windows, export
+filenames, checksums, decisions, changed files, PR/CI/deployment URLs, and
+verification results.
 
 ## License
 
