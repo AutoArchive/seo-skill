@@ -26,7 +26,14 @@ verification cannot be skipped.
 9. If review finds a problem, fix it on the same branch, push, wait for CI again,
    and repeat the complete review.
 10. When CI is green and final self-review is clean, squash-merge the pull
-    request and delete its branch.
+    request. Attempt to delete its merged head branch only when the available
+    repository tool supports safe branch deletion.
+
+Merged head-branch deletion is best-effort hygiene, not part of delivery
+completion. If a connector does not expose branch deletion, or deleting an
+already-merged automation branch fails harmlessly, continue to deployment and
+closeout. Do not create a human-only blocker for this condition. Never
+force-delete a default, protected, active, or unrelated branch.
 
 The agent performs the review itself. Do not manufacture approval from a second
 identity or bypass branch protection.
@@ -61,6 +68,8 @@ so create a metadata-only closeout pull request. Update the same day's report an
 The closeout is a real non-draft pull request. Wait for its CI, self-review the
 complete diff, and squash-merge it. A metadata-only closeout does not need to
 wait for a site deployment unless it changes rendered or deployed content.
+Branch cleanup may be recorded as attempted, skipped because unsupported, or
+completed, but it must not delay or invalidate closeout.
 
 ## Prohibited shortcuts
 

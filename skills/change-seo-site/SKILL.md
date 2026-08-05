@@ -102,11 +102,19 @@ After CI is green, read the complete final pull-request diff, commits, generated
 output, and check results. Fix every issue on the same branch, wait for CI again,
 and repeat the complete self-review. No human or second reviewer is required.
 
-### 7. Squash merge
+### 7. Squash merge and optional branch cleanup
 
 Only after green CI and a clean final self-review, squash-merge the real pull
-request and delete its branch. Capture the pull-request URL and resulting squash
-commit. Never push the automated change directly to the default branch, bypass
+request. Capture the pull-request URL and resulting squash commit. Attempt to
+delete the merged head branch only when the available repository tool supports
+safe branch deletion.
+
+Merged head-branch deletion is best-effort repository hygiene, not a completion
+criterion. A connector that does not expose branch deletion, or a harmless
+failure to delete an already-merged automation branch, must not create a
+`block.md` item, require human action, delay closeout, or make the operation
+incomplete. Never force-delete a default, protected, active, or unrelated
+branch. Never push the automated change directly to the default branch, bypass
 checks, or force-push.
 
 ### 8. Wait for production deployment
@@ -131,7 +139,8 @@ Create a metadata-only closeout branch and non-draft pull request. Update today'
 report and `status.md` with the main PR, squash commit, CI, deployment, public
 URL, verification time, and observed result. Wait for CI, self-review the entire
 closeout diff, and squash-merge it. No deployment wait is needed unless the
-closeout changes rendered output.
+closeout changes rendered output. Branch cleanup may be attempted or skipped as
+unsupported without affecting closeout completion.
 
 ## Completion criteria
 
@@ -143,3 +152,5 @@ Do not report completion until all are true:
 - the exact squash commit deployed successfully to production;
 - the changed behavior was verified on the public site;
 - a closeout pull request recorded the evidence and was squash-merged.
+
+Deletion of merged automation branches is not required for completion.
