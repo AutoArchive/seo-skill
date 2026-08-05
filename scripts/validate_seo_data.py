@@ -51,11 +51,14 @@ PRIMARY_ANALYTICS_RE = re.compile(
 RUNTIME_VERIFICATION_RE = re.compile(
     r"(?im)^\s*[-*]\s*Runtime verification URL:\s*`?https://[^\s`]+`?\s*$"
 )
+URL_REPORTING_RE = re.compile(
+    r"(?im)^\s*[-*]\s*URL reporting:\s*`?(?:full-url|path-only)`?\s*$"
+)
 SEARCH_ANALYTICS_RE = re.compile(
     r"(?im)^\s*[-*]\s*Search analytics required:\s*(?!`?(?:none|no|optional|disabled)`?\s*$).+\S\s*$"
 )
-FORBIDDEN_PAYLOADS_RE = re.compile(
-    r"(?im)^\s*[-*]\s*Forbidden analytics payloads:\s*.+\S\s*$"
+PAYLOAD_POLICY_RE = re.compile(
+    r"(?im)^\s*[-*]\s*Analytics payload policy:\s*.+\S\s*$"
 )
 
 
@@ -89,8 +92,9 @@ def validate_analytics_contract(path: Path, text: str) -> None:
         (ANALYTICS_REQUIRED_RE, "runtime analytics must be explicitly required: yes"),
         (PRIMARY_ANALYTICS_RE, "a primary runtime analytics provider is required"),
         (RUNTIME_VERIFICATION_RE, "a public HTTPS runtime analytics verification URL is required"),
+        (URL_REPORTING_RE, "URL reporting must be full-url or path-only"),
         (SEARCH_ANALYTICS_RE, "search analytics must be required"),
-        (FORBIDDEN_PAYLOADS_RE, "the forbidden analytics payload boundary is required"),
+        (PAYLOAD_POLICY_RE, "the analytics payload policy is required"),
     )
     for pattern, message in checks:
         if not pattern.search(text):
