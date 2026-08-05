@@ -1,6 +1,6 @@
 ---
 name: change-seo-site
-description: Implement and deliver an evidence-backed SEO or GEO change directly in a website repository. Use when changing content, metadata, structured data, internal links, crawlability, performance, or other search-facing behavior and the anonymous pushed commit must pass CI, deploy successfully, and be verified on the public site.
+description: Implement and deliver an evidence-backed SEO or GEO change in a website repository through a real pull request. Use when changing content, metadata, structured data, internal links, crawlability, performance, or other search-facing behavior and the change must pass CI, receive an automated final self-review, squash merge, deploy successfully, and be verified on the public site.
 ---
 
 # Change SEO Site
@@ -8,9 +8,10 @@ description: Implement and deliver an evidence-backed SEO or GEO change directly
 ## Overview
 
 Ship one coherent SEO improvement from current evidence to verified production.
-Every change uses an anonymous direct commit to the default branch, waits for
-exact-commit CI and production deployment, verifies the live result, and closes
-out the Markdown operating record with another anonymous commit.
+Every consuming-repository change uses a real pull request, waits for CI,
+receives a complete final self-review, squash-merges, waits for the exact
+production deployment, verifies the live result, and closes out the Markdown
+operating record.
 
 ## Required context
 
@@ -21,11 +22,11 @@ Read completely:
   `block.md`;
 - the newest relevant reports in `.github/seo-data/daily/`;
 - [`references/deployment-verification.md`](references/deployment-verification.md);
-- [`../../references/direct-delivery.md`](../../references/direct-delivery.md).
+- [`../../references/pull-request-delivery.md`](../../references/pull-request-delivery.md).
 
 When current analytics are needed, use `$collect-seo-data` first. Do not invent a
 site change merely to satisfy the schedule. A no-op day may update only the daily
-evidence record through the same anonymous direct-commit lifecycle.
+evidence record, but it still follows the pull-request lifecycle.
 
 ## Workflow
 
@@ -40,13 +41,14 @@ to choose at most one coherent outcome. Define before editing:
 - local validation and expected CI;
 - the production deployment and live acceptance check.
 
-### 2. Synchronize the default branch and skills
+### 2. Prepare branch and dependency update
 
-Inspect branch, upstream, dirty files, and submodule state. Require a clean local
-default branch and fast-forward it to its remote. Preserve unrelated work.
+Inspect branch, upstream, dirty files, and submodule state. Fetch the remote
+default branch and create a fresh branch using the prefix in `site.md`. Preserve
+unrelated work.
 
 Fetch the `seo-skills` submodule remote. If a newer allowed commit exists,
-update the submodule pointer in the same main commit and review compatibility.
+update the submodule pointer in the same pull request and review compatibility.
 Do not edit submodule files locally.
 
 ### 3. Implement narrowly
@@ -56,9 +58,9 @@ canonical ownership, navigation, and unrelated content unless evidence-backed
 scope explicitly requires a change. Prefer reversible, source-controlled,
 testable changes visible in generated output.
 
-This skill authorizes site changes, direct repository delivery, deployment wait,
-verification, and corrective commits without human approval. It does not
-authorize exposing secrets or fabricating external endorsements.
+This skill authorizes site changes, pull-request delivery, squash merge,
+deployment wait, verification, and corrective pull requests without human
+approval. It does not authorize exposing secrets or fabricating endorsements.
 
 ### 4. Record the work
 
@@ -67,7 +69,7 @@ outcome, changed files, validation, submodule movement, and pending delivery
 fields. Update `status.md` with current facts and `plan.md` with future work. Use
 `block.md` only for a genuine human-only or permission blocker.
 
-### 5. Validate and self-review
+### 5. Validate and create the real pull request
 
 Run the repository's smallest authoritative checks plus:
 
@@ -76,36 +78,39 @@ python .github/seo-skills/scripts/validate_seo_data.py \
   --data-root .github/seo-data
 ```
 
-Read the complete intended diff and generated output. Review correctness, SEO
-semantics, public-data safety, scope, regressions, tests, and submodule
-compatibility. Fix every issue before committing.
+Read the intended diff and generated output. Review correctness, SEO semantics,
+public-data safety, scope, regressions, tests, and submodule compatibility.
+Stage explicit paths, commit, push the fresh branch, and create a real non-draft
+pull request. Its body must state evidence, scope, tests, deployment target,
+acceptance check, and any submodule update.
 
-### 6. Commit and push anonymously
+### 6. Wait for CI and self-review
 
-Configure the repository-local anonymous name and email from `site.md` and
-verify effective config values and origins. Stage explicit paths, inspect the
-staged diff, and commit directly on the default branch. Fetch once more; if the
-remote advanced, rebase only the automation's own commit, rerun validation and
-self-review, then push normally. Never open a pull request, force-push, or amend
-already-pushed history.
+Wait until every required and expected CI check reaches success. Treat missing,
+queued, skipped, cancelled, timed-out, and failed checks as not ready.
 
-### 7. Wait for exact-commit CI
+After CI is green, read the complete final pull-request diff, commits, generated
+output, and check results. Fix every issue on the same branch, wait for CI again,
+and repeat the complete self-review. No human or second reviewer is required.
 
-Capture the pushed commit and wait for every required and expected check tied to
-that exact commit. Missing, queued, skipped, cancelled, timed-out, or failed
-checks are not ready. If CI fails, diagnose and push a corrective commit through
-the same validation and review process, then wait for the new exact commit.
+### 7. Squash merge
+
+Only after green CI and a clean final self-review, squash-merge the real pull
+request and delete its branch. Capture the pull-request URL and resulting squash
+commit. Never push the automated change directly to the default branch, bypass
+checks, or force-push.
 
 ### 8. Wait for production deployment
 
-Locate the production deployment triggered by the exact successful commit using
-the provider, workflow, environment, and verification URL in `site.md` plus live
-repository configuration. Wait for a successful terminal state. A CI start,
+Locate the production deployment triggered by the exact squash commit using the
+provider, workflow, environment, and verification URL in `site.md` plus live
+repository configuration. Wait for a successful terminal state. A PR check,
 workflow URL, preview, or HTTP 200 alone does not prove deployment.
 
-If deployment fails, diagnose and push a corrective commit, then repeat CI and
-deployment waiting. Continue while safe progress is possible. Record a blocker
-only when an external human-only action or missing permission is the true cause.
+If deployment fails, diagnose and deliver a corrective pull request through the
+same lifecycle, then repeat CI and deployment waiting. Continue while safe
+progress is possible. Record a blocker only when an external human-only action
+or missing permission is the true cause.
 
 ### 9. Verify production and close out
 
@@ -113,18 +118,19 @@ Inspect the public site and verify the acceptance check defined before editing,
 including relevant visible content, title, description, canonical, structured
 data, links, robots/sitemap output, headers, redirects, or performance signal.
 
-Push a metadata-only anonymous closeout commit that updates today's report and
-`status.md` with the main commit, CI, deployment, public URL, verification time,
-and observed result. Validate and self-review the closeout diff and wait for its
-exact-commit CI. No deployment wait is needed unless the closeout changes
-rendered site output.
+Create a metadata-only closeout branch and non-draft pull request. Update today's
+report and `status.md` with the main PR, squash commit, CI, deployment, public
+URL, verification time, and observed result. Wait for CI, self-review the entire
+closeout diff, and squash-merge it. No deployment wait is needed unless the
+closeout changes rendered output.
 
 ## Completion criteria
 
 Do not report completion until all are true:
 
-- the anonymous main commit was pushed to the default branch;
-- all required and expected CI checks for the exact commit passed;
-- the exact commit deployed successfully to production;
+- a real change pull request exists and is squash-merged;
+- all required and expected CI checks passed;
+- the agent completed a clean final diff review after CI;
+- the exact squash commit deployed successfully to production;
 - the changed behavior was verified on the public site;
-- an anonymous closeout commit recorded the evidence and its CI passed.
+- a closeout pull request recorded the evidence and was squash-merged.

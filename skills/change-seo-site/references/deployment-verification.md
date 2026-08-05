@@ -6,7 +6,8 @@ Read deployment metadata from `.github/seo-data/site.md`, then inspect live
 repository configuration. The documented workflow or provider name is a routing
 hint, not evidence by itself.
 
-Correlate deployment with the exact pushed site-change commit:
+Correlate deployment with the exact squash commit produced by the merged
+site-change pull request:
 
 - GitHub Actions or Pages: select the production workflow run whose `head_sha`
   equals the commit and whose event/branch matches the default branch.
@@ -21,15 +22,16 @@ and unrelated newer deployments do not satisfy the requirement.
 
 ## Respond to failure
 
-Read failed build/deployment logs, identify the narrow cause, and push a
-corrective anonymous commit using the full validation, self-review, CI, and
-deployment lifecycle. Do not retry blindly when inputs have not changed. Do not
-force-push, amend shared history, or rewrite another contributor's work.
+Read failed build/deployment logs, identify the narrow cause, and deliver a
+corrective pull request using the full validation, CI, final self-review,
+squash-merge, and deployment lifecycle. Do not retry blindly when inputs have
+not changed. Do not force-push, amend shared history, or rewrite another
+contributor's work.
 
 If the provider requires a permission or human-only account action that the
 automation cannot perform, write exact evidence and the minimal required action
-to `block.md` in an anonymous direct commit. Ordinary deployment and
-verification do not require approval.
+to `block.md` through a real pull request. Ordinary deployment and verification
+do not require approval.
 
 ## Verify the public result
 
@@ -47,11 +49,12 @@ needed. Check the changed behavior, not just availability. Examples:
 
 An HTTP 200, cached preview, provider dashboard success, or source diff alone is
 insufficient. Capture public URL, verification time, observed value, a public-
-safe deployment URL/ID, and the exact commit in the daily report.
+safe deployment URL/ID, and the exact squash commit in the daily report.
 
 ## Closeout scope
 
-The closeout commit may change only `.github/seo-data/daily/YYYY-MM-DD.md`,
-`.github/seo-data/status.md`, and a resolved `block.md` item. It records facts
-that became available after the site-change push and must not smuggle in another
-site change.
+The closeout pull request may change only
+`.github/seo-data/daily/YYYY-MM-DD.md`, `.github/seo-data/status.md`, and a
+resolved `block.md` item. It records facts that became available after the main
+pull request merged and must not smuggle in another site change. Wait for its
+CI, perform a final self-review, and squash-merge it.

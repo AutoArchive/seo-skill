@@ -9,9 +9,8 @@
 ## Repository
 
 - Default branch: `main`
+- Automation branch prefix: `seo/`
 - Skill submodule path: `.github/seo-skills`
-- Anonymous Git author name: `SEO Operations Bot`
-- Anonymous Git author email: `seo-operations-bot@users.noreply.github.com`
 
 ## Google data
 

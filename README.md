@@ -15,8 +15,9 @@ shared collection.
   through Cloudflare MCP or GraphQL, and writes a public-safe daily Markdown
   record.
 - [`change-seo-site`](skills/change-seo-site/SKILL.md) implements one
-  evidence-backed site improvement, pushes an anonymous commit to the default
-  branch, waits for CI and production deployment, and verifies the live result.
+  evidence-backed site improvement through a real pull request, waits for CI,
+  self-reviews the final diff, squash-merges it, and waits for deployment and
+  live verification.
 
 ## Consumer layout
 
@@ -46,47 +47,48 @@ cp .github/seo-skills/templates/seo-data/plan.example.md .github/seo-data/plan.m
 cp .github/seo-skills/templates/seo-data/block.example.md .github/seo-data/block.md
 ```
 
-Edit only the copied files. Every automated run checks whether the submodule has
-a newer allowed commit; when it does, update the pointer in the same anonymous
-direct commit as that day's site or data work.
+Edit only the copied files. Every consuming-repository run checks whether the
+submodule has a newer allowed commit; when it does, the same pull request must
+include the updated submodule pointer.
 
-## Direct delivery contract
+## Consuming-repository pull-request contract
 
 Use [`templates/daily-automation-prompt.md`](templates/daily-automation-prompt.md)
 with an authorized agent scheduler, or make the scheduler invoke the consuming
-repository's `.github/seo-data/daily-task.md`. Every daily run must:
+repository's `.github/seo-data/daily-task.md`. Every daily run in a consuming
+website repository must:
 
-1. synchronize a clean local default branch with its remote;
-2. write or append `.github/seo-data/daily/YYYY-MM-DD.md` and make any one
-   coherent site change plus an available skill-submodule update;
-3. run local validation and self-review the complete intended diff;
-4. commit with the anonymous repository-local identity documented in `site.md`
-   and push the default branch directly, never through a pull request;
-5. wait for every expected CI check for that exact commit to succeed;
-6. for a site change, wait for the exact commit's production deployment and
-   verify the changed behavior at the public URL;
-7. push an anonymous metadata-only closeout commit that records real CI,
-   deployment, and live verification in the daily report and `status.md`, then
-   wait for the closeout commit's CI.
+1. create a fresh branch and write or append
+   `.github/seo-data/daily/YYYY-MM-DD.md`;
+2. include the intended data or site changes and any available submodule update;
+3. push the branch and create a real, non-draft pull request;
+4. wait until all required and expected CI checks finish successfully;
+5. self-review the complete final diff, commits, and check results;
+6. fix issues on the same branch and repeat CI and self-review when needed;
+7. squash-merge the pull request and delete its branch without human review;
+8. for a site change, wait for the exact squash commit's production deployment
+   and verify the public result;
+9. open a metadata-only closeout pull request with the verified delivery facts,
+   then apply the same CI, self-review, and squash-merge rules to that closeout.
 
 The agent is authorized to perform every normal step without requesting human
 approval. Use `block.md` only when an external system actually requires a
 human-only act or the necessary account permission does not exist.
 
-Never force-push, bypass failed CI, rewrite another contributor's work, or claim
-completion from a workflow URL or HTTP 200 alone. If the remote default branch
-advances, rebase only the automation's own commit, rerun validation and review,
-and push normally.
+Do not push automated consuming-repository changes directly to the default
+branch. A failed, cancelled, skipped, queued, or missing expected check blocks
+merge. If a site-change deployment cannot be identified or fails, the operation
+is not complete.
 
 ## Public-data boundary
 
 Assume this repository and consuming repositories are public. Raw exports stay
 in Google Drive or the analytics provider. Never commit credentials, OAuth
-material, personal emails, account/zone/Drive IDs, IP addresses, user-level analytics,
-raw query rows, private URLs, or full API responses. Daily Markdown may contain
-aggregated metrics, public URLs, source status, date windows, export filenames,
-checksums, decisions, changed files, commit/CI/deployment URLs, and verification
-results.
+material, personal emails, account/zone/Drive IDs, IP addresses, user-level
+analytics, raw query rows, private URLs, or full API responses. Daily Markdown
+may contain aggregated metrics, public URLs, source status, date windows, export
+filenames, checksums, decisions, changed files, PR/CI/deployment URLs, and
+verification results.
 
 ## License
 

@@ -4,8 +4,9 @@
 
 - Last completed run: none
 - Last data window: none
-- Last site-change commit: none
-- Last closeout commit: none
+- Last site-change pull request: none
+- Last squash merge: none
+- Last closeout pull request: none
 - Last successful production deployment: none
 - Last public verification: none
 - Skill submodule commit: not recorded

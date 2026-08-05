@@ -28,7 +28,6 @@ DAILY_HEADINGS = (
     "## Decisions and follow-ups",
 )
 EMAIL_RE = re.compile(r"(?i)\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b")
-ALLOWED_ANONYMOUS_EMAILS = {"seo-operations-bot@users.noreply.github.com"}
 BEARER_RE = re.compile(r"(?i)\b(?:authorization\s*:\s*)?bearer\s+[A-Za-z0-9._~+/-]+=*\b")
 DRIVE_URL_RE = re.compile(r"(?i)https://drive\.google\.com/[^\s)>]+")
 PRIVATE_LABEL_RE = re.compile(
@@ -50,11 +49,8 @@ def read_required(path: Path, headings: tuple[str, ...]) -> str:
 
 
 def scan_public(path: Path, text: str) -> None:
-    for match in EMAIL_RE.finditer(text):
-        if match.group(0).lower() not in ALLOWED_ANONYMOUS_EMAILS:
-            line = text.count("\n", 0, match.start()) + 1
-            raise ValueError(f"personal email-like value in {path}:{line}")
     checks = (
+        (EMAIL_RE, "email-like value"),
         (BEARER_RE, "bearer credential"),
         (DRIVE_URL_RE, "Google Drive URL with private identifier"),
         (PRIVATE_LABEL_RE, "private source identifier"),

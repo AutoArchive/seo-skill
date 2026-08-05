@@ -15,10 +15,13 @@ out of this file.
 ## Operating constraints
 
 - Raw analytics stay outside Git.
-- Every automated change uses the anonymous repository-local Git identity.
-- Work is committed and pushed directly to the default branch; do not open PRs.
-- Local validation and self-review happen before push; exact-commit CI must pass.
-- Site changes wait for deployment success and public verification.
+- Every automated change uses a fresh branch and a real non-draft pull request.
+- Required and expected CI must pass before the final automated self-review.
+- A clean final review is followed by squash merge; human review is not needed.
+- Site changes wait for the exact squash commit's production deployment and
+  public verification.
+- Post-merge evidence is recorded through a metadata-only closeout pull request
+  that follows the same CI, self-review, and squash-merge rules.
 - Normal operation does not require human approval.
 
 Short-term fixes, one-off audits, and remediation backlogs belong in GitHub

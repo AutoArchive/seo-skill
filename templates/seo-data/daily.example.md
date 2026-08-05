@@ -41,14 +41,15 @@
 ## Validation and self-review
 
 - Local validation: passed
-- Pre-push diff self-review: passed
-- Exact-commit CI: passed
+- Pull-request CI: passed
+- Final pull-request diff self-review: passed
 
 ## Delivery
 
-- Main commit: `0123456789abcdef0123456789abcdef01234567`
+- Change pull request: `https://github.com/example/site/pull/123`
+- Squash merge: `0123456789abcdef0123456789abcdef01234567`
 - CI run: `https://github.com/example/site/actions/runs/123`
-- Closeout commit: `89abcdef0123456789abcdef0123456789abcdef`
+- Closeout pull request: `https://github.com/example/site/pull/124`
 - Deployment: not applicable
 - Public verification: not applicable
 
