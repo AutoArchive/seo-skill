@@ -1,4 +1,0 @@
-interface:
-  display_name: "Read Site Context"
-  short_description: "Separate technical site facts from editorial position"
-  default_prompt: "Use $read-site-context to identify the consuming site's technical source of truth, optional editorial position, current execution contract, priorities, and conflicts before research, writing, SEO, or deployment work."
