@@ -44,4 +44,6 @@ python .github/seo-skills/scripts/site_snapshot.py \
 
 A baseline should normally represent the last verified production output rather
 than an unverified local build. Snapshots may remain temporary CI artifacts; the
-shared package does not require committing them.
+shared package does not require committing them. Do not write a snapshot inside
+a directory copied to public production unless publishing that diagnostic file
+is an explicit site decision.
