@@ -22,8 +22,13 @@ belong to the consuming repository.
 - Normally use at least 40 substantive sources:
   - at least 20 academic sources, including papers, preprints, theses,
     dissertations, books, or book chapters;
-  - at least 20 primary, community, archival, institutional, dictionary, media,
-    creator, platform, specialist-blog, or other first-hand sources.
+  - at least 20 primary, community, archival, institutional, creator, platform,
+    specialist-blog, or other first-hand sources.
+- Use dictionary entries only for word form, recorded definition, or documented
+  usage. Use media reports only as contemporaneous evidence of public circulation
+  or framing. Keep both categories supplementary and avoid repeated reliance on
+  them when academic, community, creator, archival, or platform evidence is
+  available.
 - Use in-text citations and a complete, consistently formatted reference list.
 - Include serious counterevidence and at least one original synthesis grounded in
   multiple sources.
