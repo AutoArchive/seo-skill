@@ -1,155 +1,110 @@
 ---
 name: research-blog
-description: Research, write, review, and publish one substantial evidence-backed article with a clear thesis, an explicit reader use, rich explanatory prose, complete citations, and verified production delivery.
+description: Research, write, review, and publish one substantial evidence-backed article with a concrete thesis, rich prose, complete references, strict language review, and verified production delivery.
 ---
 
 # Research Blog
 
 ## Purpose
 
-Produce one useful long-form research article from question selection through
-public verification. This single skill owns research, writing, article review,
-and publication. Site-specific topics and editorial identity remain in the
-consuming repository.
+Produce one substantial research article from question selection through public
+verification. Keep the skill generic; site-specific topics and editorial identity
+belong to the consuming repository.
 
-## Start with the point
+## Research requirements
 
-Before research, write two sentences internally:
+- Use multiple rounds of public-web Deep Research and Sider Scholar.
+- Search every materially relevant language.
+- Research involving Japanese concepts must include Japanese-language queries
+  and Japanese research or primary material.
+- Write at least 5,000 Chinese main-text characters, excluding front matter and
+  references.
+- Normally use at least 40 substantive sources:
+  - at least 20 academic sources, including papers, preprints, theses,
+    dissertations, books, or book chapters;
+  - at least 20 primary, community, archival, institutional, creator, platform,
+    specialist-blog, or other first-hand sources.
+- Use dictionary entries only for word form, recorded definition, or documented
+  usage. Use media reports only as contemporaneous evidence of public circulation
+  or framing. Keep both categories supplementary and avoid repeated reliance on
+  them when academic, community, creator, archival, or platform evidence is
+  available.
+- Use in-text citations and a complete, consistently formatted reference list.
+- Include serious counterevidence and at least one original synthesis grounded in
+  multiple sources.
 
-- **Thesis:** the central claim the article will establish.
-- **Reader use:** what a reader can understand, decide, translate, interpret, or
-  do better after reading it.
+Search snippets, AI summaries, citation lists, and pages that only repeat another
+source serve discovery only. Verify every material claim against the underlying
+source.
 
-The thesis and reader use appear clearly in the opening paragraphs, guide every
-main section, and return in the conclusion. A reader should always be able to
-explain what the article argues and why the argument matters.
+## Article form
 
-## Research depth
+The finished article should have the shape of a real research paper adapted for
+public reading:
 
-Use multiple rounds of public-web Deep Research and Sider Scholar. Search every
-materially relevant language. Research involving Japanese concepts must include
-Japanese-language queries and Japanese research or primary material.
+1. specific title;
+2. abstract;
+3. keywords;
+4. clear research question and concrete central thesis;
+5. source and method description;
+6. sustained analytical sections;
+7. counterevidence or competing explanation;
+8. original synthesis;
+9. conclusion;
+10. complete references.
 
-A normal article uses at least 40 substantive sources:
+The exact section names may vary. The intellectual functions above must remain
+visible.
 
-- at least 20 academic sources, including peer-reviewed papers, preprints,
-  conference or workshop papers, theses, dissertations, academic books, or book
-  chapters;
-- at least 20 primary, community, archival, institutional, lexicographic,
-  contemporaneous-journalism, specialist-blog, creator, platform, or other
-  first-hand sources.
+## Writing requirements
 
-The counts are floors for a normal article. Broader, disputed, historical, or
-cross-language claims may require more. Search snippets, AI summaries, citation
-lists, and pages that merely repeat another source serve discovery only.
+Use the consuming site's strongest existing long-form article as the baseline for
+content richness, paragraph length, flow, and depth. Main analytical paragraphs
+should fully develop examples, context, source interpretation, comparison, and
+consequences.
 
-Research proceeds in several rounds:
+Prefer concrete people, texts, scenes, actions, and outcomes. Reduce abstract
+expressions and concept stacking. A reader should be able to say what happened in
+every paragraph. Replace phrases such as “身份位置”“观看关系”“话语结构” or
+“类型归属” with direct descriptions whenever concrete language can explain who
+used a term, what it described, and what readers would understand from it.
 
-1. map definitions, history, major interpretations, and relevant languages;
-2. use Sider Scholar and public scholarly search to find academic literature;
-3. collect primary, community, archival, platform, and specialist-blog material;
-4. deep-read the sources that carry the thesis;
-5. run a separate search for counterevidence, earlier cases, competing
-   explanations, and communities that use the terms differently;
-6. revise the thesis and scope;
-7. verify every material claim and bibliography entry.
+A rewrite must preserve the existing thesis, evidence, examples, counterevidence,
+original insight, references, and practical value. Style editing must never make
+the article thinner or more abstract.
 
-Keep claim-level citations close to the supported text. Clearly separate source
-findings from the article's original synthesis.
+## Strict language audit
 
-## Write a rich article
+Author-written prose should use direct affirmative expression and strictly avoid
+negative and defensive constructions.
 
-The Chinese main text contains at least 5,000 Chinese characters, excluding front
-matter and bibliography. Use the consuming site's strongest existing long-form
-work as the local baseline for density, paragraph development, rhythm, and depth.
-Preserve the context and reasoning that make the evidence meaningful.
+Before publication, complete two separate passes:
 
-A substantial section normally develops:
+1. **Literal negation scan** — search the title, description, abstract, headings,
+   body, captions, synthesis, and conclusion for negative markers and patterns,
+   including “不是……而是……”“并非”“并不是”“不只是”“不仅仅是”
+   “这并不意味着”“不能简单地说”“无法证明”“本文无意” and
+   “需要澄清”.
+2. **Defensive semantic review** — read the complete article for sentences whose
+   main function is denial, correction, anticipated objection, disclaimer, or
+   self-defense, even when no literal marker appears.
 
-- concrete material, examples, or cases;
-- historical, linguistic, social, technical, or literary context;
-- relevant source interpretations;
-- comparison with another case or explanation;
-- counterevidence or boundary conditions;
-- connection back to the central thesis;
-- consequence or use for the reader.
+Rewrite every detected case as a direct statement of evidence, difference,
+chronology, relationship, confidence, or open question.
 
-Paragraphs should feel complete and naturally connected. Short paragraphs may
-mark a turn or conclusion; repeated one- or two-sentence fragments usually signal
-that evidence or reasoning has been compressed too far. Tables and lists may
-clarify comparisons, while the main argument remains in developed prose.
-
-Content richness has priority over superficial brevity. Preserve useful examples,
-competing interpretations, mechanisms, limitations, and implications. A style
-edit changes expression while retaining the thesis, evidence, nuance, and
-practical value.
-
-## Required article content
-
-The finished article includes:
-
-- a clear question and central thesis;
-- an explicit explanation of the article's usefulness;
-- developed evidence-led sections;
-- in-text citations;
-- serious counterevidence or alternative explanations;
-- limitations and evidence boundaries;
-- an original, clearly identified synthesis or insight;
-- a conclusion that returns to the thesis and reader use;
-- a complete bibliography containing the sources actually used.
-
-## Language
-
-Write as an informed collaborator who brings the reader through the materials and
-shows how the judgment forms. Use calm, direct, affirmative sentences. Let
-examples and evidence create transitions instead of repeatedly correcting an
-imagined opponent.
-
-Author-written titles, descriptions, abstracts, headings, body text, captions,
-synthesis, limitations, and conclusions contain no negative or defensive
-constructions. Rewrite them as positive statements of evidence, scope,
-relationship, chronology, confidence, or open questions. Source-accurate
-quotations, official titles, proper names, code, and bibliography entries retain
-their original wording.
-
-This language rule never justifies removing evidence, counterarguments,
-limitations, qualifications, explanation, or the article's thesis. Express every
-boundary positively and fully.
-
-## Review
-
-Review the complete article from the beginning and answer these questions:
-
-1. Can a reader state the thesis after the opening?
-2. Is the article's practical or intellectual use explicit?
-3. Does every section advance the thesis through developed evidence and
-   explanation?
-4. Does the article match or exceed the site's established long-form richness,
-   paragraph length, flow, and depth?
-5. Are at least 40 substantive sources represented, including at least 20
-   academic and 20 primary, community, archival, institutional, or specialist
-   sources?
-6. Were multiple public-web research rounds and Sider Scholar used, with Japanese
-   research for Japanese concepts?
-7. Are counterevidence, limitations, and original synthesis represented fairly?
-8. Does every material factual claim have an adequate citation?
-9. Does the prose remain collaborative, natural, affirmative, and free of
-   defensive constructions?
-
-Revise until every answer is yes.
+An exact user-specified research question or title may retain one necessary
+logical negation. Source quotations, official titles, proper names, code, and
+reference entries retain their original wording.
 
 ## Delivery
 
-Use `$deliver-github-pr` for the repository change. Include the article, closely
-related editorial updates, and the minimum required site records. Run the site's
-authoritative checks, wait for complete green CI, review the final diff and
-rendered article from scratch, squash-merge, verify the exact production
-provider deployment, and confirm the canonical public article.
+Use `$deliver-github-pr` for the repository change. Run the site's authoritative
+checks, wait for complete green CI, review the final diff and rendered article
+from scratch, squash-merge, verify the exact production deployment, and confirm
+the canonical public article.
 
 ## Completion
 
-The work is complete when the article has a clear thesis and reader use, at least
-5,000 Chinese main-text characters, at least 40 substantive sources in the
-required composition, rich and well-supported prose, in-text citations,
-counterevidence, limitations, original synthesis, a clean final review, a merged
-pull request, and verified production output on the canonical site.
+The article is complete only after it satisfies every requirement above, passes
+both language audits, has complete references, and is verified on the canonical
+production site.
