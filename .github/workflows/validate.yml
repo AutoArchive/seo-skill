@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   validate:
-    name: Skills
+    name: Skills and optional scripts
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -22,8 +22,11 @@ jobs:
         with:
           python-version: "3.13"
 
-      - name: Compile scripts
-        run: python -m compileall -q scripts
+      - name: Compile Python
+        run: python -m compileall -q scripts tests
 
       - name: Validate skills
         run: python scripts/validate_skills.py
+
+      - name: Test optional scripts
+        run: python -m unittest discover -s tests -v
