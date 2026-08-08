@@ -80,9 +80,7 @@ function exportSite_(site, period) {
     return result;
   }
 
-  exportOne_(folder, filename_(period, 'ga4_organic_landing_pages'), result, function() {
-    return ga4OrganicLandingPagesCsv_(site.propertyId, period);
-  });
+  exportGa4_(folder, site, period, result);
 
   GSC_REPORTS.forEach(function(report) {
     exportOne_(folder, filename_(period, report.suffix), result, function() {
@@ -91,6 +89,63 @@ function exportSite_(site, period) {
   });
 
   return result;
+}
+
+function exportGa4_(folder, site, period, result) {
+  var csvFilename = filename_(period, 'ga4_organic_landing_pages');
+  var manifestFilename = ga4SourceFilename_(period);
+
+  try {
+    var csvFiles = folder.getFilesByName(csvFilename);
+    var manifestFiles = folder.getFilesByName(manifestFilename);
+
+    if (csvFiles.hasNext()) {
+      if (!manifestFiles.hasNext()) {
+        throw new Error('Existing GA4 export has no source manifest');
+      }
+      var manifest = JSON.parse(
+        manifestFiles.next().getBlob().getDataAsString('UTF-8')
+      );
+      if (
+        manifest.domain !== site.domain ||
+        String(manifest.propertyId) !== String(site.propertyId) ||
+        manifest.startDate !== period.start ||
+        manifest.endDate !== period.end
+      ) {
+        throw new Error('Existing GA4 export source does not match configured property');
+      }
+      result.skipped.push(csvFilename);
+      result.skipped.push(manifestFilename);
+      return;
+    }
+
+    if (manifestFiles.hasNext()) {
+      throw new Error('GA4 source manifest exists without CSV');
+    }
+
+    var csv = ga4OrganicLandingPagesCsv_(site.propertyId, period);
+    folder.createFile(Utilities.newBlob(csv, 'text/csv', csvFilename));
+    result.created.push(csvFilename);
+
+    var source = {
+      schemaVersion: 1,
+      domain: site.domain,
+      propertyId: String(site.propertyId),
+      startDate: period.start,
+      endDate: period.end,
+      generatedAt: new Date().toISOString()
+    };
+    folder.createFile(
+      Utilities.newBlob(
+        JSON.stringify(source, null, 2),
+        'application/json',
+        manifestFilename
+      )
+    );
+    result.created.push(manifestFilename);
+  } catch (error) {
+    result.errors.push(csvFilename + ': ' + error.message);
+  }
 }
 
 function exportOne_(folder, filename, result, buildCsv) {
@@ -227,10 +282,45 @@ function filename_(period, suffix) {
   return period.start + '_to_' + period.end + '_' + suffix + '.csv';
 }
 
+function ga4SourceFilename_(period) {
+  return period.start + '_to_' + period.end + '_ga4_source.json';
+}
+
 function validateSite_(site) {
   ['domain', 'gscProperty', 'folderId', 'propertyId'].forEach(function(key) {
     if (!site[key] || /_ID$/.test(site[key])) throw new Error('Missing private ' + key);
   });
+}
+
+function auditExporterHealth() {
+  var seen = {};
+  var errors = [];
+
+  SITES.forEach(function(site) {
+    if (seen[site.domain]) errors.push('Duplicate site: ' + site.domain);
+    seen[site.domain] = true;
+    try {
+      validateSite_(site);
+    } catch (error) {
+      errors.push(site.domain + ': ' + error.message);
+    }
+  });
+
+  var triggers = ScriptApp.getProjectTriggers().filter(function(trigger) {
+    return trigger.getHandlerFunction() === 'runWeeklySeoExport';
+  });
+  if (triggers.length !== 1) {
+    errors.push('Expected exactly one runWeeklySeoExport trigger; found ' + triggers.length);
+  }
+
+  var health = {
+    ok: errors.length === 0,
+    configuredSites: SITES.length,
+    weeklyTriggerCount: triggers.length,
+    errors: errors
+  };
+  console.log(JSON.stringify(health));
+  return health;
 }
 
 function toCsv_(rows) {

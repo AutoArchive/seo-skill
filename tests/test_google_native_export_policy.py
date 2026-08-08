@@ -23,6 +23,15 @@ class GoogleNativeExportPolicyTests(unittest.TestCase):
         self.assertNotIn('"https://www.googleapis.com/auth/analytics"', text)
         self.assertNotIn('"https://www.googleapis.com/auth/webmasters"', text)
 
+    def test_ga4_exports_are_bound_to_an_explicit_source(self) -> None:
+        text = CODE.read_text(encoding="utf-8")
+        self.assertIn("propertyId: 'GA4_PROPERTY_ID'", text)
+        self.assertIn("_ga4_source.json", text)
+        self.assertIn("Existing GA4 export has no source manifest", text)
+        self.assertIn("Existing GA4 export source does not match configured property", text)
+        self.assertIn("function auditExporterHealth()", text)
+        self.assertNotRegex(text, r"(?i)(displayName|listGaProperties|findPropertyByName)")
+
 
 if __name__ == "__main__":
     unittest.main()
